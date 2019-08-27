@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EventController!{% endblock %}
+{% block title %}Ajouter sortie{% endblock %}
 
 {% block body %}
 <div class="container">
@@ -36,31 +36,23 @@
                 <input type="text" class="form-control" >
             </div>
             <div class="form-group">
-                <label >Lieu</label>
-                <input type="text" class="form-control" >
+                {{ form_row(formEvent.location.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
-                <label >Rue</label>
-                <input type="text" class="form-control" >
+                {{ form_row(formEvent.location.street, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
                 <label >Code Postal</label>
                 <input type="text" class="form-control" >
             </div>
             <div class="form-group">
-                <label >Latitude</label>
-                <input type="text" class="form-control" >
+                {{ form_row(formEvent.location.latitude, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
-                <label >Longitude</label>
-                <input type="text" class="form-control" >
+                {{ form_row(formEvent.location.longitude, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
-
         </div>
     </div>
-
-
-
 
     <div style="text-align: center">
         {{ form_widget(formEvent.save, { 'attr': {'class': 'btn btn-primary btn-lg btn-block"', 'style':''}} ) }}

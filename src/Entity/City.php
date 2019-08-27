@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,11 +25,26 @@ class City
     private $name;
 
     /**
+     * @var Location[]
+     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="city")
+     */
+    private $locations;
+
+    /**
      * @ORM\Column(type="string", length=5)
      * @Assert\NotBlank(message="Le champ Code postal ne peut pas être vide !")
      * @Assert\Regex("/[0-9]{5}/",message="Code postal au format 75000!")
      */
     private $zipCode;
+
+    /**
+     * City constructor.
+     */
+    public function __construct()
+    {
+        $this->locations = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {

@@ -28,7 +28,8 @@ class EventController extends AbstractController
                 $stateRepo = $entityManager->getRepository(State::class);
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
                 $event->setState($state);
-
+                $entityManager->persist($event);
+                $entityManager->flush();
             }elseif (isset($req['publish'])){
 
             }elseif (isset($req['cancel'])){
