@@ -46,16 +46,6 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="city_show", methods={"GET"})
-     */
-    public function show(City $city): Response
-    {
-        return $this->render('city/show.html.twig', [
-            'city' => $city,
-        ]);
-    }
-
-    /**
      * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, City $city): Response
@@ -78,10 +68,9 @@ class CityController extends AbstractController
     /**
      * @Route("/{id}", name="city_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, City $city): Response
+    public function delete(EntityManagerInterface $entityManager,Request $request, City $city): Response
     {
         if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($city);
             $entityManager->flush();
         }
