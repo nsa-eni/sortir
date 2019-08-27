@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\City;
 use App\Entity\Location;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +27,14 @@ class LocationType extends AbstractType
             ])
             ->add('longitude', TextType::class, [
                 'label' => 'Longitude'
+            ])
+            ->add('city', EntityType::class, [
+                'class' => City::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c');
+                },
+                'label' => 'Ville',
+                'choice_label' => 'name',
             ])
         ;
     }
