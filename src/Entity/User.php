@@ -63,6 +63,11 @@ class User implements UserInterface
      */
     private $pseudo;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $imageFilename;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -209,6 +214,22 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+    /**
+     * @return mixed
+     */
+    public function getImageFilename(): ?string
+    {
+        return $this->imageFilename;
+    }
+    /**
+     * @param mixed $imageFilename
+     */
+    public function setImageFilename(?string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
 
         return $this;
     }
