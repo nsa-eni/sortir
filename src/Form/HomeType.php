@@ -4,6 +4,9 @@ namespace App\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,12 +15,16 @@ class HomeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('date_start')
-            ->add('date_interval')
-            ->add('date_end')
-            ->add('max_number_places')
-            ->add('info')
+            ->add('city', TextType::class, ['label' => 'Site :'])
+            ->add('search', TextType::class, ['label' => 'Le nom de la sortie contient :'])
+            ->add('date_start', DateTimeType::class,
+                ['label' => 'Entre', 'widget' => 'single_text'])
+            ->add('date_end', DateTimeType::class
+                , ['label' => 'et', 'widget' => 'single_text'])
+            ->add('owner', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur'])
+            ->add('subscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je suis inscrit/e'])
+            ->add('notSubscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je ne suis pas inscrit/e'])
+            ->add('eventEnded', CheckboxType::class, ['label' => 'Sorties passées'])
         ;
     }
 
