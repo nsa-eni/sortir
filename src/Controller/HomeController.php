@@ -23,8 +23,9 @@ class HomeController extends AbstractController
         if($searchForm->isSubmitted() && $searchForm->isValid()) {
             // dispatching data from the form
             $params = $searchForm->getData();
+            dump($params);
             $name = $params['search'];
-            $city = $params['city'];
+            $city = $params['site'];
             $dateStart = $params['date_start'];
             $dateEnd = $params['date_end'];
             $owner = $params['owner'];
