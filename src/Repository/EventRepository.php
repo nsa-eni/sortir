@@ -19,6 +19,17 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    /**
+     * @param $name
+     * @param $city
+     * @param $dateStart
+     * @param $dateEnd
+     * @param $owner
+     * @param $eventEnded
+     * @return mixed
+     * @throws \Exception
+     * @return Event[] returns an array of Event objects
+     */
     public function searchEvent($name, $city, $dateStart, $dateEnd, $owner, $eventEnded) {
         $name = explode(' ', $name);
         $req = $this->createQueryBuilder('e');
