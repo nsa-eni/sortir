@@ -40,7 +40,7 @@ class SiteController extends AbstractController
         }
         //si utilisation barre de recherche
         if ($data) {
-            $req = $entityManager->getRepository('App:Site')->CityNameContain($data);
+            $req = $entityManager->getRepository('App:Site')->SiteNameContain($data);
         }
         return $this->render('site/index.html.twig', ["tabSite" => $req,  'formSite' => $form->createView()]);
     }
