@@ -38,6 +38,12 @@ class Location
     private $longitude;
 
     /**
+     * @var City $city
+     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="locations", cascade={"persist"})
+     */
+    private $city;
+
+    /**
      * @var Event[] $events
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="location")
      */
