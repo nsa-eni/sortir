@@ -59,6 +59,12 @@ class Event
     private $location;
 
     /**
+     * @var Site
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="events", cascade={"persist", "remove"})
+     */
+    private $site;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -200,6 +206,22 @@ class Event
     public function setLocation(Location $location): void
     {
         $this->location = $location;
+    }
+
+    /**
+     * @return Site
+     */
+    public function getSite(): Site
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param Site $site
+     */
+    public function setSite(Site $site): void
+    {
+        $this->site = $site;
     }
 
 }
