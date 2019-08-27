@@ -23,7 +23,7 @@ class SiteRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->Where('s.name LIKE :data')
-            ->setParameter('data', $data)
+            ->setParameter('data', %$data%)
             ->orderBy('s.name', 'ASC')
             ->getQuery()
             ->getResult();

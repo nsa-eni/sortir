@@ -16,7 +16,7 @@ class SiteType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                "label"=>"Ville",
+                "label"=>"Ville organisatrice",
                 "trim"=>true,
                 "constraints" => [
                     new NotBlank([
