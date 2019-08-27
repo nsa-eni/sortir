@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Site index{% endblock %}
+
+{% block body %}
+    <br>
+    <h1 class="text-center">Gérer les Sites</h1>
+    <br>
+    <h4>Filtrer les Sites</h4>
+    <br>
+    <p> </p>
+    <form role="search" class="form-inline my-2 my-lg-2" method="get" action="{{ path('site_index') }}">
+        <label>Le nom contient : &nbsp</label>
+        <input class="form-control mr-sm-2" type="search" placeholder="Recherche" name="search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Rechercher</button>
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Ville</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for Site in tabSite %}
+            <tr>
+                <td>{{ Site.name }}</td>
+                <td>
+                    <a href="{{ path('site_edit', {'id': Site.id}) }}">Modifier</a> -
+                    <a href="{{ path('site_show', {'id': Site.id}) }}">Supprimer</a>
+                </td>
+            </tr>
+
+        {% else %}
+            <tr>
+                <td colspan="4">Désolé, il n'y a pas de résultat !</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            {{ form_start(formSite) }}
+            <td>
+                <div class="form-group">
+                    {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    {{ form_widget(formSite.submit,{'attr': {'class': 'form-control'}}) }}
+                </div>
+            </td>
+            {{ form_end(formSite) }}
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

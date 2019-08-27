@@ -22,7 +22,7 @@ class SiteType extends AbstractType
                     new NotBlank([
                         "message"=>"Le champ Ville ne peut pas être vide !"
                     ])
-            ]])
+                ]])
             ->add("submit", submitType::class,[
                 "label" => "Ajouter"])
         ;

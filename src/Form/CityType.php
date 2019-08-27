@@ -27,7 +27,7 @@ class CityType extends AbstractType
                 ]])
             ->add('zipCode', TextType::class, [
                 "label"=>"Code postal",
-                    "trim"=>true,
+                "trim"=>true,
                 "constraints" => [
                     new NotBlank([
                         "message"=>"Le champ Code postal ne peut pas être vide !"
@@ -48,3 +48,4 @@ class CityType extends AbstractType
         ]);
     }
 }
+
