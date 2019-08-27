@@ -34,13 +34,18 @@
              {{ form_start(formCity) }}
             <td>
                     <div class="form-group">
-                        {{ form_widget(formCity.name,{'attr': {'class': 'form-control','placeholder':"Nouvealle ville"}}) }}
+                        {{ form_widget(formCity.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
                     </div>
             </td>
             <td>
                     <div class="form-group">
                         {{ form_widget(formCity.zipCode,{'attr': {'class': 'form-control','placeholder':"Nouveau code"}}) }}
                     </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    {{ form_widget(formCity.submit,{'attr': {'class': 'form-control'}}) }}
+                </div>
             </td>
             {{ form_end(formCity) }}
         </tr>

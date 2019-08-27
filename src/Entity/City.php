@@ -19,7 +19,7 @@ class City
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Assert\NotBlank(message="Le champ Nom ne peut pas être vide !")
+     * @Assert\NotBlank(message="Le champ Ville ne peut pas être vide !")
      */
     private $name;
 
