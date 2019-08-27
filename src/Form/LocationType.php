@@ -35,6 +35,7 @@ class LocationType extends AbstractType
                 },
                 'label' => 'Ville',
                 'choice_label' => 'name',
+                'required' => false
             ])
         ;
     }

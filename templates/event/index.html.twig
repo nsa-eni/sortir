@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label >Code Postal</label>
-                <input type="text" class="form-control" >
+                <p id="zip_code">_____</p>
             </div>
             <div class="form-group">
                 {{ form_row(formEvent.location.latitude, { 'attr': {'class': 'form-control', 'style':''}} ) }}
@@ -63,4 +63,20 @@
     {{ form_end(formEvent) }}
 
 </div>
+    <script>
+        document.getElementById('event_location_city').addEventListener('change', function (e) {
+           console.log(e.currentTarget.value);
+            $.ajax({
+                url : "{{ path('event') }}",
+                type: 'post',
+                data : {
+                    city_id: e.currentTarget.value
+                },
+                success: function(response) {
+                    let zip = JSON.parse(response);
+                    document.getElementById('zip_code').innerText = zip.zip_code;
+                }
+            });
+        });
+    </script>
 {% endblock %}

@@ -48,13 +48,13 @@ class Event
 
     /**
      * @var State $state
-     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events", cascade={"persist", "remove"})
      */
     private $state;
 
     /**
      * @var Location $state
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events", cascade={"persist", "remove"})
      */
     private $location;
 

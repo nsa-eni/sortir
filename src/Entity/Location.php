@@ -39,7 +39,7 @@ class Location
 
     /**
      * @var City $city
-     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="locations", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\City", inversedBy="locations", cascade={"persist", "remove"})
      */
     private $city;
 
