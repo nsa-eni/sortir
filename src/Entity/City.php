@@ -74,4 +74,20 @@ class City
 
         return $this;
     }
+
+    /**
+     * @return Location[]
+     */
+    public function getLocations(): array
+    {
+        return $this->locations;
+    }
+
+    /**
+     * @param Location[] $locations
+     */
+    public function setLocations(array $locations): void
+    {
+        $this->locations = $locations;
+    }
 }
