@@ -126,7 +126,7 @@ class Location
     /**
      * @return City
      */
-    public function getCity(): City
+    public function getCity()
     {
         return $this->city;
     }

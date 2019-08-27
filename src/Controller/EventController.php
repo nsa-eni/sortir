@@ -23,18 +23,17 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $req = $request->request->get('event');
-
+            $stateRepo = $entityManager->getRepository(State::class);
             if (isset($req['save'])){
-                $stateRepo = $entityManager->getRepository(State::class);
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
-                $event->setState($state);
-                $entityManager->persist($event);
-                $entityManager->flush();
             }elseif (isset($req['publish'])){
-
+                $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
             }elseif (isset($req['cancel'])){
                 return $this->redirectToRoute("home");
             }
+            $event->setState($state);
+            $entityManager->persist($event);
+            $entityManager->flush();
         }
         return $this->render('event/index.html.twig', ["formEvent" => $form->createView()]);
     }
