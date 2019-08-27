@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,13 +16,28 @@ class EventType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('date_start')
-            ->add('date_interval')
-            ->add('date_end')
+            ->add('date_start', DateTimeType::class, [
+                'widget' => 'single_text',
+            ])
+            ->add('dateEndOfRegistration', DateTimeType::class, [
+                'widget' => 'single_text',
+
+            ])
+            ->add('time_delay_minutes')
             ->add('max_number_places')
-            ->add('info')
+            ->add('info', TextareaType::class)
+            ->add('location', LocationType::class)
         ;
-        $builder->add('submit', SubmitType::class);
+        $builder->add('save', SubmitType::class, [
+            'label' => 'Enregistrez'
+        ]);
+        $builder->add('publish', SubmitType::class,[
+            'label' => 'Publier'
+        ]);
+        $builder->add('cancel', SubmitType::class,[
+            'label' => 'Annuler'
+        ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

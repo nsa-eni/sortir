@@ -29,12 +29,12 @@ class Event
     /**
      * @ORM\Column(type="integer")
      */
-    private $date_interval;
+    private $time_delay_minutes;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $date_end;
+    private $date_end_of_registration;
 
     /**
      * @ORM\Column(type="integer")
@@ -46,80 +46,160 @@ class Event
      */
     private $info;
 
-    public function getId(): ?int
+    /**
+     * @var State $state
+     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events", cascade={"persist"})
+     */
+    private $state;
+
+    /**
+     * @var Location $state
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events", cascade={"persist"})
+     */
+    private $location;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
-    public function getDateStart(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getDateStart()
     {
         return $this->date_start;
     }
 
-    public function setDateStart(\DateTimeInterface $date_start): self
+    /**
+     * @param mixed $date_start
+     */
+    public function setDateStart($date_start): void
     {
         $this->date_start = $date_start;
-
-        return $this;
     }
 
-    public function getDateInterval(): ?int
+    /**
+     * @return mixed
+     */
+    public function getTimeDelayMinutes()
     {
-        return $this->date_interval;
+        return $this->time_delay_minutes;
     }
 
-    public function setDateInterval(int $date_interval): self
+    /**
+     * @param mixed $time_delay_minutes
+     */
+    public function setTimeDelayMinutes($time_delay_minutes): void
     {
-        $this->date_interval = $date_interval;
-
-        return $this;
+        $this->time_delay_minutes = $time_delay_minutes;
     }
 
-    public function getDateEnd(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getDateEndOfRegistration()
     {
-        return $this->date_end;
+        return $this->date_end_of_registration;
     }
 
-    public function setDateEnd(\DateTimeInterface $date_end): self
+    /**
+     * @param mixed $date_end_of_registration
+     */
+    public function setDateEndOfRegistration($date_end_of_registration): void
     {
-        $this->date_end = $date_end;
-
-        return $this;
+        $this->date_end_of_registration = $date_end_of_registration;
     }
 
-    public function getMaxNumberPlaces(): ?int
+    /**
+     * @return mixed
+     */
+    public function getMaxNumberPlaces()
     {
         return $this->max_number_places;
     }
 
-    public function setMaxNumberPlaces(int $max_number_places): self
+    /**
+     * @param mixed $max_number_places
+     */
+    public function setMaxNumberPlaces($max_number_places): void
     {
         $this->max_number_places = $max_number_places;
-
-        return $this;
     }
 
-    public function getInfo(): ?string
+    /**
+     * @return mixed
+     */
+    public function getInfo()
     {
         return $this->info;
     }
 
-    public function setInfo(string $info): self
+    /**
+     * @param mixed $info
+     */
+    public function setInfo($info): void
     {
         $this->info = $info;
-
-        return $this;
     }
+
+    /**
+     * @return State
+     */
+    public function getState(): State
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param State $state
+     */
+    public function setState(State $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param Location $location
+     */
+    public function setLocation(Location $location): void
+    {
+        $this->location = $location;
+    }
+
 }

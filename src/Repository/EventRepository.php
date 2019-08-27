@@ -19,6 +19,38 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
+    public function searchEvent($name, $city, $dateStart, $dateEnd, $owner, $eventEnded) {
+        $name = explode(' ', $name);
+        $req = $this->createQueryBuilder('e');
+        $dateNow = new \DateTime('now');
+
+        if (!is_null($name)) {
+            foreach($name as $n) {
+                $req->andWhere('e.name LIKE :n')->setParameter('n', $n);
+            }
+        }
+
+        if (!is_null($city)) {
+            $req->andWhere('e.city like :city')->setParameter('city', $city);
+        }
+
+        if (!is_null($dateStart) && !is_null($dateEnd)) {
+            $req->andWhere('e.date_start BETWEEN :date_start AND :date_end')
+                ->setParameter('date_start', $dateStart)
+                ->setParameter('date_end', $dateEnd);
+        }
+
+        if (!is_null($owner)) {
+            $req->andWhere('e.owner = :owner')->setParameter('owner', $owner);
+        }
+
+        if (!is_null($eventEnded)) {
+            $req->andWhere(':dateNow >= e.date_end')->setParameter('dateNow', $dateNow);
+        }
+
+        return $req->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Event[] Returns an array of Event objects
     //  */
