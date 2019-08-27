@@ -20,7 +20,7 @@ class UserType extends AbstractType
             ->add('password')
             ->add('actif')
             ->add('administrator')
-            ->add('imageFilename', FileType::class, [
+         /*  ->add('imageFilename', FileType::class, [
                 'label' => 'Image (JPG)',
 
                 // unmapped means that this field is not associated to any entity property
@@ -45,7 +45,7 @@ class UserType extends AbstractType
                     ])
                 ],
             ])
-
+*/
         ;
     }
 
