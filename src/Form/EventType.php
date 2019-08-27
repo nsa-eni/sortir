@@ -18,7 +18,6 @@ class EventType extends AbstractType
             ->add('name')
             ->add('date_start', DateTimeType::class, [
                 'widget' => 'single_text',
-
             ])
             ->add('dateEndOfRegistration', DateTimeType::class, [
                 'widget' => 'single_text',
@@ -27,10 +26,17 @@ class EventType extends AbstractType
             ->add('time_delay_minutes')
             ->add('max_number_places')
             ->add('info', TextareaType::class)
+            ->add('location', LocationType::class)
         ;
-        $builder->add('save', SubmitType::class);
-        $builder->add('publish', SubmitType::class);
-        $builder->add('cancel', SubmitType::class);
+        $builder->add('save', SubmitType::class, [
+            'label' => 'Enregistrez'
+        ]);
+        $builder->add('publish', SubmitType::class,[
+            'label' => 'Publier'
+        ]);
+        $builder->add('cancel', SubmitType::class,[
+            'label' => 'Annuler'
+        ]);
 
     }
 

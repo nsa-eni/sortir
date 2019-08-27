@@ -47,6 +47,18 @@ class Event
     private $info;
 
     /**
+     * @var State $state
+     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events", cascade={"persist"})
+     */
+    private $state;
+
+    /**
+     * @var Location $state
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events", cascade={"persist"})
+     */
+    private $location;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -157,4 +169,37 @@ class Event
     {
         $this->info = $info;
     }
+
+    /**
+     * @return State
+     */
+    public function getState(): State
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param State $state
+     */
+    public function setState(State $state): void
+    {
+        $this->state = $state;
+    }
+
+    /**
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param Location $location
+     */
+    public function setLocation(Location $location): void
+    {
+        $this->location = $location;
+    }
+
 }
