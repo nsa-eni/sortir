@@ -23,7 +23,7 @@ class CityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->Where('c.name LIKE :data')
-            ->setParameter('data', $data)
+            ->setParameter('data', '%'.$data.'%')
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult();
