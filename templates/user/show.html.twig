@@ -7,23 +7,23 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            {#  <tr>
-               <th>Password</th>
-               <td>{{ user.password }}</td>
-           </tr>
-           <tr>  #}
+        {#   <tr>
+              <th>Id</th>
+              <td>{{ user.id }}</td>
+          </tr> #}
+          <tr>
+              <th>Email</th>
+              <td>{{ user.email }}</td>
+          </tr>
+          <tr>
+              <th>Roles</th>
+              <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+          </tr>
+          {#  <tr>
+             <th>Password</th>
+             <td>{{ user.password }}</td>
+         </tr>
+         <tr>  #}
                 <th>Name</th>
                 <td>{{ user.name }}</td>
             </tr>
@@ -51,7 +51,7 @@
             <tr>
                 {# <th>Images</th>
                     <td> {% if tabDetail.imageFilename %}
-                            <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}" alt="image annonce" height="200"/></p>
+                            <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}/></p>
                         {% endif %}</td>    #}
             </tr>
 

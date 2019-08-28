@@ -7,6 +7,7 @@ use App\Form\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,7 +97,55 @@ class UserController extends AbstractController
 
     // Annotation à mettre
     // Deposer, depose_depose ,get post
+    /**
+     * @Route("depose", name="user_depose", methods={"GET","POST"})
+     */
+    public function depose(EntityManagerInterface $entityManager, Request $request)
+    {
+        $user = new User();
 
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user=$this->getUser();
+            $user->setUser($user);
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form['imageFilename']->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($imageFile) {
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $user->setImageFilename($newFilename);
+            }
+
+            // ... persist the $product variable or any other work
+            $this->addFlash("success", "Votre annonce a été enregistrée !");
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute("depose_depose");
+        }
+
+        return $this->render('user/index.html.twig', ["form" => $form->createView()]);
+    }
 
 }
 
