@@ -32,8 +32,10 @@ class EventRepository extends ServiceEntityRepository
      */
     public function searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded) {
         $name = explode(' ', $name);
-        $req = $this->createQueryBuilder('e');
         $dateNow = new \DateTime('now');
+
+        $req = $this->createQueryBuilder('e')->addSelect('state')
+            ->leftJoin('e.state', 'state');
 
         if (!is_null($name)) {
             foreach($name as $n)
