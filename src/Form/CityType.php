@@ -19,6 +19,7 @@ class CityType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 "label"=>"Ville",
+                "required"=>false,
                 "trim"=>true,
                 "constraints" => [
                     new NotBlank([
@@ -27,6 +28,7 @@ class CityType extends AbstractType
                 ]])
             ->add('zipCode', TextType::class, [
                 "label"=>"Code postal",
+                "required"=>false,
                 "trim"=>true,
                 "constraints" => [
                     new NotBlank([
