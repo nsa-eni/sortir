@@ -21,7 +21,6 @@ class City
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Assert\NotBlank(message="Le champ Ville ne peut pas être vide !")
      */
     private $name;
 
@@ -33,8 +32,6 @@ class City
 
     /**
      * @ORM\Column(type="string", length=5)
-     * @Assert\NotBlank(message="Le champ Code postal ne peut pas être vide !")
-     * @Assert\Regex("/[0-9]{5}/",message="Code postal au format 75000!")
      */
     private $zipCode;
 
