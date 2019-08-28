@@ -70,7 +70,7 @@ class User implements UserInterface
 
     /**
      * @var Site
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="userss", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users", cascade={"persist", "remove"})
      */
     private $site;
 
