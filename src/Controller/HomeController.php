@@ -24,7 +24,6 @@ class HomeController extends AbstractController
         if($searchForm->isSubmitted() && $searchForm->isValid()) {
             // dispatching data from the form
             $params = $searchForm->getData();
-            dump($params);
             $name = $params['name'];
             $site = $params['site'];
 
@@ -65,9 +64,11 @@ class HomeController extends AbstractController
                 }
             }*/
 
+            dump($eventsFromSearch);
+
             return $this->render('home/index.html.twig', [
                 'searchForm' => $searchForm->createView(),
-                $eventsFromSearch
+                'eventsFromSearch' => $eventsFromSearch
             ]);
         }
 

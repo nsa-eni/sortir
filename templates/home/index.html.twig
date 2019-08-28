@@ -94,12 +94,12 @@
                 <tr>
                     {% for e in eventsFromSearch %}
                         <td>{{ e.name }}</td>
-                        <td>{{ e.dateStart }}</td>
-                        <td>{{ e.dateEnd }}</td>
-                        <td>{{ e.number }}/{{ e.maxNumberPlaces }}</td>
-                        <td>{{ e.state }}</td>
-                        <td>{{ e.subscribed }}</td>
-                        <td>{{ e.owner }}</td>
+                        <td>{{ e.dateStart|date('Y-m-d') }}</td>
+                        <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
+                        {#<td>{{ e.number }}/{{ e.maxNumberPlaces }}</td>#}
+                        <td>{{ e.state.name }}</td>
+                        {#<td>{{ e.subscribed }}</td>#}
+                        {#<td>{{ e.owner }}</td>
                         <td>
                             {% if e.owner != user and e.state != "En création" %}
                                 <a href="{{ path('description') }}">Afficher</a>
@@ -116,7 +116,7 @@
                                 {% endif %}
 
                             {% endif %}
-                        </td>
+                        </td>#}
                     {% endfor %}
                 </tr>
                 </tbody>

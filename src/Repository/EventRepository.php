@@ -36,15 +36,15 @@ class EventRepository extends ServiceEntityRepository
         $dateNow = new \DateTime('now');
 
         if (!is_null($name)) {
-            foreach($name as $n) {
-                $req->andWhere('e.name LIKE :n')->setParameter('n', $n);
-            }
+            foreach($name as $n)
+                $req->andWhere('e.name like :n')
+                    ->setParameter('n', '%'.$n.'%' );
         }
 
         if (!is_null($dateStart) && !is_null($dateEnd)) {
-            $req->andWhere('e.date_start BETWEEN :date_start AND :date_end')
+            $req->andWhere('e.date_start BETWEEN :date_start AND :date_end_of_registration')
                 ->setParameter('date_start', $dateStart)
-                ->setParameter('date_end', $dateEnd);
+                ->setParameter('date_end_of_registration', $dateEnd);
         }
 
         if (!is_null($owner)) {
@@ -52,7 +52,7 @@ class EventRepository extends ServiceEntityRepository
         }
 
         if (!is_null($eventEnded)) {
-            $req->andWhere(':dateNow >= e.date_end')->setParameter('dateNow', $dateNow);
+            $req->andWhere(':dateNow >= e.date_end_of_registration')->setParameter('dateNow', $dateNow);
         }
 
         return $req->getQuery()->getResult();

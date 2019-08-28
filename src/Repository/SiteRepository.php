@@ -36,16 +36,17 @@ class SiteRepository extends ServiceEntityRepository
      */
     public function eventsFromSite($name, $site, $dateStart, $dateEnd, $owner, $eventEnded) {
         $name = explode(' ', $name);
-        $req = $this->createQueryBuilder('s');
         $dateNow = new \DateTime('now');
-
+        $req = $this->createQueryBuilder('s');
         $req->addSelect('event')
-            ->leftJoin('s.events', 'event');
+            ->leftJoin('s.events', 'event')
+            ->andWhere('s.name = :name')
+            ->setParameter('name', $site);
 
             if (!is_null($name)) {
                 foreach($name as $n)
                 $req->andWhere('event.name like :n')
-                    ->setParameter('n', $n);
+                    ->setParameter('n', '%'.$n.'%');
             }
 
              if (!is_null($dateStart) && !is_null($dateEnd)) {
@@ -58,9 +59,9 @@ class SiteRepository extends ServiceEntityRepository
                   $req->andWhere('event.owner = :owner')->setParameter('owner', $owner);
               }
 
-        if (!is_null($eventEnded)) {
-            $req->andWhere(':dateNow >= event.date_end_of_registration')->setParameter('dateNow', $dateNow);
-        }
+                if (!is_null($eventEnded)) {
+                    $req->andWhere(':dateNow >= event.date_end_of_registration')->setParameter('dateNow', $dateNow);
+                }
 
         return $req->getQuery()->getResult();
     }
