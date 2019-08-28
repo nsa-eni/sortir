@@ -16,6 +16,14 @@
         </div>
             <br>
         <div class="form-group col-md-2">
+            {{ form_start(form) }}
+            {{ form_label(form.zipCode) }}
+            <br>
+            {{ form_widget(form.zipCode) }}
+            {{ form_errors(form.zipCode) }}
+        </div>
+        <br>
+        <div class="form-group col-md-2">
             {{ form_widget(form.submit,{'attr': {'class': 'form-control'}}) }}
         </div>
     {{ form_end(form) }}
