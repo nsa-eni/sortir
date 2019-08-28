@@ -27,7 +27,7 @@ class SiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $site->setName(strtoupper($site->getName()));
+            $site->setName(mb_strtoupper($site->getName()));
             $this->addFlash("success", "Le nouveau site a bien été enregistré !");
             $entityManager->persist($site);
             $entityManager->flush();
@@ -38,7 +38,7 @@ class SiteController extends AbstractController
         //récup info barre recherche
         $data = $request->query->get('search');
         if (!$data) {
-            $req = $entityManager->getRepository('App:Site')->findAll();
+            $req = $entityManager->getRepository('App:Site')->findSites();
         }
         //si utilisation barre de recherche
         if ($data) {
@@ -56,6 +56,7 @@ class SiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $site->setName(mb_strtoupper($site->getName()));
             $this->addFlash("success", "Le site a bien été modifié !");
             $this->getDoctrine()->getManager()->flush();
 
