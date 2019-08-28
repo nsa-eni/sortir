@@ -24,7 +24,7 @@
 
     <div class="group">
         <div class="form-group">
-            <div >
+            <div>
                 <div class="row">
                     <div class="offset-1 col-lg-5 col-md-5">
                         <div>
@@ -71,7 +71,54 @@
         </div>
     </div>
     <div class="container">
+        {% if eventsFromSearch is defined %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for e in eventsFromSearch %}
+                        <td>{{ e.name }}</td>
+                        <td>{{ e.dateStart }}</td>
+                        <td>{{ e.dateEnd }}</td>
+                        <td>{{ e.number }}/{{ e.maxNumberPlaces }}</td>
+                        <td>{{ e.state }}</td>
+                        <td>{{ e.subscribed }}</td>
+                        <td>{{ e.owner }}</td>
+                        <td>
+                            {% if e.owner != user and e.state != "En création" %}
+                                <a href="{{ path('description') }}">Afficher</a>
+                            {% else %}
+                                <a href="{{ path('modify') }}">Modifier</a>
+                            {% endif %}
 
+                            {% if e.state == "Créée" or e.state == "Ouverte" %}
+
+                                {% if e.subscribed %}
+                                    <a href="{{ path('unsubscribe') }}"> - Se désister</a>
+                                {% else %}
+                                    <a href="{{ path('subscribe') }}"> - S'inscrire</a>
+                                {% endif %}
+
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        {% endif %}
+
+        <button>Créer une sortie</button>
     </div>
 
 {% endblock %}
