@@ -28,10 +28,10 @@
                     <tr class="row">
                         <td class="col-md-4">{{ City.name }}</td>
                         <td class="col-md-2">{{ City.zipCode }}</td>
-                        <td class="col-md-3 text-cente">
-                            <a href="{{ path('city_edit', {'id': City.id}) }}"><button class="btn">Modifier</button></a> -
+                        <td class="col-md-2 text-center">
+                            <a href="{{ path('city_edit', {'id': City.id}) }}"><button class="btn">Modifier</button></a>
                         </td>
-                        <td class=col-md-3">
+                        <td class="col-md-2 text-left">
                             <form method="post" action="{{ path('city_delete', {'id': City.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette ville ?');">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ City.id) }}">
@@ -59,8 +59,8 @@
                                 {{ form_errors(formCity.zipCode) }}
                             </div>
                         </td>
-                        <td class="col-md-3">
-                            <div class="form-group text-center">
+                        <td class="col-md-2">
+                            <div class="form-group text-left">
                             {{ form_widget(formCity.submit,{'attr': {'class': 'form-control'}}) }}
                             </div>
                         </td>

@@ -7,18 +7,26 @@
     <h1 class="text-center">Gérer les villes</h1>
     <br>
     <div class="offset-1">
-    {{ form_start(form) }}
-    {{ form_label(form.name) }}
-    <br>
-    {{ form_widget(form.name) }}
-    {{ form_errors(form.name) }}
-    <br>
-    {{ form_label(form.zipCode) }}
-    <br>
-    {{ form_widget(form.zipCode) }}
-    {{ form_errors(form.zipCode) }}
+        <div class="form-group col-md-2">
+            {{ form_start(form) }}
+            {{ form_label(form.name) }}
+            <br>
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+        <br>
+        <div class="form-group col-md-2">
+            {{ form_label(form.zipCode) }}
+            <br>
+            {{ form_widget(form.zipCode) }}
+            {{ form_errors(form.zipCode) }}
+        </div>
+            <br>
+        <div class="form-group col-md-2">
+            {{ form_widget(form.submit,{'attr': {'class': 'form-control'}}) }}
+        </div>
     {{ form_end(form) }}
-
+        <br>
     <a href="{{ path('city_index') }}">Retour à la liste</a>
     </div>
 
