@@ -93,14 +93,13 @@
                 <tbody>
                 <tr>
                     {% for e in eventsFromSearch %}
+                        {{ dump(e.subscribersUsers.count) }}
                         <td>{{ e.name }}</td>
                         <td>{{ e.dateStart|date('Y-m-d') }}</td>
                         <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
-                        <td></td>
-                        {#<td>{{ e.number }}/{{ e.maxNumberPlaces }}</td>#}
+                        <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
                         <td>{{ e.state.name }}</td>
                         {#<td>{{ e.subscribed }}</td>#}
-                        <td>{{ e.user }}</td>
                         {#<td>
                             {% if e.owner != user and e.state != "En création" %}
                                 <a href="{{ path('description') }}">Afficher</a>
