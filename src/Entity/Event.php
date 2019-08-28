@@ -65,6 +65,49 @@ class Event
     private $site;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User",  inversedBy="events", cascade={"persist", "remove"})
+     */
+    private $users;
+
+    /**
+     * @var User
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents", cascade={"persist", "remove"})
+     */
+    private $user;
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param mixed $users
+     */
+    public function setUsers($users): void
+    {
+        $this->users = $users;
+    }
+
+    /**
      * @return mixed
      */
     public function getId()

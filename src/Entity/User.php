@@ -74,6 +74,50 @@ class User implements UserInterface
      */
     private $site;
 
+    /**
+     * @var Event
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="users", cascade={"persist", "remove"})
+     */
+    private $events;
+
+    /**
+     * @var Event
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $createdEvents;
+
+    /**
+     * @return Event
+     */
+    public function getEvents(): Event
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param Event $events
+     */
+    public function setEvents(Event $events): void
+    {
+        $this->events = $events;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getCreatedEvents(): Event
+    {
+        return $this->createdEvents;
+    }
+
+    /**
+     * @param Event $createdEvents
+     */
+    public function setCreatedEvents(Event $createdEvents): void
+    {
+        $this->createdEvents = $createdEvents;
+    }
+
 
     public function getId(): ?int
     {
