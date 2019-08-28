@@ -40,20 +40,9 @@ class SiteController extends AbstractController
         }
         //si utilisation barre de recherche
         if ($data) {
-            $req = $entityManager->getRepository('App:Site')->CityNameContain($data);
+            $req = $entityManager->getRepository('App:Site')->SiteNameContain($data);
         }
         return $this->render('site/index.html.twig', ["tabSite" => $req,  'formSite' => $form->createView()]);
-    }
-
-
-    /**
-     * @Route("/{id}", name="site_show", methods={"GET"})
-     */
-    public function show(Site $site): Response
-    {
-        return $this->render('site/show.html.twig', [
-            'site' => $site,
-        ]);
     }
 
     /**
@@ -79,10 +68,9 @@ class SiteController extends AbstractController
     /**
      * @Route("/{id}", name="site_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, Site $site): Response
+    public function delete(EntityManagerInterface $entityManager,Request $request, Site $site): Response
     {
         if ($this->isCsrfTokenValid('delete'.$site->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($site);
             $entityManager->flush();
         }

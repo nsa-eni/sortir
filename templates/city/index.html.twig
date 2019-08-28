@@ -29,7 +29,11 @@
                 <td>{{ City.zipCode }}</td>
                 <td>
                     <a href="{{ path('city_edit', {'id': City.id}) }}">Modifier</a> -
-                    <a href="{{ path('city_delete', {'id': City.id}) }}">Supprimer</a>
+                    <form method="post" action="{{ path('city_delete', {'id': City.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette ville ?');">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ City.id) }}">
+                        <button class="btn">Supprimer</button>
+                    </form>
                 </td>
             </tr>
 

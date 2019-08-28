@@ -23,21 +23,9 @@ class SiteRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->Where('s.name LIKE :data')
-            ->setParameter('data', $data)
+            ->setParameter('data', '%'.$data.'%')
             ->orderBy('s.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
-
-    /*
-    public function findOneBySomeField($value): ?Site
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
