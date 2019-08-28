@@ -30,7 +30,7 @@ class EventRepository extends ServiceEntityRepository
      * @throws \Exception
      * @return Event[] returns an array of Event objects
      */
-    public function searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded) {
+    public function searchEvent($name, $dateStart, $dateEnd, $user, $eventEnded) {
         $name = explode(' ', $name);
         $dateNow = new \DateTime('now');
 
@@ -49,8 +49,8 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('date_end_of_registration', $dateEnd);
         }
 
-        if (!is_null($owner)) {
-            $req->andWhere('e.owner = :owner')->setParameter('owner', $owner);
+        if (!is_null($user)) {
+            $req->andWhere('e.user_id = :user')->setParameter('user', $user);
         }
 
         if (!is_null($eventEnded)) {
@@ -58,6 +58,14 @@ class EventRepository extends ServiceEntityRepository
         }
 
         return $req->getQuery()->getResult();
+    }
+
+    public function getSubscribers() {
+        dump($this->createQueryBuilder('e')
+            ->addSelect('user')
+            ->leftJoin('e.subscribers_users', 'user')
+            ->getQuery()
+            ->getResult());
     }
 
     // /**

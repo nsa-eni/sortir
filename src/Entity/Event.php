@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,9 +66,10 @@ class Event
     private $site;
 
     /**
+     *
      * @ORM\ManyToMany(targetEntity="App\Entity\User",  inversedBy="events", cascade={"persist", "remove"})
      */
-    private $users;
+    private $subscribers_users;
 
     /**
      * @var User
@@ -76,9 +78,18 @@ class Event
     private $user;
 
     /**
+     * Event constructor.
+     * @param $subscribers_users
+     */
+    public function __construct()
+    {
+        $this->subscribers_users = new ArrayCollection();
+    }
+
+    /**
      * @return User
      */
-    public function getUser(): User
+    public function getUser()
     {
         return $this->user;
     }
@@ -94,19 +105,21 @@ class Event
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getSubscribersUsers()
     {
-        return $this->users;
+        return $this->subscribers_users;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $subscribers_users
      */
-    public function setUsers($users): void
+    public function addSubscribersUsers(User $user): void
     {
-        $this->users = $users;
+        if (!$this->subscribers_users->contains($user)) {
+            $this->subscribers_users->add($user);
+            $user->addEvents($this);
+        }
     }
-
     /**
      * @return mixed
      */

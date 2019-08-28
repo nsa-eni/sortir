@@ -34,7 +34,7 @@ class SiteRepository extends ServiceEntityRepository
      * @param $site
      * @return mixed
      */
-    public function eventsFromSite($name, $site, $dateStart, $dateEnd, $owner, $eventEnded) {
+    public function eventsFromSite($name, $site, $dateStart, $dateEnd, $user, $eventEnded) {
         $name = explode(' ', $name);
         $dateNow = new \DateTime('now');
         $req = $this->createQueryBuilder('s');
@@ -55,8 +55,8 @@ class SiteRepository extends ServiceEntityRepository
                      ->setParameter('date_end_of_registration', $dateEnd);
              }
 
-              if (!is_null($owner)) {
-                  $req->andWhere('event.owner = :owner')->setParameter('owner', $owner);
+              if (!is_null($user)) {
+                  $req->andWhere('event.user_id = :user')->setParameter('user', $user);
               }
 
                 if (!is_null($eventEnded)) {

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -76,7 +77,7 @@ class User implements UserInterface
 
     /**
      * @var Event
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="users", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="subscribed_users", cascade={"persist", "remove"})
      */
     private $events;
 
@@ -85,6 +86,15 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="user", cascade={"persist", "remove"})
      */
     private $createdEvents;
+
+    /**
+     * User constructor.
+     * @param Event $events
+     */
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
 
     /**
      * @return Event
@@ -97,9 +107,12 @@ class User implements UserInterface
     /**
      * @param Event $events
      */
-    public function setEvents(Event $events): void
+    public function addEvents(Event $event): void
     {
-        $this->events = $events;
+        if ($this->events->contains($event)){
+            $this->events->add($event);
+            $event->addSubscribersUsers($this);
+        }
     }
 
     /**

@@ -21,7 +21,7 @@ class HomeType extends AbstractType
                 ['label' => 'Entre', 'widget' => 'single_text', 'required' => false])
             ->add('date_end_of_registration', DateTimeType::class
                 , ['label' => 'et', 'widget' => 'single_text', 'required' => false])
-            //->add('owner', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur', 'required' => false])
+            ->add('user', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur', 'required' => false])
             //->add('subscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je suis inscrit/e', 'required' => false])
             //->add('notSubscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je ne suis pas inscrit/e', 'required' => false])
             ->add('eventEnded', CheckboxType::class, ['label' => 'Sorties passées', 'required' => false])

@@ -47,11 +47,11 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 mt-4">
-                        {#<div>
-                            {{ form_widget(searchForm.owner,{ 'attr': {'class': 'form-group', 'style':''}}) }}
-                            {{ form_label(searchForm.owner) }}
-                        </div>
                         <div>
+                            {{ form_widget(searchForm.user,{ 'attr': {'class': 'form-group', 'style':''}}) }}
+                            {{ form_label(searchForm.user) }}
+                        </div>
+                        {#<div>
                             {{ form_widget(searchForm.subscribed, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.subscribed) }}
                         </div>
@@ -100,8 +100,8 @@
                         {#<td>{{ e.number }}/{{ e.maxNumberPlaces }}</td>#}
                         <td>{{ e.state.name }}</td>
                         {#<td>{{ e.subscribed }}</td>#}
-                        {#<td>{{ e.owner }}</td>
-                        <td>
+                        <td>{{ e.user }}</td>
+                        {#<td>
                             {% if e.owner != user and e.state != "En création" %}
                                 <a href="{{ path('description') }}">Afficher</a>
                             {% else %}
