@@ -6,63 +6,68 @@
     <br>
     <h1 class="text-center">Gérer les villes</h1>
     <br>
-    <h4>Filtrer les villes</h4>
-    <br>
-    <p> </p>
-    <form role="search" class="form-inline my-2 my-lg-2" method="get" action="{{ path('city_index') }}">
-        <label>Le nom contient : &nbsp</label>
-        <input class="form-control mr-sm-2" type="search" placeholder="Recherche" name="search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Rechercher</button>
-    </form>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Ville</th>
-            <th scope="col">Code Postal</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for City in tabCity %}
-            <tr>
-                <td>{{ City.name }}</td>
-                <td>{{ City.zipCode }}</td>
-                <td>
-                    <a href="{{ path('city_edit', {'id': City.id}) }}">Modifier</a> -
-                    <form method="post" action="{{ path('city_delete', {'id': City.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette ville ?');">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ City.id) }}">
-                        <button class="btn">Supprimer</button>
-                    </form>
-                </td>
+    <div class="offset-2">
+        <h4>Filtrer les villes</h4>
+        <br>
+        <form role="search" class="form-inline my-2 my-lg-2" method="get" action="{{ path('city_index') }}">
+            <label>Le nom contient : &nbsp</label>
+            <input class="form-control mr-sm-2" type="search" placeholder="Recherche" name="search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Rechercher</button>
+        </form>
+        <div class="container">
+        <table class="table">
+            <thead>
+            <tr class="row">
+                <th class="col-md-4 text-cente" scope="col">Ville</th>
+                <th class="col-md-2 text-cente" scope="col">Code Postal</th>
+                <th colspan="2" class="col-md-4 text-center" scope="col">Actions</th>
             </tr>
+            </thead>
+            <tbody>
+                {% for City in tabCity %}
+                    <tr class="row">
+                        <td class="col-md-4">{{ City.name }}</td>
+                        <td class="col-md-2">{{ City.zipCode }}</td>
+                        <td class="col-md-3 text-cente">
+                            <a href="{{ path('city_edit', {'id': City.id}) }}"><button class="btn">Modifier</button></a> -
+                        </td>
+                        <td class=col-md-3">
+                            <form method="post" action="{{ path('city_delete', {'id': City.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette ville ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ City.id) }}">
+                                <a href="{{ path('city_delete', {'id': City.id}) }}"> <button class="btn">Supprimer</button></a>
+                            </form>
+                        </td>
+                    </tr>
 
-        {% else %}
-            <tr>
-                <td colspan="4">Désolé, il n'y a pas de résultat !</td>
-            </tr>
-        {% endfor %}
-        <tr>
-            {{ form_start(formCity) }}
-            <td>
-                <div class="form-group">
-                    {{ form_widget(formCity.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
-                    {{ form_errors(formCity.name) }}
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    {{ form_widget(formCity.zipCode,{'attr': {'class': 'form-control','placeholder':"Nouveau code"}}) }}
-                    {{ form_errors(formCity.zipCode) }}
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    {{ form_widget(formCity.submit,{'attr': {'class': 'form-control'}}) }}
-                </div>
-            </td>
-            {{ form_end(formCity) }}
-        </tr>
-        </tbody>
-    </table>
+                {% else %}
+                    <tr>
+                        <td colspan="4">Désolé, il n'y a pas de résultat !</td>
+                    </tr>
+                {% endfor %}
+                <tr class="row">
+                    {{ form_start(formCity) }}
+                        <td class="col-md-4">
+                            <div class="form-group">
+                                {{ form_widget(formCity.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
+                                {{ form_errors(formCity.name) }}
+                            </div>
+                        </td>
+                        <td class="col-md-2">
+                            <div class="form-group">
+                                {{ form_widget(formCity.zipCode,{'attr': {'class': 'form-control','placeholder':"Nouveau code"}}) }}
+                                {{ form_errors(formCity.zipCode) }}
+                            </div>
+                        </td>
+                        <td class="col-md-3">
+                            <div class="form-group text-center">
+                            {{ form_widget(formCity.submit,{'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </td>
+                        {{ form_end(formCity) }}
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
 {% endblock %}

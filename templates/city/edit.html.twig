@@ -3,10 +3,23 @@
 {% block title %}Edit City{% endblock %}
 
 {% block body %}
-    <h1>Edit City</h1>
+    <br>
+    <h1 class="text-center">Gérer les villes</h1>
+    <br>
+    <div class="offset-1">
+    {{ form_start(form) }}
+    {{ form_label(form.name) }}
+    <br>
+    {{ form_widget(form.name) }}
+    {{ form_errors(form.name) }}
+    <br>
+    {{ form_label(form.zipCode) }}
+    <br>
+    {{ form_widget(form.zipCode) }}
+    {{ form_errors(form.zipCode) }}
+    {{ form_end(form) }}
 
-    {{ include('city/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('city_index') }}">back to list</a>
+    <a href="{{ path('city_index') }}">Retour à la liste</a>
+    </div>
 
 {% endblock %}
