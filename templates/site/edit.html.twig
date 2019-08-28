@@ -1,12 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Site{% endblock %}
+{% block title %}Gestion Sites{% endblock %}
 
 {% block body %}
-    <h1>Edit Site</h1>
-
-    {{ include('site/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('site_index') }}">back to list</a>
+    <br>
+    <h1 class="text-center">Modification d'un site</h1>
+    <br>
+    <div class="offset-1">
+        <div class="form-group col-md-2">
+            {{ form_start(form) }}
+            {{ form_label(form.name) }}
+            <br>
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name) }}
+        </div>
+        <br>
+        <div class="form-group col-md-2">
+            {{ form_widget(form.submit,{'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_end(form) }}
+        <br>
+        <a href="{{ path('site_index') }}">Retour à la liste des sites</a>
+    </div>
 
 {% endblock %}
+
