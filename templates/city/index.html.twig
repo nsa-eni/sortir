@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}City index{% endblock %}
+{% block title %}Villes{% endblock %}
 
 {% block body %}
     <br>
@@ -47,11 +47,13 @@
             <td>
                 <div class="form-group">
                     {{ form_widget(formCity.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
+                    {{ form_errors(formCity.name) }}
                 </div>
             </td>
             <td>
                 <div class="form-group">
                     {{ form_widget(formCity.zipCode,{'attr': {'class': 'form-control','placeholder':"Nouveau code"}}) }}
+                    {{ form_errors(formCity.zipCode) }}
                 </div>
             </td>
             <td>

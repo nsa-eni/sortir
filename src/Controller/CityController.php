@@ -28,6 +28,7 @@ class CityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $city->setName(strtoupper($city->getName()));
+            $this->addFlash("success", "La nouvelle ville a bien été enregistrée !");
             $entityManager->persist($city);
             $entityManager->flush();
 
@@ -54,6 +55,7 @@ class CityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash("success", "La ville a bien été modifiée !");
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('city_index');
@@ -71,6 +73,7 @@ class CityController extends AbstractController
     public function delete(EntityManagerInterface $entityManager,Request $request, City $city): Response
     {
         if ($this->isCsrfTokenValid('delete'.$city->getId(), $request->request->get('_token'))) {
+            $this->addFlash("success", "La ville a bien été effacée !");
             $entityManager->remove($city);
             $entityManager->flush();
         }

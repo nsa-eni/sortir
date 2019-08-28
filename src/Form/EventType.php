@@ -24,7 +24,8 @@ class EventType extends AbstractType
             ])
             ->add('date_start', DateTimeType::class, [
                 'widget' => 'single_text',
-                'label' => 'Date et heure de la sortie'
+                'label' => 'Date et heure de la sortie',
+                'data' => new \DateTime('now')
             ])
             ->add('dateEndOfRegistration', DateTimeType::class, [
                 'widget' => 'single_text',

@@ -68,6 +68,13 @@ class User implements UserInterface
      */
     private $imageFilename;
 
+    /**
+     * @var Site
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="users", cascade={"persist", "remove"})
+     */
+    private $site;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -233,4 +240,21 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Site
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param Site $site
+     */
+    public function setSite(Site $site): void
+    {
+        $this->site = $site;
+    }
+
 }

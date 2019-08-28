@@ -21,7 +21,6 @@ class Site
 
     /**
      * @ORM\Column(type="string", length=30)
-     * @Assert\NotBlank(message="Le champ Nom ne peut pas être vide !")
      */
     private $name;
 
@@ -31,6 +30,10 @@ class Site
      */
     private $events;
 
+    /**
+     * @var User[]
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="site")
+     */
     private $users;
 
     public function __construct()
@@ -72,15 +75,15 @@ class Site
     }
 
     /**
-     * @return mixed
+     * @return User[]
      */
-    public function getUsers()
+    public function getUsers(): array
     {
         return $this->users;
     }
 
     /**
-     * @param mixed $users
+     * @param User[] $users
      */
     public function setUsers($users): void
     {

@@ -45,6 +45,7 @@
             <td>
                 <div class="form-group">
                     {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
+                    {{ form_errors(formSite.name) }}
                 </div>
             </td>
             <td>
