@@ -27,7 +27,7 @@ class CityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $city->setName(strtoupper($city->getName()));
+            $city->setName(mb_strtoupper($city->getName()));
             $this->addFlash("success", "La nouvelle ville a bien été enregistrée !");
             $entityManager->persist($city);
             $entityManager->flush();
@@ -55,7 +55,7 @@ class CityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $city->setName(strtoupper($city->getName()));
+            $city->setName(mb_strtoupper($city->getName()));
             $this->addFlash("success", "La ville a bien été modifiée !");
             $this->getDoctrine()->getManager()->flush();
 
