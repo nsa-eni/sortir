@@ -38,6 +38,10 @@ class EventController extends AbstractController
                     return $this->redirectToRoute("home");
                 }
                 $event->setState($state);
+
+
+                dump($request->request);
+                die();
                 $entityManager->persist($event);
                 $entityManager->flush();
             }
