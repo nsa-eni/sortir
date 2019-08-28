@@ -30,7 +30,7 @@ class EventRepository extends ServiceEntityRepository
      * @throws \Exception
      * @return Event[] returns an array of Event objects
      */
-    public function searchEvent($name, $city, $dateStart, $dateEnd, $owner, $eventEnded) {
+    public function searchEvent($name, $site, $dateStart, $dateEnd, $owner, $eventEnded) {
         $name = explode(' ', $name);
         $req = $this->createQueryBuilder('e');
         $dateNow = new \DateTime('now');
@@ -41,8 +41,8 @@ class EventRepository extends ServiceEntityRepository
             }
         }
 
-        if (!is_null($city)) {
-            $req->andWhere('e.city like :city')->setParameter('city', $city);
+        if (!is_null($site)) {
+            $req->andWhere('e.site like :site')->setParameter('site', $site);
         }
 
         if (!is_null($dateStart) && !is_null($dateEnd)) {

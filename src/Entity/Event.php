@@ -211,7 +211,7 @@ class Event
     /**
      * @return Site
      */
-    public function getSite(): Site
+    public function getSite()
     {
         return $this->site;
     }

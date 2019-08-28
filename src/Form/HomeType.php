@@ -15,23 +15,23 @@ class HomeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('city', TextType::class, ['label' => 'Site :'])
-            ->add('search', TextType::class, ['label' => 'Le nom de la sortie contient :'])
+            ->add('site', TextType::class, ['label' => 'Site :', 'required' => false])
+            ->add('name', TextType::class, ['label' => 'Le nom de la sortie contient :', 'required' => false])
             ->add('date_start', DateTimeType::class,
-                ['label' => 'Entre', 'widget' => 'single_text'])
-            ->add('date_end', DateTimeType::class
-                , ['label' => 'et', 'widget' => 'single_text'])
-            ->add('owner', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur'])
-            ->add('subscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je suis inscrit/e'])
-            ->add('notSubscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je ne suis pas inscrit/e'])
-            ->add('eventEnded', CheckboxType::class, ['label' => 'Sorties passées'])
+                ['label' => 'Entre', 'widget' => 'single_text', 'required' => false])
+            ->add('date_end_of_registration', DateTimeType::class
+                , ['label' => 'et', 'widget' => 'single_text', 'required' => false])
+            //->add('owner', CheckboxType::class, ['label' => 'Sorties dont je suis l\'organisateur', 'required' => false])
+            //->add('subscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je suis inscrit/e', 'required' => false])
+            //->add('notSubscribed', CheckboxType::class, ['label' => 'Sorties auxquelles je ne suis pas inscrit/e', 'required' => false])
+            ->add('eventEnded', CheckboxType::class, ['label' => 'Sorties passées', 'required' => false])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Event::class,
+
         ]);
     }
 }

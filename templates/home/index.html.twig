@@ -26,45 +26,50 @@
         <div class="form-group">
             <div>
                 <div class="row">
-                    <div class="offset-1 col-lg-5 col-md-5">
+                    <div class="offset-1 col-lg-3 col-md-3 ">
                         <div>
-                            {{ form_label(searchForm.city) }}
-                            {{ form_widget(searchForm.city, { 'attr': {'class': 'form-group col-lg-8 col-md-8', 'style':''}}) }}
+                            {{ form_label(searchForm.site) }}
+                            {{ form_widget(searchForm.site, { 'attr': {'class': 'form-group', 'style':''}}) }}
                         </div>
                         <div>
-                            {{ form_label(searchForm.search) }}
-                            {{ form_widget(searchForm.search, { 'attr': {'class': 'form-group col-lg-8 col-md-8', 'style':''}}) }}
+                            {{ form_label(searchForm.name) }}
+                            {{ form_widget(searchForm.name, { 'attr': {'class': 'form-group ', 'style':''}}) }}
                         </div>
                         <div class="row">
                             <div class="col-lg-5 col-md-5">
                                 {{ form_label(searchForm.date_start) }}
-                                {{ form_widget(searchForm.date_start, { 'attr': {'class': 'form-group col-lg-8 col-md-8', 'style':''}}) }}
+                                {{ form_widget(searchForm.date_start, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             </div>
                             <div class="col-lg-5 col-md-5">
-                                {{ form_label(searchForm.date_end) }}
-                                {{ form_widget(searchForm.date_end, { 'attr': {'class': 'form-group col-lg-8 col-md-8', 'style':''}}) }}
+                                {{ form_label(searchForm.date_end_of_registration) }}
+                                {{ form_widget(searchForm.date_end_of_registration, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-5 col-md-5">
-                        <div>
-                            {{ form_widget(searchForm.owner,{ 'attr': {'class': 'form-check-input', 'style':''}}) }}
+                    <div class="col-lg-4 col-md-4 mt-4">
+                        {#<div>
+                            {{ form_widget(searchForm.owner,{ 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.owner) }}
                         </div>
                         <div>
-                            {{ form_widget(searchForm.subscribed, { 'attr': {'class': 'form-check-input', 'style':''}}) }}
+                            {{ form_widget(searchForm.subscribed, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.subscribed) }}
                         </div>
                         <div>
-                            {{ form_widget(searchForm.notSubscribed, { 'attr': {'class': 'form-check-input', 'style':''}}) }}
+                            {{ form_widget(searchForm.notSubscribed, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.notSubscribed) }}
-                        </div>
-                        <div>
-                            {{ form_widget(searchForm.eventEnded, { 'attr': {'class': 'form-check-input', 'style':''}}) }}
+                        </div>#}
+                        <div class="mb-3">
+                            {{ form_widget(searchForm.eventEnded, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.eventEnded) }}
                         </div>
+                        <br>
+                        <div class="mt-5">
+                            <button type="submit" class="has-search">Rechercher</button>
+                        </div>
                     </div>
-                    <button type="submit" class="has-search">Rechercher</button>
+
+
                 </div>
                 {{ form_end(searchForm) }}
             </div>

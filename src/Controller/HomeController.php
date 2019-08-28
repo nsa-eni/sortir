@@ -24,21 +24,21 @@ class HomeController extends AbstractController
             // dispatching data from the form
             $params = $searchForm->getData();
             dump($params);
-            $name = $params['search'];
-            $city = $params['site'];
+            $name = $params['name'];
+            $site = $params['site'];
             $dateStart = $params['date_start'];
-            $dateEnd = $params['date_end'];
-            $owner = $params['owner'];
-            $subscribed = $params['subscribed'];
-            $notSubscribed = $params['notSubscribed'];
+            $dateEnd = $params['date_end_of_registration'];
+            //$owner = $params['owner'];
+            //$subscribed = $params['subscribed'];
+            //$notSubscribed = $params['notSubscribed'];
             $eventEnded = $params['eventEnded'];
 
             $eventsFromSearch = $entityManager->getRepository(Event::class)
-                ->searchEvent($name, $city, $dateStart, $dateEnd, $owner, $eventEnded);
+                ->searchEvent($name, $site, $dateStart, $dateEnd, null, $eventEnded);
 
             $user = $this->getUser();
 
-            if (!is_null($subscribed)) {
+            /*if (!is_null($subscribed)) {
                 $entityManager->initializeObject($user->getEvents());
 
                 $events = $user->getEvents();
@@ -55,7 +55,7 @@ class HomeController extends AbstractController
                         array_push($eventsNotIn, $e);
                     }
                 }
-            }
+            }*/
 
             return $this->render('home/index.html.twig', [
                 'SearchForm' => $searchForm->createView(),
