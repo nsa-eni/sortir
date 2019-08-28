@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit City{% endblock %}
+{% block title %}Gestion Ville{% endblock %}
 
 {% block body %}
     <br>
-    <h1 class="text-center">Gérer les villes</h1>
+    <h1 class="text-center">Modification d'une ville</h1>
     <br>
     <div class="offset-1">
         <div class="form-group col-md-2">
@@ -13,13 +13,6 @@
             <br>
             {{ form_widget(form.name) }}
             {{ form_errors(form.name) }}
-        </div>
-        <br>
-        <div class="form-group col-md-2">
-            {{ form_label(form.zipCode) }}
-            <br>
-            {{ form_widget(form.zipCode) }}
-            {{ form_errors(form.zipCode) }}
         </div>
             <br>
         <div class="form-group col-md-2">
