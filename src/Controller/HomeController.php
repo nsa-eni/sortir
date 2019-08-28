@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\HomeType;
 use App\Entity\Event;
+use App\Entity\Site;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +27,7 @@ class HomeController extends AbstractController
             dump($params);
             $name = $params['name'];
             $site = $params['site'];
+
             $dateStart = $params['date_start'];
             $dateEnd = $params['date_end_of_registration'];
             //$owner = $params['owner'];
@@ -33,8 +35,14 @@ class HomeController extends AbstractController
             //$notSubscribed = $params['notSubscribed'];
             $eventEnded = $params['eventEnded'];
 
-            $eventsFromSearch = $entityManager->getRepository(Event::class)
-                ->searchEvent($name, $site, $dateStart, $dateEnd, null, $eventEnded);
+            if (is_null($site)) {
+                $eventsFromSearch = $entityManager->getRepository(Event::class)
+                    ->searchEvent($name, $dateStart, $dateEnd, null, $eventEnded);
+            } else {
+                $eventsFromSearch = $entityManager->getRepository(Site::class)
+                    ->eventsFromSite($name, $site, $dateStart, $dateEnd, null, $eventEnded);
+            }
+
 
             $user = $this->getUser();
 
@@ -58,7 +66,7 @@ class HomeController extends AbstractController
             }*/
 
             return $this->render('home/index.html.twig', [
-                'SearchForm' => $searchForm->createView(),
+                'searchForm' => $searchForm->createView(),
                 $eventsFromSearch
             ]);
         }
