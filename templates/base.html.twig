@@ -24,7 +24,15 @@
         </div>
     </div>
 </nav>
-{% block body %}{% endblock %}
+{% for label, messages in app.Flashes %}
+    {% for message in messages %}
+        <div class="alert-success"{{ label }}>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+{% block body %}
+{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
