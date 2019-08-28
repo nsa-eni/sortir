@@ -28,8 +28,10 @@ class SiteController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $site->setName(strtoupper($site->getName()));
+            $this->addFlash("success", "Le nouveau site a bien été enregistré !");
             $entityManager->persist($site);
             $entityManager->flush();
+
 
             return $this->redirectToRoute('site_index');
         }
@@ -54,6 +56,7 @@ class SiteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash("success", "Le site a bien été modifié !");
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('site_index');
@@ -71,6 +74,7 @@ class SiteController extends AbstractController
     public function delete(EntityManagerInterface $entityManager,Request $request, Site $site): Response
     {
         if ($this->isCsrfTokenValid('delete'.$site->getId(), $request->request->get('_token'))) {
+            $this->addFlash("success", "Le site a bien été effacé !");
             $entityManager->remove($site);
             $entityManager->flush();
         }
