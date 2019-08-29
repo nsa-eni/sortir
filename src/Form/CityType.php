@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\City;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,7 +31,7 @@ class CityType extends AbstractType
                     new Length([
                         "max"=>"30",
                         "maxMessage"=>"Le nom ne peut faire plus de 30 caractères !"
-                    ])
+                    ]),
                 ]])
             ->add('zipCode', TextType::class, [
                 "label"=>"Code postal",

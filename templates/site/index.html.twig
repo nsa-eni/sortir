@@ -4,6 +4,7 @@
 
 {% block body %}
     <br>
+    <div class="container">
     <h1 class="text-center">Gérer les Sites</h1>
     <br>
     <div class="offset-2">
@@ -14,7 +15,6 @@
         <input class="form-control mr-sm-2" type="search" placeholder="Recherche" name="search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" >Rechercher</button>
     </form>
-        <div class="container">
             <table class="table">
                 <thead>
                 <tr class="row">
@@ -49,7 +49,7 @@
                 <div class="form-group">
                     {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouveau site"}}) }}
                     <br>
-                        {{ form_errors(formSite.name) }}
+                    <font color="red">{{ form_errors(formSite.name) }}</font>
                 </div>
             </td>
             <td class="col-md-2">
@@ -62,4 +62,6 @@
         </tr>
         </tbody>
     </table>
+    </div>
+    </div>
 {% endblock %}
