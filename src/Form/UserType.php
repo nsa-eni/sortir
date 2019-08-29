@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -19,10 +20,19 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+       // /^\(0\)[0-9]*$
             ->add('pseudo',TextType::class)
             ->add('firstname',TextType::class)
             ->add('name',TextType::class)
-            ->add('phone',TelType::class)
+            ->add('phone',Teltype::class, [
+
+                "constraints" => [
+                    new NotBlank([
+                        "message"=>"Le champ Téléphone ne peut pas être vide !"
+                    ]),
+                    new Regex(["pattern"=>"/^[0-9]*$/",
+                        "message"=>"Le format est 00 00 00 00 00!"])
+                ]])
 
 
 
