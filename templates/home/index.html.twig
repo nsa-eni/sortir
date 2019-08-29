@@ -78,49 +78,81 @@
     <div class="container">
         {% if eventsFromSearch is defined %}
             <table class="table">
-                <thead>
-                <tr>
-                    <th>Nom de la sortie</th>
-                    <th>Date de la sortie</th>
-                    <th>Clôture</th>
-                    <th>inscrits/places</th>
-                    <th>Etat</th>
-                    <th>Inscrit</th>
-                    <th>Organisateur</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    {% for e in eventsFromSearch %}
-                        <td>{{ e.name }}</td>
-                        <td>{{ e.dateStart|date('Y-m-d') }}</td>
-                        <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
-                        <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
-                        <td>{{ e.state.name }}</td>
-                        <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
-                        <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
-                        <td>
-                            {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
-                                <a href="#">Afficher</a>
+            <thead>
+            <tr>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture</th>
+                <th>inscrits/places</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+        <tr>
+            {% if eventsFromSearch is null %}
+                {% for s in sites %}
+                {% for e in s.events %}
+                    <td>{{ e.name }}</td>
+                    <td>{{ e.dateStart|date('Y-m-d') }}</td>
+                    <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
+                    <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
+                    <td>{{ e.state.name }}</td>
+                    <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
+                    <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                    <td>
+                        {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
+                            <a href="#">Afficher</a>
+                        {% else %}
+                            <a href="#">Modifier</a>
+                        {% endif %}
+
+                        {% if e.state == "Créée" or e.state == "Ouverte" %}
+
+                            {% if e.subscribed %}
+                                <a href="#"> - Se désister</a>
                             {% else %}
-                                <a href="#">Modifier</a>
+                                <a href="#"> - S'inscrire</a>
                             {% endif %}
 
-                            {% if e.state == "Créée" or e.state == "Ouverte" %}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+                {% endfor %}
+            {% endif %}
+            {% if sites is null %}
+                {% for e in eventsFromSearch %}
+                    <td>{{ e.name }}</td>
+                    <td>{{ e.dateStart|date('Y-m-d') }}</td>
+                    <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
+                    <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
+                    <td>{{ e.state.name }}</td>
+                    <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
+                    <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                    <td>
+                        {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
+                            <a href="#">Afficher</a>
+                        {% else %}
+                            <a href="#">Modifier</a>
+                        {% endif %}
 
-                                {% if e.subscribed %}
-                                    <a href="#"> - Se désister</a>
-                                {% else %}
-                                    <a href="#"> - S'inscrire</a>
-                                {% endif %}
+                        {% if e.state == "Créée" or e.state == "Ouverte" %}
 
+                            {% if e.subscribed %}
+                                <a href="#"> - Se désister</a>
+                            {% else %}
+                                <a href="#"> - S'inscrire</a>
                             {% endif %}
-                        </td>
-                    {% endfor %}
+
+                        {% endif %}
+                    </td>
+                {% endfor %}
                 </tr>
                 </tbody>
-            </table>
+                </table>
+            {% endif %}
         {% endif %}
 
         <button>Créer une sortie</button>

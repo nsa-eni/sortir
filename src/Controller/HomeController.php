@@ -21,7 +21,7 @@ class HomeController extends AbstractController
         $searchForm = $this->createForm(HomeType::class);
         $searchForm->handleRequest($request);
 
-        if($searchForm->isSubmitted() && $searchForm->isValid()) {
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
             // dispatching data from the form
             $params = $searchForm->getData();
             $name = $params['name'];
@@ -31,58 +31,47 @@ class HomeController extends AbstractController
             $dateEnd = $params['date_end_of_registration'];
             $user = $params['user'];
             $me = $this->getUser();
-
-            $number = $entityManager->getRepository('App\Entity\Event')->getSubscribers();
+            $sites = null;
+            $eventsFromSearch = null;
 
             if ($me == $user) {
                 $owner = $me;
             }
-            //$subscribed = $params['subscribed'];
-            //$notSubscribed = $params['notSubscribed'];
             $eventEnded = $params['eventEnded'];
 
             if (is_null($site)) {
-
                 $eventsFromSearch = $entityManager->getRepository(Event::class)
                     ->searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded);
-
             } else {
-                $eventsFromSearch = $entityManager->getRepository(Site::class)
-                    ->eventsFromSite($name, $site, $dateStart, $dateEnd, $user, $eventEnded);
+                
+                $sites = $entityManager->getRepository(Site::class)
+                    ->eventsFromSite($name, $site, $dateStart, $dateEnd, $owner, $eventEnded);
             }
 
-            $user = $this->getUser();
-
-            /*if (!is_null($subscribed)) {
-                $entityManager->initializeObject($user->getEvents());
-
-                $events = $user->getEvents();
-            }
-
-            if (!is_null($notSubscribed)) {
-                $entityManager->initializeObject($user->getEvents());
-                $allEvents = $entityManager->getRepository('Event')
-                    ->findAll();
-                $events = $user->getEvents();
-                $eventsNotIn = [];
-                foreach($allEvents as $e) {
-                    if (!in_array($e, $events)) {
-                        array_push($eventsNotIn, $e);
-                    }
-                }
-            }*/
-
-            dump($eventsFromSearch);
+            dump($sites);
 
             return $this->render('home/index.html.twig', [
                 'searchForm' => $searchForm->createView(),
-                'eventsFromSearch' => $eventsFromSearch
+                'eventsFromSearch' => $eventsFromSearch,
+                'sites' => $sites
             ]);
         }
 
 
         return $this->render('home/index.html.twig', [
             'searchForm' => $searchForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("event/{id}", name="detail", methods={"GET"})
+     */
+    public function detail(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
+        dump($event);
+
+        return $this->render('event/detail.html.twig', [
+            'event' => $event
         ]);
     }
 }

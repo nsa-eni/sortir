@@ -64,7 +64,7 @@ class Site
     /**
      * @return Event[]
      */
-    public function getEvents(): array
+    public function getEvents()
     {
         return $this->events;
     }

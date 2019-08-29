@@ -45,11 +45,12 @@ class SiteRepository extends ServiceEntityRepository
     public function eventsFromSite($name, $site, $dateStart, $dateEnd, $user, $eventEnded) {
         $name = explode(' ', $name);
         $dateNow = new \DateTime('now');
+
         $req = $this->createQueryBuilder('s');
         $req->addSelect('event')
             ->leftJoin('s.events', 'event')
-            ->andWhere('s.name = :name')
-            ->setParameter('name', $site);
+            ->andWhere('s.name = :site')
+            ->setParameter('site', $site->getName());
 
             if (!is_null($name)) {
                 foreach($name as $n)
