@@ -51,24 +51,24 @@ class City
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName()
     {
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName($name)
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getZipCode(): ?string
+    public function getZipCode()
     {
         return $this->zipCode;
     }
 
-    public function setZipCode(string $zipCode): self
+    public function setZipCode($zipCode)
     {
         $this->zipCode = $zipCode;
 

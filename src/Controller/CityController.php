@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
 * Class CityController
  * @package App\Controller
-* @Route("/admin/city/")
+* @Route("/admin/city")
 */
 class CityController extends AbstractController
 {
     /**
-     * @Route("index", name="city_index", methods={"GET","POST"})
+     * @Route("/", name="city_index", methods={"GET","POST"})
      */
     public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -47,21 +47,22 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="city_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="city_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, City $city): Response
     {
-        $form = $this->createForm(CityType::class, $city);
-        $form->handleRequest($request);
 
+        $form = $this->createForm(CityType::class, $city);
+
+        $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $city->setName(mb_strtoupper($city->getName()));
             $this->addFlash("success", "La ville a bien été modifiée !");
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('city_index');
         }
-
         return $this->render('city/edit.html.twig', [
             'city' => $city,
             'form' => $form->createView(),

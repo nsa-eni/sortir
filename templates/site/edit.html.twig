@@ -12,13 +12,27 @@
             {{ form_label(form.name) }}
             <br>
             {{ form_widget(form.name) }}
-            {{ form_errors(form.name) }}
         </div>
         <br>
         <div class="form-group col-md-2">
             {{ form_widget(form.submit,{'attr': {'class': 'form-control'}}) }}
         </div>
         {{ form_end(form) }}
+        <br>
+        {% if not form.vars.valid %}
+            {# Loop through every form item #}
+            {% for child in form.children %}
+                {# Display the errors of the form item #}
+                {% if child.vars.errors is defined %}
+                    {% for error in child.vars.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error.message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
         <br>
         <a href="{{ path('site_index') }}">Retour à la liste des sites</a>
     </div>
