@@ -61,11 +61,11 @@ class EventRepository extends ServiceEntityRepository
     }
 
     public function getSubscribers() {
-        dump($this->createQueryBuilder('e')
+        return $this->createQueryBuilder('e')
             ->addSelect('user')
             ->leftJoin('e.subscribers_users', 'user')
             ->getQuery()
-            ->getResult());
+            ->getResult();
     }
 
     // /**

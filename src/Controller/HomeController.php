@@ -29,19 +29,27 @@ class HomeController extends AbstractController
 
             $dateStart = $params['date_start'];
             $dateEnd = $params['date_end_of_registration'];
-            //$owner = $params['owner'];
+            $user = $params['user'];
+            $me = $this->getUser();
+
+            $number = $entityManager->getRepository('App\Entity\Event')->getSubscribers();
+
+            if ($me == $user) {
+                $owner = $me;
+            }
             //$subscribed = $params['subscribed'];
             //$notSubscribed = $params['notSubscribed'];
             $eventEnded = $params['eventEnded'];
 
             if (is_null($site)) {
+
                 $eventsFromSearch = $entityManager->getRepository(Event::class)
-                    ->searchEvent($name, $dateStart, $dateEnd, null, $eventEnded);
+                    ->searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded);
+
             } else {
                 $eventsFromSearch = $entityManager->getRepository(Site::class)
-                    ->eventsFromSite($name, $site, $dateStart, $dateEnd, null, $eventEnded);
+                    ->eventsFromSite($name, $site, $dateStart, $dateEnd, $user, $eventEnded);
             }
-
 
             $user = $this->getUser();
 

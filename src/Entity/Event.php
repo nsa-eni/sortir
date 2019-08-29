@@ -66,7 +66,7 @@ class Event
     private $site;
 
     /**
-     *
+     * @var User[]
      * @ORM\ManyToMany(targetEntity="App\Entity\User",  inversedBy="events", cascade={"persist", "remove"})
      */
     private $subscribers_users;
@@ -79,7 +79,6 @@ class Event
 
     /**
      * Event constructor.
-     * @param $subscribers_users
      */
     public function __construct()
     {
@@ -103,12 +102,21 @@ class Event
     }
 
     /**
-     * @return mixed
+     * @return User[]
      */
     public function getSubscribersUsers()
     {
         return $this->subscribers_users;
     }
+
+    /**
+     * @param User[] $subscribers_users
+     */
+    public function setSubscribersUsers(array $subscribers_users): void
+    {
+        $this->subscribers_users = $subscribers_users;
+    }
+
 
     /**
      * @param mixed $subscribers_users

@@ -96,13 +96,12 @@
                         <td>{{ e.name }}</td>
                         <td>{{ e.dateStart|date('Y-m-d') }}</td>
                         <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
-                        <td></td>
-                        {#<td>{{ e.number }}/{{ e.maxNumberPlaces }}</td>#}
+                        <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
                         <td>{{ e.state.name }}</td>
-                        {#<td>{{ e.subscribed }}</td>#}
-                        <td>{{ e.user }}</td>
-                        {#<td>
-                            {% if e.owner != user and e.state != "En création" %}
+                        <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
+                        <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                        <td>
+                            {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
                                 <a href="{{ path('description') }}">Afficher</a>
                             {% else %}
                                 <a href="{{ path('modify') }}">Modifier</a>
@@ -117,7 +116,7 @@
                                 {% endif %}
 
                             {% endif %}
-                        </td>#}
+                        </td>
                     {% endfor %}
                 </tr>
                 </tbody>
