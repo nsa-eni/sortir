@@ -50,13 +50,15 @@
                         <td class="col-md-4">
                             <div class="form-group">
                                 {{ form_widget(formCity.name,{'attr': {'class': 'form-control','placeholder':"Nouvelle ville"}}) }}
+                                <br>
                                 {{ form_errors(formCity.name) }}
                             </div>
                         </td>
                         <td class="col-md-2">
                             <div class="form-group">
                                 {{ form_widget(formCity.zipCode,{'attr': {'class': 'form-control','placeholder':"Nouveau code"}}) }}
-                                {{ form_errors(formCity.zipCode) }}
+                                <br>
+                                    {{ form_errors(formCity.zipCode) }}
                             </div>
                         </td>
                         <td class="col-md-2">
