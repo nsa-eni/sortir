@@ -11,19 +11,26 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 class EventController extends AbstractController
 {
     /**
      * @Route("/event", name="event", methods={"GET", "POST"})
      */
-    public function index(EntityManagerInterface $entityManager, Request $request)
+    public function index(EntityManagerInterface $entityManager, Request $request, Security $security)
     {
+
         if ($request->isXmlHttpRequest()){
             return $this->getPostalCodeByCityId($request, $entityManager);
         }else{
+            $user = $security->getUser();
+
             $event = new Event();
+            $event->setUser($user);
+            $event->setSite($user->getSite());
             $form = $this->createForm(EventType::class, $event);
             $form->handleRequest($request);
 
@@ -39,9 +46,6 @@ class EventController extends AbstractController
                 }
                 $event->setState($state);
 
-
-                dump($request->request);
-                die();
                 $entityManager->persist($event);
                 $entityManager->flush();
             }
