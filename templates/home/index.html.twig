@@ -51,14 +51,14 @@
                             {{ form_widget(searchForm.user,{ 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.user) }}
                         </div>
-                        {#<div>
+                        <div>
                             {{ form_widget(searchForm.subscribed, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.subscribed) }}
                         </div>
                         <div>
                             {{ form_widget(searchForm.notSubscribed, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.notSubscribed) }}
-                        </div>#}
+                        </div>
                         <div class="mb-3">
                             {{ form_widget(searchForm.eventEnded, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.eventEnded) }}
@@ -93,47 +93,80 @@
             <tbody>
         <tr>
             {% if eventsFromSearch is null %}
+                {{ dump(app.session.get('user')) }}
                 {% for s in sites %}
-                {% for e in s.events %}
-                    <td>{{ e.name }}</td>
-                    <td>{{ e.dateStart|date('Y-m-d') }}</td>
-                    <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
-                    <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
-                    <td>{{ e.state.name }}</td>
-                    <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
-                    <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
-                    <td>
-                        {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
-                            <a href="#">Afficher</a>
-                        {% else %}
-                            <a href="#">Modifier</a>
-                        {% endif %}
+                    {% for e in s.events %}
+                        {% if subscribed is defined %}
+                            {% if e in subEvents %}
+                                <td>{{ e.name }}</td>
+                                <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
+                                <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
+                                <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
+                                <td>{{ e.state.name }}</td>
+                                <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
+                                <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                                <td>
+                                    {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
+                                        <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
+                                    {% else %}
+                                        <a href="#">Modifier</a>
+                                    {% endif %}
 
-                        {% if e.state == "Créée" or e.state == "Ouverte" %}
+                                    {% if e.state == "Créée" or e.state == "Ouverte" %}
 
-                            {% if e.subscribed %}
-                                <a href="#"> - Se désister</a>
-                            {% else %}
-                                <a href="#"> - S'inscrire</a>
+                                        {% if e.subscribed %}
+                                            <a href="#"> - Se désister</a>
+                                        {% else %}
+                                            <a href="#"> - S'inscrire</a>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </td>
                             {% endif %}
-
                         {% endif %}
-                    </td>
-                {% endfor %}
+                        {% if notSubscribed is defined %}
+                            {% if e not in subEvents %}
+                                <td>{{ e.name }}</td>
+                                <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
+                                <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
+                                <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
+                                <td>{{ e.state.name }}</td>
+                                <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
+                                <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                                <td>
+                                    {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
+                                        <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
+                                    {% else %}
+                                        <a href="#">Modifier</a>
+                                    {% endif %}
+
+                                    {% if e.state == "Créée" or e.state == "Ouverte" %}
+
+                                        {% if e.subscribed %}
+                                            <a href="#"> - Se désister</a>
+                                        {% else %}
+                                            <a href="#"> - S'inscrire</a>
+                                        {% endif %}
+
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
             {% endif %}
             {% if sites is null %}
                 {% for e in eventsFromSearch %}
                     <td>{{ e.name }}</td>
-                    <td>{{ e.dateStart|date('Y-m-d') }}</td>
-                    <td>{{ e.dateEndOfRegistration|date('Y-m-d') }}</td>
+                    <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
+                    <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
                     <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
                     <td>{{ e.state.name }}</td>
                     <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
                     <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
                     <td>
-                        {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
-                            <a href="#">Afficher</a>
+                        {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
+                            <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
                         {% else %}
                             <a href="#">Modifier</a>
                         {% endif %}

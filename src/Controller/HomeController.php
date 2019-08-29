@@ -33,10 +33,17 @@ class HomeController extends AbstractController
             $me = $this->getUser();
             $sites = null;
             $eventsFromSearch = null;
+            $subEvents = $me->getEvents();
+            $subscribed = $params['subscribed'];
+            $notSubscribed = $params['notSubscribed'];
 
+            dump($me);
             if ($me == $user) {
                 $owner = $me;
+            } else {
+                $owner = null;
             }
+
             $eventEnded = $params['eventEnded'];
 
             if (is_null($site)) {
@@ -48,12 +55,15 @@ class HomeController extends AbstractController
                     ->eventsFromSite($name, $site, $dateStart, $dateEnd, $owner, $eventEnded);
             }
 
-            dump($sites);
+            dump($eventsFromSearch);
 
             return $this->render('home/index.html.twig', [
                 'searchForm' => $searchForm->createView(),
                 'eventsFromSearch' => $eventsFromSearch,
-                'sites' => $sites
+                'sites' => $sites,
+                'subEvents' => $subEvents,
+                'subscribed' => $subscribed,
+                '$notSubscribed' => $notSubscribed
             ]);
         }
 

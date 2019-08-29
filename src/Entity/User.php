@@ -44,12 +44,12 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=10, nullable=true)
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $firstname;
 
@@ -264,7 +264,7 @@ class User implements UserInterface
     /**
      * @return Event
      */
-    public function getEvents(): Event
+    public function getEvents()
     {
         return $this->events;
     }
