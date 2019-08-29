@@ -13,12 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class SiteController
  * @package App\Controller
- * @Route("/admin/site/")
+ * @Route("/admin/site")
  */
 class SiteController extends AbstractController
 {
     /**
-     * @Route("index", name="site_index", methods={"GET","POST"})
+     * @Route("/", name="site_index", methods={"GET","POST"})
      */
     public function index(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -48,7 +48,7 @@ class SiteController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="site_edit", methods={"GET","POST"})
+     * @Route("/edit/{id}", name="site_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Site $site): Response
     {

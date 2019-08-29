@@ -6,6 +6,12 @@
     <h1>Modifier le profil</h1>
 
     {{ include('user/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+    {#<div class="form-group">
+        {{ form_label(form.imageFilename) }}
+        {{ form_widget(form.imageFilename) }}
+        {{ form_errors(form.imageFilename) }}
+        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-outline-primary btn-rounded'}}) }}
+    </div>#}
 
     <a href="{{ path('user_index') }}">Retour</a>
 

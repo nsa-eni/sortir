@@ -86,6 +86,29 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+          $imageFile = $form['imageFilename']->getData();
+
+                    // this condition is needed because the 'brochure' field is not required
+                    // so the PDF file must be processed only when a file is uploaded
+                    if ($imageFile) {
+                        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        // this is needed to safely include the file name as part of the URL
+                        $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+
+                        // Move the file to the directory where brochures are stored
+                        try {
+                            $imageFile->move(
+                                $this->getParameter('images_directory'),
+                                $newFilename
+                            );
+                        } catch (FileException $e) {
+                            // ... handle exception if something happens during file upload
+                        }
+
+                        // updates the 'brochureFilename' property to store the PDF file name
+                        // instead of its contents
+                        $user->setImageFilename($newFilename);
+                    }
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index');
@@ -103,6 +126,7 @@ class UserController extends AbstractController
     public function delete(Request $request, User $user): Response
     {
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+            $this->addFlash("success", "Le profil a bien été effacé !");
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();
