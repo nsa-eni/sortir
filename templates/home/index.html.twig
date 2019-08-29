@@ -102,17 +102,17 @@
                         <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
                         <td>
                             {% if e.user.id == app.session.get('user') and e.state.name != "En création" %}
-                                <a href="{{ path('description') }}">Afficher</a>
+                                <a href="#">Afficher</a>
                             {% else %}
-                                <a href="{{ path('modify') }}">Modifier</a>
+                                <a href="#">Modifier</a>
                             {% endif %}
 
                             {% if e.state == "Créée" or e.state == "Ouverte" %}
 
                                 {% if e.subscribed %}
-                                    <a href="{{ path('unsubscribe') }}"> - Se désister</a>
+                                    <a href="#"> - Se désister</a>
                                 {% else %}
-                                    <a href="{{ path('subscribe') }}"> - S'inscrire</a>
+                                    <a href="#"> - S'inscrire</a>
                                 {% endif %}
 
                             {% endif %}
