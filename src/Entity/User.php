@@ -9,8 +9,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @UniqueEntity(fields="email", message="le compte existe déja!")
- * @UniqueEntity(fields="pseudo", message="le pseudo existe déja!")
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"pseudo"}, message="There is already an account with this pseudo")
  */
 class User implements UserInterface
 {
@@ -27,9 +27,15 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
     private $roles = [];
+
+    /**
+     * @var boolean $admin
+     * @ORM\Column(type="boolean")
+     */
+    private $administrator = false;
 
     /**
      * @var string The hashed password
@@ -38,32 +44,27 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean",nullable=true)
      */
     private $actif;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    private $administrator;
-
-    /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, unique=true)
      */
     private $pseudo;
 
@@ -97,41 +98,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->events = new ArrayCollection();
-    }
-
-    /**
-     * @return Event
-     */
-    public function getEvents(): Event
-    {
-        return $this->events;
-    }
-
-    /**
-     * @param Event $events
-     */
-    public function addEvents(Event $event): void
-    {
-        if ($this->events->contains($event)){
-            $this->events->add($event);
-            $event->addSubscribersUsers($this);
-        }
-    }
-
-    /**
-     * @return Event
-     */
-    public function getCreatedEvents(): Event
-    {
-        return $this->createdEvents;
-    }
-
-    /**
-     * @param Event $createdEvents
-     */
-    public function setCreatedEvents(Event $createdEvents): void
-    {
-        $this->createdEvents = $createdEvents;
+        $this->createdEvents = new ArrayCollection();
     }
 
 
@@ -168,16 +135,17 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
+        if ($this->administrator)
+            $roles[] = 'ROLE_ADMIN';
         // guarantee every user at least has ROLE_USER
-        $roles = ['ROLE_USER', 'ROLE_ADMIN'];
+        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles)
     {
         $this->roles = $roles;
-
         return $this;
     }
 
@@ -213,92 +181,68 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
+    /**
+     * @return mixed
+     */
+    public function getPhone()
     {
         return $this->phone;
     }
 
-    public function setPhone(?string $phone): self
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone): void
     {
         $this->phone = $phone;
-
-        return $this;
     }
 
-    public function getActif(): ?bool
+    /**
+     * @return mixed
+     */
+    public function getActif()
     {
         return $this->actif;
     }
 
-    public function setActif(bool $actif): self
+    /**
+     * @param mixed $actif
+     */
+    public function setActif($actif): void
     {
         $this->actif = $actif;
-
-        return $this;
     }
 
-    public function getAdministrator(): ?bool
-    {
-        return $this->administrator;
-    }
-
-    public function setAdministrator(bool $administrator): self
-    {
-        $this->administrator = $administrator;
-
-        return $this;
-    }
-
-    public function getPseudo(): ?string
+    /**
+     * @return mixed
+     */
+    public function getPseudo()
     {
         return $this->pseudo;
     }
 
-    public function setPseudo(string $pseudo): self
+    /**
+     * @param mixed $pseudo
+     */
+    public function setPseudo($pseudo): void
     {
         $this->pseudo = $pseudo;
-
-        return $this;
     }
+
     /**
      * @return mixed
      */
-    public function getImageFilename(): ?string
+    public function getImageFilename()
     {
         return $this->imageFilename;
     }
+
     /**
      * @param mixed $imageFilename
      */
-    public function setImageFilename(?string $imageFilename): self
+    public function setImageFilename($imageFilename): void
     {
         $this->imageFilename = $imageFilename;
-
-        return $this;
     }
 
     /**
@@ -315,6 +259,97 @@ class User implements UserInterface
     public function setSite(Site $site): void
     {
         $this->site = $site;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getEvents(): Event
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param Event $events
+     */
+    public function setEvents(Event $events): void
+    {
+        $this->events = $events;
+    }
+
+    /**
+     * @return Event
+     */
+    public function getCreatedEvents(): Event
+    {
+        return $this->createdEvents;
+    }
+
+    /**
+     * @param Event $createdEvents
+     */
+    public function setCreatedEvents(Event $createdEvents): void
+    {
+        $this->createdEvents = $createdEvents;
+    }
+
+    /**
+     * @param Event $events
+     */
+    public function addEvents(Event $event): void
+    {
+        if ($this->events->contains($event)){
+            $this->events->add($event);
+            $event->addSubscribersUsers($this);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * @param mixed $firstname
+     */
+    public function setFirstname($firstname): void
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdministrator(): bool
+    {
+        return $this->administrator;
+    }
+
+    /**
+     * @param bool $administrator
+     */
+    public function setAdministrator(bool $administrator): void
+    {
+        $this->administrator = $administrator;
     }
 
 }
