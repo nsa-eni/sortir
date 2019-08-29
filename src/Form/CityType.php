@@ -9,8 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Unique;
 
 class CityType extends AbstractType
 {
@@ -24,6 +26,10 @@ class CityType extends AbstractType
                 "constraints" => [
                     new NotBlank([
                         "message"=>"Le champ Ville ne peut pas être vide !"
+                    ]),
+                    new Length([
+                        "max"=>"30",
+                        "maxMessage"=>"Le nom ne peut faire plus de 30 caractères !"
                     ])
                 ]])
             ->add('zipCode', TextType::class, [
