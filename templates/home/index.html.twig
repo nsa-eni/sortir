@@ -114,7 +114,7 @@
                             {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
                                 {% if app.user.id == e.user.id %}
                                     {% if e.state.name == "Ouverte" %}
-                                        - <a href={{ path('cancelEvent', {id: e.id}) }}>Annuler</a>
+                                        - <a href={{ path('cancel', {id: e.id}) }}>Annuler</a>
                                     {% endif %}
                                     {% if e.state.name == "Créée" %}
                                         - <a href={{ path('publish', {id: e.id}) }}>Publier</a>

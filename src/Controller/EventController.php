@@ -103,10 +103,28 @@ class EventController extends AbstractController
      * @param Event $event
      * @param Request $request
      * @param EntityManagerInterface $entityManager
-     * @Route("/cancel/{id}", name="cancelEvent", methods={"GET"})
+     * @Route("/cancel/{id}", name="cancel", methods={"GET"})
      */
     public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
         return $this->render('event/cancel.html.twig', ['event' => $event]);
+    }
+
+    /**
+     * @param Event $event
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Route("/cancelEvent/{id}", name="cancelEvent", methods={"GET"})
+     */
+    public function cancelEvent(Event $event, Request $request, EntityManagerInterface $entityManager) {
+        $user = $this->getUser();
+        $owner = $event->getUser();
+
+        if ($user.id == $owner.id or $user.administrator) {
+            $entityManager->remove($event);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('home');
     }
 
     /**
