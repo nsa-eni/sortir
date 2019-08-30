@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -62,21 +63,21 @@ class RegistrationFormType extends AbstractType
                     new Regex(["pattern" => "/^[0-9]*$/",
                         "message" => "Le format est 00 00 00 00 00!"])
                 ]])
-            ->add('plainPassword', PasswordType::class, [
+            ->add('plainPassword', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
-                'mapped' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
+                'type' => PasswordType::class,
+                'invalid_message' =>'Les 2 champs de mot de passe doivent être identiques !',
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation mot de passe'],
+                "trim"=>true,
+                'constraints'=>
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        //'min' => 6,
+                        //'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères !',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
-                ],
             ])
             ->add('imageFilename', FileType::class, [
                 'label' => 'Ma photo',

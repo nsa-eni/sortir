@@ -3,12 +3,15 @@
 {% block title %}Edit User{% endblock %}
 
 {% block body %}
-    <h1>Modifier le profil</h1>
+    <br>
+    <h1 class="text-center">Mon profil</h1>
+    <br>
     <div class="container">
         <div class="row">
             <div class="col-md-3">
             </div>
             <div class="col-md-6">
+                {{ form_start(form) }}
                 <div class="form-group">
                     {{ form_row(form.pseudo, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
@@ -26,22 +29,36 @@
                     {{ form_row(form.phone, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.plainPassword, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    <div class="form-group">
+
+                        {{ form_row(form.first, {'attr': {'class': 'form-control', 'style':''}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.second, {'attr': {'class': 'form-control', 'style':''}}) }}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
                     {{ form_label(form.imageFilename) }}
                     <br>
                     {{ form_widget(form.imageFilename) }}
+
                 </div>
-                <div style="text-align: center">
-                    <button class="btn btn-primary btn-lg btn-block text-center">Enregistrer les modifications</button>
+                {{ form_end(form) }}
+                <br>
+                <div class="row"style="text-align: center">
+                    <div class="col-md-6">
+                    <a href="{{ path('home') }}<button class=" btn btn-primary btn-lg btn-block text-center">Enregistrer
+                    les modifications</button></a>
+                    </div>
+                    <div class="col-md-6">
+                    <a href="{{ path('home') }}">Annuler</a></button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    {##}
-
-    <a href="{{ path('user_index') }}">Retour</a>
-
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

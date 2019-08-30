@@ -38,7 +38,7 @@ class CityType extends AbstractType
                     new NotBlank([
                         "message"=>"Le champ Code postal ne peut pas être vide !"
                     ]),
-                    new Regex(["pattern"=>"/[0-9]{5}/",
+                    new Regex(["pattern"=>"/^(([0-8][0-9])|(9[0-5]))[0-9]{3}$/",
                         "message"=>"Code postal au format 01000 !"])
                 ]])
             ->add("submit", submitType::class,[
