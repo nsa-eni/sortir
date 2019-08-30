@@ -78,116 +78,50 @@
     <div class="container">
         {% if eventsFromSearch is defined %}
             <table class="table">
-            <thead>
-            <tr>
-                <th>Nom de la sortie</th>
-                <th>Date de la sortie</th>
-                <th>Clôture</th>
-                <th>inscrits/places</th>
-                <th>Etat</th>
-                <th>Inscrit</th>
-                <th>Organisateur</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-        <tr>
-            {% if eventsFromSearch is null %}
-                {{ dump(app.session.get('user')) }}
-                {% for s in sites %}
-                    {% for e in s.events %}
-                        {% if subscribed is defined %}
-                            {% if e in subEvents %}
-                                <td>{{ e.name }}</td>
-                                <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
-                                <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
-                                <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
-                                <td>{{ e.state.name }}</td>
-                                <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
-                                <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
-                                <td>
-                                    {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
-                                        <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
-                                    {% else %}
-                                        <a href="#">Modifier</a>
-                                    {% endif %}
-
-                                    {% if e.state == "Créée" or e.state == "Ouverte" %}
-
-                                        {% if e.subscribed %}
-                                            <a href="#"> - Se désister</a>
-                                        {% else %}
-                                            <a href="#"> - S'inscrire</a>
-                                        {% endif %}
-
-                                    {% endif %}
-                                </td>
-                            {% endif %}
-                        {% endif %}
-                        {% if notSubscribed is defined %}
-                            {% if e not in subEvents %}
-                                <td>{{ e.name }}</td>
-                                <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
-                                <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
-                                <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
-                                <td>{{ e.state.name }}</td>
-                                <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
-                                <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
-                                <td>
-                                    {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
-                                        <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
-                                    {% else %}
-                                        <a href="#">Modifier</a>
-                                    {% endif %}
-
-                                    {% if e.state == "Créée" or e.state == "Ouverte" %}
-
-                                        {% if e.subscribed %}
-                                            <a href="#"> - Se désister</a>
-                                        {% else %}
-                                            <a href="#"> - S'inscrire</a>
-                                        {% endif %}
-
-                                    {% endif %}
-                                </td>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            {% endif %}
-            {% if sites is null %}
-                {% for e in eventsFromSearch %}
-                    <td>{{ e.name }}</td>
-                    <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
-                    <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
-                    <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
-                    <td>{{ e.state.name }}</td>
-                    <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
-                    <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
-                    <td>
-                        {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
-                            <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
-                        {% else %}
-                            <a href="#">Modifier</a>
-                        {% endif %}
-
-                        {% if e.state == "Créée" or e.state == "Ouverte" %}
-
-                            {% if e.subscribed %}
-                                <a href="#"> - Se désister</a>
+                <thead>
+                <tr>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture</th>
+                    <th>inscrits/places</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    {% for e in eventsFromSearch %}
+                        <td>{{ e.name }}</td>
+                        <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
+                        <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
+                        <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
+                        <td>{{ e.state.name }}</td>
+                        <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
+                        <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                        <td>
+                            {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
+                                <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
                             {% else %}
-                                <a href="#"> - S'inscrire</a>
+                                <a href="#">Modifier</a>
                             {% endif %}
 
-                        {% endif %}
-                    </td>
-                {% endfor %}
+                            {% if e.state == "Créée" or e.state == "Ouverte" %}
+
+                                {% if e.subscribed %}
+                                    <a href="#"> - Se désister</a>
+                                {% else %}
+                                    <a href="#"> - S'inscrire</a>
+                                {% endif %}
+
+                            {% endif %}
+                        </td>
+                    {% endfor %}
                 </tr>
                 </tbody>
-                </table>
-            {% endif %}
+            </table>
         {% endif %}
-
         <button>Créer une sortie</button>
     </div>
 

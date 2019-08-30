@@ -27,20 +27,41 @@ class EventRepository extends ServiceEntityRepository
      * @param $owner
      * @param $eventEnded
      * @return mixed
-     * @throws \Exception
      * @return Event[] returns an array of Event objects
+     * @throws \Exception
      */
-    public function searchEvent($name, $dateStart, $dateEnd, $user, $eventEnded) {
+    public function searchEvent($name, $dateStart, $dateEnd, $user, $eventEnded, $site, $myId, $subscribed, $notsubscribed)
+    {
         $name = explode(' ', $name);
         $dateNow = new \DateTime('now');
-
         $req = $this->createQueryBuilder('e')->addSelect('state')
             ->leftJoin('e.state', 'state');
 
+        if (!is_null($site)) {
+            $req->leftJoin('e.site', 'site');
+        }
+
         if (!is_null($name)) {
-            foreach($name as $n)
+            foreach ($name as $n)
                 $req->andWhere('e.name like :n')
-                    ->setParameter('n', '%'.$n.'%' );
+                    ->setParameter('n', '%' . $n . '%');
+        }
+
+        if ($subscribed and $notsubscribed) {
+
+        } else {
+            if ($subscribed) {
+                $req->innerJoin('e.subscribers_users', 'event_user')
+                    ->andWhere(':me in (:subs)')
+                    ->setParameter('subs', 'e.subscribers_users')
+                    ->setParameter('me', $myId);
+            }
+
+            if ($notsubscribed) {
+                $req->andWhere(':me not in (:subs)')
+                    ->setParameter('subs', 'e.subscribers_users')
+                    ->setParameter('me', $myId);
+            }
         }
 
         if (!is_null($dateStart) && !is_null($dateEnd)) {
@@ -49,8 +70,8 @@ class EventRepository extends ServiceEntityRepository
                 ->setParameter('date_end_of_registration', $dateEnd);
         }
 
-        if (!is_null($user)) {
-            $req->andWhere('e.user_id = :user')->setParameter('user', $user);
+        if ($user) {
+            $req->andWhere('e.user = :me')->setParameter('me', $myId);
         }
 
         if (!is_null($eventEnded)) {
@@ -60,7 +81,8 @@ class EventRepository extends ServiceEntityRepository
         return $req->getQuery()->getResult();
     }
 
-    public function getSubscribers() {
+    public function getSubscribers()
+    {
         return $this->createQueryBuilder('e')
             ->addSelect('user')
             ->leftJoin('e.subscribers_users', 'user')

@@ -26,47 +26,35 @@ class HomeController extends AbstractController
             $params = $searchForm->getData();
             $name = $params['name'];
             $site = $params['site'];
-
             $dateStart = $params['date_start'];
             $dateEnd = $params['date_end_of_registration'];
-            $user = $params['user'];
-            $me = $this->getUser();
-            $sites = null;
+            $owner = $params['user'];
             $eventsFromSearch = null;
+            $me = $this->getUser();
+            $myId = $me->getId();
+
+            $entityManager->initializeObject($me->getEvents());
             $subEvents = $me->getEvents();
+
+            if ($subEvents[0] == null) {
+                $subEvents = null;
+            }
+
             $subscribed = $params['subscribed'];
             $notSubscribed = $params['notSubscribed'];
 
-            dump($me);
-            if ($me == $user) {
-                $owner = $me;
-            } else {
-                $owner = null;
-            }
-
             $eventEnded = $params['eventEnded'];
 
-            if (is_null($site)) {
-                $eventsFromSearch = $entityManager->getRepository(Event::class)
-                    ->searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded);
-            } else {
-                
-                $sites = $entityManager->getRepository(Site::class)
-                    ->eventsFromSite($name, $site, $dateStart, $dateEnd, $owner, $eventEnded);
-            }
-
+            $eventsFromSearch = $entityManager->getRepository(Event::class)
+                ->searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded, $site, $myId, $subscribed, $notSubscribed);
             dump($eventsFromSearch);
 
             return $this->render('home/index.html.twig', [
                 'searchForm' => $searchForm->createView(),
                 'eventsFromSearch' => $eventsFromSearch,
-                'sites' => $sites,
-                'subEvents' => $subEvents,
-                'subscribed' => $subscribed,
-                '$notSubscribed' => $notSubscribed
+                'subEvents' => $subEvents
             ]);
         }
-
 
         return $this->render('home/index.html.twig', [
             'searchForm' => $searchForm->createView()
@@ -78,8 +66,6 @@ class HomeController extends AbstractController
      */
     public function detail(Event $event, Request $request, EntityManagerInterface $entityManager)
     {
-        dump($event);
-
         return $this->render('event/detail.html.twig', [
             'event' => $event
         ]);
