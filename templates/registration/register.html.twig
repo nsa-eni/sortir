@@ -5,7 +5,6 @@
 {% block body %}
 
     <div class="container">
-        {{ form_start(registrationForm) }}
         <div class="">
             <div class="form-group">
                 {{ form_row(registrationForm.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
@@ -34,7 +33,6 @@
                 <button class="btn btn-primary btn-lg btn-block">Register</button>
             </div>
         </div>
-        {{ form_end(registrationForm) }}
     </div>
 
 
