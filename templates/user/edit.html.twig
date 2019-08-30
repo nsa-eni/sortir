@@ -9,7 +9,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <img class="image-fluid" src="{{ asset('uploads/images/' ~ user.imageFilename) }}" alt="image profil" height="200"/>
+                <img class="image-fluid" src="{{ asset('uploads/images/' ~ user.imageFilename) }}" alt="image profil"
+                     height="200"/>
             </div>
             <div class="col-md-5">
                 {{ form_start(form) }}
@@ -55,36 +56,40 @@
                 <div class="form-group">
                     {{ form_label(form.site) }}
                     <br>
-                    {{ form_row(form.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_widget(form.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
                     {{ form_label(form.imageFilename) }}
                     <br>
                     {{ form_widget(form.imageFilename) }}
                 </div>
-                    <div class="form-group col-md-6">
-                        {{ form_widget(form.submit,{'attr': {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="col-md-6">
-                    <a href="{{ path('home') }}"><button class=" btn">Annuler</button></a>
-                    </div>
-                    {{ form_end(form) }}
+                <div class="row">
+                <div class="form-group col-md-6">
+                    {{ form_widget(form.submit,{'attr': {'class': 'form-control','style':'border:none'}}) }}
                 </div>
+                <div class="col-md-6">
+                    <a href="{{ path('home') }}">
+                        <button class=" btn">Annuler</button>
+                    </a>
+                </div>
+                </div>
+                {{ form_end(form) }}
             </div>
-            {% if not form.vars.valid %}
-                {# Loop through every form item #}
-                {% for child in form.children %}
-                    {# Display the errors of the form item #}
-                    {% if child.vars.errors is defined %}
-                        {% for error in child.vars.errors %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ error.message }}
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-
-                {% endfor %}
-            {% endif %}
         </div>
+        {% if not form.vars.valid %}
+            {# Loop through every form item #}
+            {% for child in form.children %}
+                {# Display the errors of the form item #}
+                {% if child.vars.errors is defined %}
+                    {% for error in child.vars.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error.message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+            {% endfor %}
+        {% endif %}
+    </div>
     </div>
 {% endblock %}

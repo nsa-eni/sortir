@@ -50,7 +50,7 @@ class RegistrationFormType extends AbstractType
             ]])
             ->add('email', EmailType::class, [
                 "label" => "Email",
-                "required" => false,
+                "required" => true,
                 "trim" => true,
                 "constraints" => [
                     new NotBlank([
@@ -83,11 +83,11 @@ class RegistrationFormType extends AbstractType
                 "trim" => true,
                 "constraints" => [
                     new NotBlank([
-                        "message"=>"Le champ Nom ne peut pas être vide !"
+                        "message"=>"Le champ Prénom ne peut pas être vide !"
                     ]),
                     new Length([
                         "max"=>"100",
-                        "maxMessage"=>"Le nom ne peut faire plus de 100 caractères !"
+                        "maxMessage"=>"Le prénom ne peut faire plus de 100 caractères !"
                     ])
                 ]])
             ->add('phone', TextType::class, [
@@ -98,8 +98,8 @@ class RegistrationFormType extends AbstractType
                     new NotBlank([
                         "message" => "Le champ Téléphone ne peut pas être vide !"
                     ]),
-                    new Regex(["pattern" => "/^[0-9]*$/",
-                        "message" => "Le format est 00 00 00 00 00!"])
+                    new Regex(["pattern" => "/^(0)[1-9][0-9]{8}$/",
+                        "message" => "Le format est 02 00 00 00 00!"])
                 ]])
             ->add('password', RepeatedType::class, [
                 // instead of being set onto the object directly,
@@ -112,7 +112,7 @@ class RegistrationFormType extends AbstractType
                 'constraints'=>
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères !',
+                        'minMessage' => 'Votre mot de passe doit contenir au minimum 6 caractères !',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
