@@ -3,64 +3,50 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>Profil</h1>
+    <br>
+    <h3 class="text-center">{{ user.pseudo }}</h3>
+    <br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="image-fluid" src="{{ asset('uploads/images/' ~ user.imageFilename) }}" alt="image profil"
+                 height="200"/>
+        </div>
+        <div class="col-md-6">
+                <div>
+                    <label class="col-md-6">Prénom : </label>
+                    <span class="col-md-6">{{ user.firstname }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Nom : </label>
+                    <span class="col-md-6">{{ user.name }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Telephone : </label>
+                    <span class="col-md-6">{{ user.phone }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Email : </label>
+                    <span class="col-md-6">{{ user.email }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Ville de rattachement : </label>
+                    <span class="col-md-6">{{ user.site.name }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <table class="table">
-        <tbody>
-        {#   <tr>
-              <th>Id</th>
-              <td>{{ user.id }}</td>
-          </tr> #}
-          <tr>
-              <th>Email</th>
-              <td>{{ user.email }}</td>
-          </tr>
-          <tr>
-              <th>Roles</th>
-              <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-          </tr>
-          {#  <tr>
-             <th>Password</th>
-             <td>{{ user.password }}</td>
-         </tr>
-         <tr>  #}
-                <th>Name</th>
-                <td>{{ user.name }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ user.firstname }}</td>
-            </tr>
-            <tr>
-                <th>Phone</th>
-                <td>{{ user.phone }}</td>
-            </tr>
-            <tr>
-                <th>Actif</th>
-                <td>{{ user.actif ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Administrator</th>
-                <td>{{ user.administrator ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Pseudo</th>
-                <td>{{ user.pseudo }}</td>
-            </tr>
 
-            <tr>
-                {# <th>Images</th>
-                    <td> {% if tabDetail.imageFilename %}
-                            <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}/></p>
-                        {% endif %}</td>    #}
-            </tr>
+    {# <th>Images</th>
+        <td> {% if tabDetail.imageFilename %}
+                <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}/></p>
+            {% endif %}</td>    #}
+    <br>
+    <div class="text-center">
+        <a href="{{ path('home') }}">Retour aux sorties</a>
+    </div>
+    {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 
-        </tbody>
-    </table>
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
-    {{ include('user/_delete_form.html.twig') }}
-{% endblock %}
+     {{ include('user/_delete_form.html.twig') }} #}
+    {% endblock %}

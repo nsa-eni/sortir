@@ -90,7 +90,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_show", methods={"GET"})
+     * @Route("user/{id}", name="user_show", methods={"GET"})
      */
     public function show(User $user): Response
     {
@@ -100,7 +100,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="user_edit", methods={"GET","POST"})
+     * @Route("user/edit/{id}", name="user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
@@ -152,7 +152,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("admin/{id}", name="user_delete", methods={"DELETE"})
      */
     public function delete(Request $request, User $user): Response
     {
