@@ -236,9 +236,10 @@ class User implements UserInterface
     /**
      * @param mixed $imageFilename
      */
-    public function setImageFilename($imageFilename): void
+    public function setImageFilename($imageFilename)
     {
         $this->imageFilename = $imageFilename;
+        return $this;
     }
 
     /**

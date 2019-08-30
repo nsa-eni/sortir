@@ -12,9 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
@@ -27,6 +29,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('site', EntityType::class, [
                 'class' => Site::class,
+                'label' => "Site de rattachement",
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('s');
                 },
@@ -36,22 +39,57 @@ class RegistrationFormType extends AbstractType
                 "label" => "Pseudo",
                 "required" => false,
                 "trim" => true,
-            ])
+                "constraints" => [
+                    new NotBlank([
+                        "message"=>"Le champ Pseudo ne peut pas être vide !"
+                    ]),
+                    new Length([
+                        "max"=>"30",
+                        "maxMessage"=>"Le pseudo ne peut faire plus de 30 caractères !"
+                    ])
+            ]])
             ->add('email', EmailType::class, [
                 "label" => "Email",
                 "required" => false,
                 "trim" => true,
-            ])
+                "constraints" => [
+                    new NotBlank([
+                        "message"=>"Le champ Email ne peut pas être vide !"
+                    ]),
+                    new Length([
+                        "max"=>"180",
+                        "maxMessage"=>"L'email ne peut faire plus de 180 caractères !"
+                    ]),
+                    new Email([
+                        "message"=>"Email non valide !"
+                    ])
+            ]])
             ->add('name', TextType::class, [
                 "label" => "Nom",
                 "required" => false,
                 "trim" => true,
-            ])
+                "constraints" => [
+                    new NotBlank([
+                        "message"=>"Le champ Nom ne peut pas être vide !"
+                    ]),
+                    new Length([
+                        "max"=>"100",
+                        "maxMessage"=>"Le nom ne peut faire plus de 100 caractères !"
+                    ])
+            ]])
             ->add('firstname', TextType::class, [
                 "label" => "Prénom",
                 "required" => false,
                 "trim" => true,
-            ])
+                "constraints" => [
+                    new NotBlank([
+                        "message"=>"Le champ Nom ne peut pas être vide !"
+                    ]),
+                    new Length([
+                        "max"=>"100",
+                        "maxMessage"=>"Le nom ne peut faire plus de 100 caractères !"
+                    ])
+                ]])
             ->add('phone', TextType::class, [
                 "label"=>"Téléphone",
                 "required"=>false,
@@ -63,7 +101,7 @@ class RegistrationFormType extends AbstractType
                     new Regex(["pattern" => "/^[0-9]*$/",
                         "message" => "Le format est 00 00 00 00 00!"])
                 ]])
-            ->add('plainPassword', RepeatedType::class, [
+            ->add('password', RepeatedType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'type' => PasswordType::class,
@@ -73,8 +111,8 @@ class RegistrationFormType extends AbstractType
                 "trim"=>true,
                 'constraints'=>
                     new Length([
-                        //'min' => 6,
-                        //'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères !',
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit contenir au minimum {{ limit }} caractères !',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -100,9 +138,13 @@ class RegistrationFormType extends AbstractType
                             'image/jpg',
                             'image/bmp',
                             'image/png',
+                            'image/jpeg'
                         ]
                     ])
                 ],
+            ])
+            ->add("submit", submitType::class,[
+                "label" => "Enregistrer"
             ]);
     }
 
