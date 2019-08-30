@@ -66,4 +66,35 @@ class EventController extends AbstractController
             'zip_code'=> $city->getZipCode()
         ]), 200);
     }
+
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Route("/subscribe/{id}", name="subscribe", methods={"GET"})
+     */
+    public function subscribe(Event $event, Request $request, EntityManagerInterface $entityManager) {
+        $user = $this->getUser();
+        $user->addEvents($event);
+        $event->addSubscribersUsers($user);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @param Event $event
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Route("/unsubscribe/{id}", name="unsubscribe", methods={"GET"})
+     */
+    public function unSubscribe(Event $event, Request $request, EntityManagerInterface $entityManager) {
+        $user = $this->getUser();
+        $user->removeEvents($event);
+        $event->removeSubscribersUsers($user);
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
 }

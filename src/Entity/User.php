@@ -80,7 +80,7 @@ class User implements UserInterface
     private $site;
 
     /**
-     * @var Event
+     * @var Event[]
      * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="subscribers_users", cascade={"persist", "remove"})
      */
     private $events;
@@ -126,7 +126,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -150,7 +150,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -259,7 +259,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return Event
+     * @return Event[]
      */
     public function getEvents()
     {
@@ -295,10 +295,15 @@ class User implements UserInterface
      */
     public function addEvents(Event $event): void
     {
-        if ($this->events->contains($event)){
-            $this->events->add($event);
-            $event->addSubscribersUsers($this);
-        }
+        $this->events->add($event);
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function removeEvents(Event $event): void
+    {
+        $this->events->removeElement($event);
     }
 
     /**

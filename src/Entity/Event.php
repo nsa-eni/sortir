@@ -123,11 +123,17 @@ class Event
      */
     public function addSubscribersUsers(User $user): void
     {
-        if (!$this->subscribers_users->contains($user)) {
-            $this->subscribers_users->add($user);
-            $user->addEvents($this);
-        }
+        $this->subscribers_users->add($user);
     }
+
+    /**
+     * @param User $user
+     */
+    public function removeSubscribersUsers(User $user): void
+    {
+        $this->subscribers_users->removeElement($user);
+    }
+
     /**
      * @return mixed
      */

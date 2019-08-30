@@ -39,11 +39,6 @@ class HomeController extends AbstractController
             $myId = $me->getId();
 
             $entityManager->initializeObject($me->getEvents());
-            $subEvents = $me->getEvents();
-
-            if ($subEvents[0] == null) {
-                $subEvents = null;
-            }
 
             $subscribed = $params['subscribed'];
             $notSubscribed = $params['notSubscribed'];
@@ -56,8 +51,7 @@ class HomeController extends AbstractController
 
             return $this->render('home/index.html.twig', [
                 'searchForm' => $searchForm->createView(),
-                'eventsFromSearch' => $eventsFromSearch,
-                'subEvents' => $subEvents
+                'eventsFromSearch' => $eventsFromSearch
             ]);
         }
 

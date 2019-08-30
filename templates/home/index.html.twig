@@ -102,18 +102,23 @@
                         <td>{% if e.user.id == app.session.get('user') %}X{% endif %}</td>
                         <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
                         <td>
-                            {% if e.user.id == app.session.get('user') or e.state.name != "En création" %}
+                            {% if e.user.id == app.user.id or e.state.name != "En création" %}
                                 <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
                             {% else %}
                                 <a href="#">Modifier</a>
                             {% endif %}
-
-                            {% if e.state == "Créée" or e.state == "Ouverte" %}
-
-                                {% if e.subscribed %}
-                                    <a href="#"> - Se désister</a>
+                            {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
+                                
+                                {% if e.subscribersUsers|length > 0 %}
+                                    {% for sub in e.subscribersUsers %}
+                                        {% if app.user.id == sub.id %}
+                                            - <a href={{ path('unsubscribe', {id: e.id}) }}>Se désister</a>
+                                        {% else %}
+                                            - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                        {% endif %}
+                                    {% endfor %}
                                 {% else %}
-                                    <a href="#"> - S'inscrire</a>
+                                    - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
                                 {% endif %}
                             {% endif %}
                         </td>
