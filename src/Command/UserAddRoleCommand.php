@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
+use http\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,31 +54,22 @@ class UserAddRoleCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
 
-        $encoder = $this->encoderFactory->getEncoder(User::class);
+        $helper->ask($input, $output, $this->createSecurityPasswordCommandQuestion());
 
-        $question_security = new Question("Enter password command : ");
-        $question_security->setHidden(true);
-        $pass_security = $helper->ask($input, $output, $question_security);
+        $email = $helper->ask($input, $output, $this->createEmailQuestion());
 
-        if ($encoder->isPasswordValid(self::$security_password_command, $pass_security, null)){
+        $password = $helper->ask($input, $output, $this->createPasswordQuestion());
 
-            $question1 = new Question("Enter email: ", "guest");
-            $email = $helper->ask($input, $output, $question1);
+        if ($this->createUser($email, $password)){
 
-            $question2 = new Question("Enter password: ", "guest");
-            $password = $helper->ask($input, $output, $question2);
+            $message1 = sprintf("Email: %s", $email);
+            $message2 = sprintf("Password: %s", $password);
+            $output->writeln($message1);
+            $output->writeln($message2);
+            $io->success('User admin has been created');
 
-            if ($this->createUser($email, $password)){
-                $message1 = sprintf("Email: %s", $email);
-                $message2 = sprintf("Password: %s", $password);
-                $output->writeln($message1);
-                $output->writeln($message2);
-                $io->success('User admin has been created');
-            }else
-                $io->error("Something wrong!");
         }else
-            $io->error("Wrong password for use this command!");
-
+            $io->error("Process failed!");
     }
 
     /**
@@ -102,5 +94,69 @@ class UserAddRoleCommand extends Command
             print $exception->getMessage();
         }
         return false;
+    }
+
+    /**
+     * @return Question
+     */
+    private function createEmailQuestion(): Question
+    {
+        $question = new Question("Enter email: ");
+        return $question->setValidator(function ($value) {
+            if (is_null($value) || '' === trim($value)) {
+                throw new \InvalidArgumentException('The email must not be empty.');
+
+            }
+            if (!$this->isValidEmail($value)){
+                throw new \InvalidArgumentException('The email is not valid.');
+
+            }
+
+            return $value;
+        })->setMaxAttempts(20);
+    }
+
+    /**
+     * @return Question
+     */
+    private function createPasswordQuestion(): Question
+    {
+        $question = new Question("Enter password: ");
+        return $question->setValidator(function ($value) {
+
+            if ('' === trim($value) || is_null($value)) {
+                throw new \InvalidArgumentException('The password must not be empty.');
+            }
+
+            return $value;
+        })->setMaxAttempts(20);
+    }
+
+    /**
+     * @return Question
+     */
+    private function createSecurityPasswordCommandQuestion() :Question
+    {
+        $question = new Question("Enter password command : ");
+        return $question->setValidator(function ($value) {
+            if ('' === trim($value)) {
+                throw new \InvalidArgumentException('The password must not be empty.');
+            }
+            if (!$this->encoderFactory->getEncoder(User::class)->isPasswordValid(self::$security_password_command, $value, null)){
+                throw new \InvalidArgumentException('Invalid password.');
+
+            }
+
+            return $value;
+        })->setHidden(true)->setMaxAttempts(3);
+    }
+
+    /**
+     * @param string $email
+     * @return bool
+     */
+    private function isValidEmail(string $email)
+    {
+        return (boolean) filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 }
