@@ -106,12 +106,35 @@ class EventController extends AbstractController
      * @Route("/cancel/{id}", name="cancelEvent", methods={"GET"})
      */
     public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
-
-
         return $this->render('event/cancel.html.twig', ['event' => $event]);
     }
 
+    /**
+     * @param Event $event
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/modify/{id}", name="modifyEvent", methods={"GET"})
+     */
     public function modify(Event $event, Request $request, EntityManagerInterface $entityManager) {
+        dump($event);
         return $this->render('event/modify.html.twig', ['event' => $event]);
+    }
+
+    /**
+     * @param Event $event
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/publish/{id}", name="publish", methods={"GET"})
+     */
+    public function publish(Event $event, Request $request, EntityManagerInterface $entityManager) {
+        $state = new State();
+        $state->setName("Ouverte");
+        $event->setState($state);
+        $entityManager->persist($event);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
     }
 }

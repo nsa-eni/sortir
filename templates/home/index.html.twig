@@ -106,18 +106,18 @@
                         </td>
                         <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
                         <td>
-                            {% if e.user.id == app.user.id or e.state.name != "En création" %}
+                            {% if e.user.id == app.user.id and e.state.name != "Créée" %}
                                 <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
-                            {% else %}
-                                <a href="#">Modifier</a>
+                            {% elseif e.user.id == app.user.id and e.state.name == "Créée" %}
+                                <a href={{ path('modifyEvent', {id: e.id}) }}>Modifier</a>
                             {% endif %}
                             {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
                                 {% if app.user.id == e.user.id %}
                                     {% if e.state.name == "Ouverte" %}
                                         - <a href={{ path('cancelEvent', {id: e.id}) }}>Annuler</a>
                                     {% endif %}
-                                    {% if e.state.name == "En création" %}
-                                        - <a href="#">Publier</a>
+                                    {% if e.state.name == "Créée" %}
+                                        - <a href={{ path('publish', {id: e.id}) }}>Publier</a>
                                     {% endif %}
                                 {% else %}
                                     {% if e.subscribersUsers|length > 0 %}
