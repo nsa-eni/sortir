@@ -81,7 +81,7 @@ class User implements UserInterface
 
     /**
      * @var Event
-     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="subscribed_users", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Event", mappedBy="subscribers_users", cascade={"persist", "remove"})
      */
     private $events;
 
