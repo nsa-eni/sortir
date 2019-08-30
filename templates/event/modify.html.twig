@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Afficher une sortie{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h3>Afficher une sortie</h3>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div>
+                    <label class="col-md-6">Nom de la sortie :  </label>
+                    <span class="col-md-6">{{ event.name }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Date et heure de la sortie : </label>
+                    <span class="col-md-6">{{ event.dateStart|date('Y-m-d h:i', "Europe/Paris") }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Date limite d'inscription : </label>
+                    <span class="col-md-6">{{ event.dateEndOfRegistration|date('Y-m-d h:i', "Europe/Paris") }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Nom de places : </label>
+                    <span class="col-md-6">{{ event.maxNumberPlaces }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Durée :</label>
+                    <span class="col-md-6">{{ event.timeDelayMinutes }} minutes</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Description et infos : </label>
+                    <span class="col-md-6">{{ event.info }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <label class="col-md-6">Ville organisatrice :</label>
+                    <span class="col-md-6">{{ event.site.name }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Lieu : </label>
+                    <span class="col-md-6">{{ event.location.name }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Rue :</label>
+                    <span class="col-md-6">{{ event.location.street }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Code postal :</label>
+                    <span class="col-md-6">{{ event.location.city.zipCode }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Latitude :</label>
+                    <span class="col-md-6">{{ event.location.latitude }}</span>
+                </div>
+                <div>
+                    <label class="col-md-6">Longitude :</label>
+                    <span class="col-md-6">{{ event.location.longitude }}</span>
+                </div>
+            </div>
+        </div>
+
+        <button>Enregistrer</button>
+        <button>Publier la sortie</button>
+        <button>Supprimer la sortie</button>
+        <button>Annuler</button>
+    </div>
+{% endblock %}

@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Twig\Node\EmbedNode;
 
 /**
  * Class EventController
@@ -96,5 +97,21 @@ class EventController extends AbstractController
         $entityManager->flush();
 
         return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @param Event $event
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @Route("/cancel/{id}", name="cancelEvent", methods={"GET"})
+     */
+    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
+
+
+        return $this->render('event/cancel.html.twig', ['event' => $event]);
+    }
+
+    public function modify(Event $event, Request $request, EntityManagerInterface $entityManager) {
+        return $this->render('event/modify.html.twig', ['event' => $event]);
     }
 }

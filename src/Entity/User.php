@@ -86,7 +86,7 @@ class User implements UserInterface
     private $events;
 
     /**
-     * @var Event
+     * @var Event[]
      * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="user", cascade={"persist", "remove"})
      */
     private $createdEvents;
@@ -288,6 +288,15 @@ class User implements UserInterface
     public function setCreatedEvents(Event $createdEvents): void
     {
         $this->createdEvents = $createdEvents;
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function removeCreatedEvents(Event $event): void
+    {
+        $this->createdEvents->removeElement($event);
+        $event->setUser(null);
     }
 
     /**

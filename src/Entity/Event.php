@@ -96,7 +96,7 @@ class Event
     /**
      * @param User $user
      */
-    public function setUser(User $user): void
+    public function setUser(?User $user): void
     {
         $this->user = $user;
     }
