@@ -10,6 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class HomeController
+ * @package App\Controller
+ * @Route("user")
+ */
 class HomeController extends AbstractController
 {
     /**

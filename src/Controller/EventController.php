@@ -15,6 +15,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
+/**
+ * Class EventController
+ * @package App\Controller
+ * @Route("user")
+ */
 class EventController extends AbstractController
 {
     /**
