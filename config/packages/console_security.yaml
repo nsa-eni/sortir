@@ -1,0 +1,3 @@
+console_security:
+    create_admin:
+        password: $argon2id$v=19$m=65536,t=4,p=1$qwpqYuq0rJrUeyQ4xvQgHQ$21Rhb/cYkzJXHdDyryuM1MB1GEuEu8DbyfqZAHB0l9A
