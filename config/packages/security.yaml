@@ -23,7 +23,7 @@ security:
         main:
             remember_me:
                 secret:   '%kernel.secret%'
-                lifetime: 310 # 1 week in seconds
+                lifetime: 15000 # 1 week in seconds
                 path:     /
             anonymous: true
             guard:
