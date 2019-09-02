@@ -6,10 +6,11 @@
 
     <div class="container">
         <div class="">
+            {{ form_start(registrationForm, {'method': 'post', 'attr': {'class': ''}}) }}
+
             <div class="form-group">
                 {{ form_row(registrationForm.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
-            {{ form_start(registrationForm, {'method': 'post', 'attr': {'class': ''}}) }}
             <div class="form-group">
                 {{ form_row(registrationForm.file, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
@@ -20,6 +21,4 @@
             {{ form_end(registrationForm) }}
         </div>
     </div>
-
-
 {% endblock %}
