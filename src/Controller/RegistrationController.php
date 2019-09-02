@@ -43,4 +43,13 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @Route("/admin/import_file", name="import_file_and_register")
+     */
+    public function registerByImportingFile(Request $request)
+    {
+
+    }
 }
