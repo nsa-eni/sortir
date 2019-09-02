@@ -73,7 +73,7 @@ class Event
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents"})
      */
     private $user;
 
@@ -289,7 +289,7 @@ class Event
     /**
      * @param Site $site
      */
-    public function setSite(Site $site): void
+    public function setSite($site): void
     {
         $this->site = $site;
     }
