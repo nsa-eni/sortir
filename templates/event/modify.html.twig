@@ -63,7 +63,7 @@
 
         <button>Enregistrer</button>
         <button>Publier la sortie</button>
-        <button>Supprimer la sortie</button>
+        <a href={{ path('cancelEvent', {id: event.id}) }}><button>Supprimer la sortie</button></a>
         <button>Annuler</button>
     </div>
 {% endblock %}
