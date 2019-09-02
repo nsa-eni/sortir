@@ -44,15 +44,9 @@
                     <br>
                     {{ form_widget(form.imageFilename) }}
                 </div>
-                <div class="row">
-                <div class="form-group col-md-6">
-                    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary btn-lg btn-block"', 'style':''}}) }}
-                </div>
-                <div class="col-md-6">
-                    <a href="{{ path('home') }}">
-                        <button class=" btn  btn-primary btn-lg btn-block" style="">Annuler</button>
-                    </a>
-                </div>
+                <div class="text-center">
+                    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary', 'style':''}}) }}
+                    <a href="{{ path('home') }}" ><input type="button" class="btn btn-primary" value="Retour"></a>
                 </div>
                 {{ form_end(form) }}
             </div>
