@@ -37,7 +37,7 @@ class HomeController extends AbstractController
             $eventsFromSearch = null;
             $me = $this->getUser();
             $myId = $me->getId();
-
+            dump($me);
             $entityManager->initializeObject($me->getEvents());
 
             $subscribed = $params['subscribed'];

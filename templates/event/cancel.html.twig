@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        {% if event.user.id == app.user.id %}
+        {% if event.user.id == app.user.id or app.user.roles[0] == "ROLE_ADMIN"%}
         <button>Enregistrer</button>
         <a href={{ path('cancelEvent', {id: event.id}) }}><button>Annuler</button></a>
         {% endif %}

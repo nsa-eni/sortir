@@ -122,7 +122,7 @@ class EventController extends AbstractController
         $entityManager->initializeObject($event->getState());
         $event->setState(null);
 
-        if ($user->getId() == $owner->getId() or $user.administrator) {
+        if ($user->getId() == $owner->getId() or $user->getRoles() == "ROLE_ADMIN") {
             $entityManager->remove($event);
             $entityManager->flush();
         }

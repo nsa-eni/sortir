@@ -106,14 +106,14 @@
                         </td>
                         <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
                         <td>
-                            {% if e.user.id == app.user.id and e.state.name != "Créée" %}
+                            {% if e.user.id == app.user.id and e.state.name != "Créée" or app.user.roles[0] == "ROLE_ADMIN" %}
                                 <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
                             {% elseif e.user.id == app.user.id and e.state.name == "Créée" %}
                                 <a href={{ path('modifyEvent', {id: e.id}) }}>Modifier</a>
                             {% endif %}
                             {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
-                                {% if app.user.id == e.user.id %}
-                                    {% if e.state.name == "Ouverte" %}
+                                {% if app.user.id == e.user.id or app.user.roles[0] == "ROLE_ADMIN" %}
+                                    {% if e.state.name == "Ouverte" or app.user.roles[0] == "ROLE_ADMIN"%}
                                         - <a href={{ path('cancel', {id: e.id}) }}>Annuler</a>
                                     {% endif %}
                                     {% if e.state.name == "Créée" %}
