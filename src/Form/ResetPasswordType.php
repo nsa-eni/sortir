@@ -17,10 +17,10 @@ class ResetPasswordType extends AbstractType
 
 
         $builder
-            ->add('oldPassword', PasswordType::class, array(
+            ->add('password', PasswordType::class, array(
                 'mapped' => false
             ))
-            ->add('password', RepeatedType::class, array(
+            ->add('newPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les deux mots de passe doivent être identiques',
                 'options' => array(

@@ -18,7 +18,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $oldPassword;
+    private $newPassword;
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -371,15 +371,15 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getOldPassword(): string
+    public function getNewPassword(): string
     {
-        return $this->oldPassword;
+        return $this->newPassword;
     }
 
 
-    public function setOldPassword(string $oldPassword): void
+    public function setNewPassword(string $newPassword): void
     {
-        $this->oldPassword = $oldPassword;
+        $this->newPassword = $newPassword;
     }
 
 }

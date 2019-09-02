@@ -74,7 +74,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-
+        if ($user->getId() == $this->getUser()->getId() or $user->getRoles() == 'ROLE_ADMIN') {
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
             $imageFile = $form['imageFilename']->getData();
@@ -116,6 +116,9 @@ class SecurityController extends AbstractController
             'user' => $user,
             'form' => $form->createView(),
         ]);
+    }else{
+            return $this->redirectToRoute('home');
+        }
     }
 
     /**
@@ -149,11 +152,11 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
 
-            $oldPassword = $request->request->get('etiquettebundle_user')['oldPassword'];
+            $password = $request->request->get('etiquettebundle_user')['password'];
 
             // Si l'ancien mot de passe est bon
-            if ($passwordEncoder->isPasswordValid($user, $oldPassword)) {
-                $newEncodedPassword = $passwordEncoder->encodePassword($user, $user->getPassword());
+            if ($passwordEncoder->isPasswordValid($user, $password)) {
+                $newEncodedPassword = $passwordEncoder->encodePassword($user, $form->get('newPassword')->getData());
                 $user->SetPassword($newEncodedPassword);
 
                 $em->persist($user);
