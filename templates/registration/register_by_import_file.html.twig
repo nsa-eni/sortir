@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Import file and register{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="">
+            <div class="form-group">
+                {{ form_row(registrationForm.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+            </div>
+            {{ form_start(registrationForm, {'method': 'post', 'attr': {'class': ''}}) }}
+            <div class="form-group">
+                {{ form_row(registrationForm.file, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+            </div>
+
+            <div style="text-align: center">
+                {{ form_widget(registrationForm.submit, { 'attr': {'class': 'btn btn-primary btn-lg btn-block"', 'style':''}} ) }}
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
+
+{% endblock %}

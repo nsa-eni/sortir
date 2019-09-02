@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\RegistrationByImportFileType;
 use App\Form\RegistrationFormType;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,10 +50,31 @@ class RegistrationController extends AbstractController
 
     /**
      * @param Request $request
-     * @Route("/admin/import_file", name="import_file_and_register")
+     * @Route("/admin/import_file", name="import_file_and_register", methods={"GET", "POST"})
+     * @return Response
      */
     public function registerByImportingFile(Request $request)
     {
+        $form = $this->createForm(RegistrationByImportFileType::class);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()){
+            $file = (object) $form->get('file')->getData();
+            $tmp_filename = $file->getBasename();
+            try{
+                $content = IOFactory::load("/tmp/$tmp_filename");
+                $data = $content->getActiveSheet()->toArray(null, true, true, true);
+            }catch (Exception $exception){
+                print $exception->getMessage();
+            }catch (\PhpOffice\PhpSpreadsheet\Exception $exception){
+                print  $exception->getMessage();
+            }
+            dump($data);die();
+        }
+
+
+        return $this->render('registration/register_by_import_file.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
     }
 }
