@@ -15,48 +15,29 @@
             <div class="col-md-5">
                 {{ form_start(form) }}
                 <div class="form-group">
-                    {{ form_label(form.pseudo) }}
-                    <br>
-                    {{ form_widget(form.pseudo, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_row(form.pseudo, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.name) }}
-                    <br>
-                    {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_row(form.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.firstname) }}
-                    <br>
-                    {{ form_widget(form.firstname, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_row(form.firstname, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
 
                 <div class="form-group">
-                    {{ form_label(form.email) }}
-                    <br>
-                    {{ form_widget(form.email, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_row(form.email, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
-                    {{ form_label(form.phone) }}
-                    <br>
-                    {{ form_widget(form.phone, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_row(form.phone, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div class="form-group">
                     <div class="form-group">
-                        {{ form_label(form.password.first) }}
-                        <br>
-                        {{ form_widget(form.password.first, {'attr': {'class': 'form-control', 'style':''}}) }}
+                        {{ form_row(form.password.first, {'attr': {'class': 'form-control', 'style':''}}) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.password.second) }}
-                        <br>
-                        {{ form_widget(form.password.second, {'attr': {'class': 'form-control', 'style':'', 'placeholder':"Saisissez à nouveau votre mot de passe"}}) }}
-
+                        {{ form_row(form.password.second, {'attr': {'class': 'form-control', 'style':'', 'placeholder':"Saisissez à nouveau votre mot de passe"}}) }}
                     </div>
-                </div>
                 <div class="form-group">
-                    {{ form_label(form.site) }}
-                    <br>
-                    {{ form_widget(form.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                    {{ form_row(form.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
                     {{ form_label(form.imageFilename) }}
@@ -65,11 +46,11 @@
                 </div>
                 <div class="row">
                 <div class="form-group col-md-6">
-                    {{ form_widget(form.submit,{'attr': {'class': 'form-control','style':'border:none'}}) }}
+                    {{ form_widget(form.submit, { 'attr': {'class': 'btn btn-primary btn-lg btn-block"', 'style':''}}) }}
                 </div>
                 <div class="col-md-6">
                     <a href="{{ path('home') }}">
-                        <button class=" btn">Annuler</button>
+                        <button class=" btn  btn-primary btn-lg btn-block" style="">Annuler</button>
                     </a>
                 </div>
                 </div>
