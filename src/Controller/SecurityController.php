@@ -65,7 +65,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("admin/edit/{id}", name="user_edit", methods={"GET","POST"})
+     * @Route("user/edit/{id}", name="user_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, User $user, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
