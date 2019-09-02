@@ -116,8 +116,12 @@ class EventController extends AbstractController
     public function cancelEvent(Event $event, Request $request, EntityManagerInterface $entityManager) {
         $user = $this->getUser();
         $owner = $event->getUser();
+        $entityManager->initializeObject($event->getState());
+        $event->setState(null);
 
-        if ($user.id == $owner.id or $user.administrator) {
+        dump($event);
+
+        if ($user->getId() == $owner->getId() or $user.administrator) {
             $entityManager->remove($event);
             $entityManager->flush();
         }

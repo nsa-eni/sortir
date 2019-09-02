@@ -49,19 +49,19 @@ class Event
 
     /**
      * @var State $state
-     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\State", inversedBy="events", cascade={"persist"})
      */
     private $state;
 
     /**
      * @var Location $state
-     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Location", inversedBy="events", cascade={"persist"})
      */
     private $location;
 
     /**
      * @var Site
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="events", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="events")
      */
     private $site;
 
@@ -249,7 +249,7 @@ class Event
     /**
      * @return State
      */
-    public function getState(): State
+    public function getState()
     {
         return $this->state;
     }
@@ -257,7 +257,7 @@ class Event
     /**
      * @param State $state
      */
-    public function setState(State $state): void
+    public function setState($state): void
     {
         $this->state = $state;
     }

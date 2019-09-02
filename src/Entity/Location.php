@@ -45,7 +45,7 @@ class Location
 
     /**
      * @var Event[] $events
-     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="location")
+     * @ORM\OneToMany(targetEntity="App\Entity\Event", mappedBy="location", cascade={"persist", "remove"})
      */
     private $events;
 
