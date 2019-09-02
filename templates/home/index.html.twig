@@ -113,7 +113,7 @@
                             {% endif %}
                             {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
                                 {% if app.user.id == e.user.id or app.user.roles[0] == "ROLE_ADMIN" %}
-                                    {% if e.state.name == "Ouverte" or app.user.roles[0] == "ROLE_ADMIN"%}
+                                    {% if e.state.name == "Ouverte" or app.user.roles[0] == "ROLE_ADMIN" %}
                                         - <a href={{ path('cancel', {id: e.id}) }}>Annuler</a>
                                     {% endif %}
                                     {% if e.state.name == "Créée" %}
@@ -125,14 +125,18 @@
                                     {% endif %}
                                     {% if e.subscribersUsers|length > 0 %}
                                         {% for sub in e.subscribersUsers %}
-                                            {% if app.user.id == sub.id %}
-                                                - <a href={{ path('unsubscribe', {id: e.id}) }}>Se désister</a>
-                                            {% else %}
-                                                - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                            {% if date(e.dateEndOfRegistration|date('d/m/Y h:i')) < date() %}
+                                                {% if app.user.id == sub.id %}
+                                                    - <a href={{ path('unsubscribe', {id: e.id}) }}>Se désister</a>
+                                                {% else %}
+                                                    - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                                {% endif %}
                                             {% endif %}
                                         {% endfor %}
                                     {% else %}
-                                        - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                        {% if date(e.dateEndOfRegistration|date('d/m/Y h:i')) > date() %}
+                                            - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
                             {% endif %}
