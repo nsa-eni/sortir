@@ -6,6 +6,7 @@
 
     <div class="container">
         <div class="">
+            {{ form_start(registrationForm, {'method': 'post', 'attr': {'class': ''}}) }}
             <div class="form-group">
                 {{ form_row(registrationForm.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
@@ -30,8 +31,10 @@
                 {{ form_row(registrationForm.password, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div style="text-align: center">
-                <button class="btn btn-primary btn-lg btn-block">Register</button>
+                {{ form_widget(registrationForm.submit, { 'attr': {'class': 'btn btn-primary btn-lg btn-block"', 'style':''}} ) }}
             </div>
+            {{ form_end(registrationForm) }}
+
         </div>
     </div>
 
