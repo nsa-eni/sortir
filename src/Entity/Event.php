@@ -73,7 +73,7 @@ class Event
 
     /**
      * @var User
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="createdEvents")
      */
     private $user;
 
