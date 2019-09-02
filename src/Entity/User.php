@@ -15,6 +15,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $oldPassword;
+    /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
@@ -361,6 +366,20 @@ class User implements UserInterface
     public function setAdministrator(bool $administrator): void
     {
         $this->administrator = $administrator;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getOldPassword(): string
+    {
+        return $this->oldPassword;
+    }
+
+
+    public function setOldPassword(string $oldPassword): void
+    {
+        $this->oldPassword = $oldPassword;
     }
 
 }
