@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -47,12 +48,20 @@ class SecurityController extends AbstractController
     /**
      * @Route("/admin/", name="user_index", methods={"GET"})
      */
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
+    public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): Response
+     {
+         //récup info barre recherche
+         $data = $request->query->get('search');
+         if (!$data) {
+             $req = $entityManager->getRepository('App:User')->findUsers();
+         }
+         //si utilisation barre de recherche
+         if ($data) {
+             $req = $entityManager->getRepository('App:User')->UserNameContain($data);
+         }
+         return $this->render('user/index.html.twig', ["users" => $req]);
+     }
+
 
 
 
