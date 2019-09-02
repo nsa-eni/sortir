@@ -73,8 +73,7 @@ class SecurityController extends AbstractController
     {
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
-        if ($user->getId() == $this->getUser()->getId() or $user->getRoles() == 'ROLE_ADMIN') {
+        if ($user->getId() == $this->getUser()->getId()) {
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
             $imageFile = $form['imageFilename']->getData();

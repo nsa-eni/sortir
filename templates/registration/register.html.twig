@@ -8,30 +8,46 @@
         <div class="">
             {{ form_start(registrationForm, {'method': 'post', 'attr': {'class': ''}}) }}
             <div class="form-group">
-                {{ form_row(registrationForm.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                {{ form_label(registrationForm.site) }}
+                <br>
+                {{ form_widget(registrationForm.site, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
 
             <div class="form-group">
-                {{ form_row(registrationForm.pseudo, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                {{ form_label(registrationForm.pseudo) }}
+                <br>
+                {{ form_widget(registrationForm.pseudo, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                {{ form_label(registrationForm.name) }}
+                <br>
+                {{ form_widget(registrationForm.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.firstname, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                {{ form_label(registrationForm.firstname) }}
+                <br>
+                {{ form_widget(registrationForm.firstname, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
 
             <div class="form-group">
-                {{ form_row(registrationForm.email, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                {{ form_label(registrationForm.email) }}
+                <br>
+                {{ form_widget(registrationForm.email, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.phone, { 'attr': {'class': 'form-control', 'style':''}} ) }}
+                {{ form_label(registrationForm.phone) }}
+                <br>
+                {{ form_widget(registrationForm.phone, { 'attr': {'class': 'form-control', 'style':''}} ) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.password.first, {'attr': {'class': 'form-control', 'style':''}}) }}
+                {{ form_label(registrationForm.password.first) }}
+                <br>
+                {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form-control', 'style':''}}) }}
             </div>
             <div class="form-group">
-                {{ form_row(registrationForm.password.second, {'attr': {'class': 'form-control', 'style':'', 'placeholder':"Saisissez à nouveau votre mot de passe"}}) }}
+                {{ form_label(registrationForm.password.second) }}
+                <br>
+                {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form-control', 'style':'', 'placeholder':"Saisissez à nouveau votre mot de passe"}}) }}
             </div>
             <div class="form-group">
                 {{ form_label(registrationForm.imageFilename) }}
@@ -44,7 +60,7 @@
             {{ form_end(registrationForm) }}
             {% if not registrationForm.vars.valid %}
                 {# Loop through every form item #}
-                {% for child in form.children %}
+                {% for child in registrationForm.children %}
                     {# Display the errors of the form item #}
                     {% if child.vars.errors is defined %}
                         {% for error in child.vars.errors %}

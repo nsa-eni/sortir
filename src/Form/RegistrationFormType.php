@@ -99,7 +99,7 @@ class RegistrationFormType extends AbstractType
                         "message" => "Le champ Téléphone ne peut pas être vide !"
                     ]),
                     new Regex(["pattern" => "/^(0)[1-9][0-9]{8}$/",
-                        "message" => "Le format est 02 00 00 00 00!"])
+                        "message" => "Le format d'un numéro de téléphone est 02 00 00 00 00!"])
                 ]])
             ->add('password', RepeatedType::class, [
                 // instead of being set onto the object directly,
