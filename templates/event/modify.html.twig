@@ -5,65 +5,62 @@
 {% block body %}
 
     <div class="container">
-        <h3>Afficher une sortie</h3>
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div>
-                    <label class="col-md-6">Nom de la sortie :  </label>
-                    <span class="col-md-6">{{ event.name }}</span>
+        {{ form_start(formEvent, {'method': 'post', 'attr': {'class': ''}}) }}
+
+        <div class="row bar">
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_row(formEvent.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Date et heure de la sortie : </label>
-                    <span class="col-md-6">{{ event.dateStart|date('Y-m-d h:i', "Europe/Paris") }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.date_start, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Date limite d'inscription : </label>
-                    <span class="col-md-6">{{ event.dateEndOfRegistration|date('Y-m-d h:i', "Europe/Paris") }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.dateEndOfRegistration, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Nom de places : </label>
-                    <span class="col-md-6">{{ event.maxNumberPlaces }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.max_number_places, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Durée :</label>
-                    <span class="col-md-6">{{ event.timeDelayMinutes }} minutes</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.time_delay_minutes, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Description et infos : </label>
-                    <span class="col-md-6">{{ event.info }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.info, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
             </div>
-            <div class="col-md-6">
-                <div>
-                    <label class="col-md-6">Ville organisatrice :</label>
-                    <span class="col-md-6">{{ event.site.name }}</span>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_row(formEvent.location.city, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Lieu : </label>
-                    <span class="col-md-6">{{ event.location.name }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.location.name, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Rue :</label>
-                    <span class="col-md-6">{{ event.location.street }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.location.street, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Code postal :</label>
-                    <span class="col-md-6">{{ event.location.city.zipCode }}</span>
+                <div class="form-group">
+                    <label >Code Postal</label>
+                    <p id="zip_code">_____</p>
                 </div>
-                <div>
-                    <label class="col-md-6">Latitude :</label>
-                    <span class="col-md-6">{{ event.location.latitude }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.location.latitude, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
-                <div>
-                    <label class="col-md-6">Longitude :</label>
-                    <span class="col-md-6">{{ event.location.longitude }}</span>
+                <div class="form-group">
+                    {{ form_row(formEvent.location.longitude, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
             </div>
         </div>
 
-        <button>Enregistrer</button>
-        <button>Publier la sortie</button>
-        <a href={{ path('cancelEvent', {id: event.id}) }}><button>Supprimer la sortie</button></a>
-        <button>Annuler</button>
+        <div style="text-align: center" class="row">
+            {{ form_widget(formEvent.save, { 'attr': {'class': 'btn btn-primary col-md-2', 'style':''}} ) }}
+            {{ form_widget(formEvent.publish, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
+            <a href={{ path('cancelEvent', {id: event.id}) }} class="col-md-2"><input type="button" class="btn btn-primary pl-5 pr-5 ml-4 mr-5" value="Supprimer"></a>
+            {{ form_widget(formEvent.cancel, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
+        </div>
+
+
+        {{ form_end(formEvent) }}
     </div>
 {% endblock %}

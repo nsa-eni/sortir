@@ -104,7 +104,10 @@ class EventController extends AbstractController
      * @Route("/cancel/{id}", name="cancel", methods={"GET"})
      */
     public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
-        return $this->render('event/cancel.html.twig', ['event' => $event]);
+        dump($event);
+        $user = $this->getUser();
+
+        return $this->render('event/cancel.html.twig', ['event' => $event, 'user' => $user]);
     }
 
     /**
@@ -119,8 +122,6 @@ class EventController extends AbstractController
         $entityManager->initializeObject($event->getState());
         $event->setState(null);
 
-        dump($event);
-
         if ($user->getId() == $owner->getId() or $user.administrator) {
             $entityManager->remove($event);
             $entityManager->flush();
@@ -134,11 +135,28 @@ class EventController extends AbstractController
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
-     * @Route("/modify/{id}", name="modifyEvent", methods={"GET"})
+     * @Route("/modify/{id}", name="modifyEvent", methods={"GET", "POST"})
      */
     public function modify(Event $event, Request $request, EntityManagerInterface $entityManager) {
-        dump($event);
-        return $this->render('event/modify.html.twig', ['event' => $event]);
+        $form = $this->createForm(EventType::class, $event);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $req = $request->request->get('event');
+            $stateRepo = $entityManager->getRepository(State::class);
+            if (isset($req['save'])){
+                $state = $stateRepo->findOneBy(['name' => 'Créée']);
+            }elseif (isset($req['publish'])){
+                $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
+            }elseif (isset($req['cancel'])){
+                return $this->redirectToRoute("home");
+            }
+
+            $entityManager->persist($event);
+            $entityManager->flush();
+        }
+
+        return $this->render('event/modify.html.twig', ["formEvent" => $form->createView(), 'event' => $event]);
     }
 
     /**

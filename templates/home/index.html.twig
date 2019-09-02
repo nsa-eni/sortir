@@ -120,6 +120,9 @@
                                         - <a href={{ path('publish', {id: e.id}) }}>Publier</a>
                                     {% endif %}
                                 {% else %}
+                                    {% if e.state.name == "Ouverte" %}
+                                        <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
+                                    {% endif %}
                                     {% if e.subscribersUsers|length > 0 %}
                                         {% for sub in e.subscribersUsers %}
                                             {% if app.user.id == sub.id %}
