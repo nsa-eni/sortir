@@ -38,6 +38,14 @@ class SiteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getUsers()
+    {
+        return $this->createQueryBuilder('s')
+            ->addSelect('user')
+            ->leftJoin('s.users', 'user')
+            ->getQuery()
+            ->getResult();
+    }
     /**
      * @param $site
      * @return mixed
