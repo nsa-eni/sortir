@@ -24,6 +24,21 @@
                 </tr>
                 </thead>
                 <tbody>
+                <tr class="row">
+                    {{ form_start(formSite) }}
+                    <td class="col-md-4">
+                        <div class="form-group">
+                            {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouveau site"}}) }}
+                        </div>
+                    </td>
+                    <td class="col-md-2">
+                        <div class="form-group text-left">
+                            {{ form_widget(formSite.submit,{'attr': {'class': 'form-control', 'style':'border:none'}}) }}
+                        </div>
+                    </td>
+                    <td class="col-md-2"></td>
+                    {{ form_end(formSite) }}
+                </tr>
                 {% for Site in tabSite %}
                     <tr class="row">
                         <td class="col-md-4">{{ Site.name }}</td>
@@ -49,21 +64,6 @@
                         <td colspan="4">Désolé, il n'y a pas de résultat !</td>
                     </tr>
                 {% endfor %}
-                <tr class="row">
-                    {{ form_start(formSite) }}
-                    <td class="col-md-4">
-                        <div class="form-group">
-                            {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouveau site"}}) }}
-                        </div>
-                    </td>
-                    <td class="col-md-2">
-                        <div class="form-group text-left">
-                            {{ form_widget(formSite.submit,{'attr': {'class': 'form-control', 'style':'border:none'}}) }}
-                        </div>
-                    </td>
-                    <td class="col-md-2"></td>
-                    {{ form_end(formSite) }}
-                </tr>
                 </tbody>
             </table>
             {% if not formSite.vars.valid %}
