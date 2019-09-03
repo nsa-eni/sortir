@@ -18,12 +18,7 @@ class User implements UserInterface
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $newPassword;
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+
     private $id;
 
     /**
@@ -258,7 +253,7 @@ class User implements UserInterface
     /**
      * @param Site $site
      */
-    public function setSite(Site $site): void
+    public function setSite( $site): void
     {
         $this->site = $site;
     }
@@ -368,18 +363,6 @@ class User implements UserInterface
         $this->administrator = $administrator;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getNewPassword(): string
-    {
-        return $this->newPassword;
-    }
 
-
-    public function setNewPassword(string $newPassword): void
-    {
-        $this->newPassword = $newPassword;
-    }
 
 }
