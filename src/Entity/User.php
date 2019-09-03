@@ -15,7 +15,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface
 {
     /**
-     * @var string The hashed password
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
      * @ORM\Column(type="string")
      */
 
