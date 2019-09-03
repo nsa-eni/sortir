@@ -17,7 +17,7 @@
         <table class="table">
             <thead>
             <tr>
-                <th class="text-center"scope="col">Pseudo</th>
+                <th class="text-center" scope="col">Pseudo</th>
                 <th class="text-center" scope="col">Prénom</th>
                 <th class="text-center" scope="col">Nom</th>
                 <th class="text-center" scope="col">Téléphone</th>
@@ -67,6 +67,11 @@
             {% endfor %}
             </tbody>
         </table>
-        <a href="{{ path('app_register') }}" ><input type="button" class="btn btn-primary" value="Créer un nouvel utilisateur"></a>
+        <div class="text-center">
+            <a href="{{ path('app_register') }}"><input type="button" class="btn btn-primary"
+                                                        value="Créer un nouvel utilisateur"></a>
+            <a href="{{ path('import_file_and_register') }}"><input type="button" class="btn btn-primary"
+                                                                    value="Importer un groupe d'utilisateurs"></a>
+        </div>
     </div>
 {% endblock %}
