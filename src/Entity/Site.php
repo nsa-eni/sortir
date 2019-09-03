@@ -80,7 +80,7 @@ class Site
     /**
      * @return User[]
      */
-    public function getUsers(): array
+    public function getUsers()
     {
         return $this->users;
     }

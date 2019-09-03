@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use App\Security\LoginFormAuthenticator;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
@@ -134,11 +135,23 @@ class SecurityController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
+        $entityManager= $this->getDoctrine()->getManager();
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
-            $this->addFlash("success", "Le profil a bien été effacé !");
-            $entityManager = $this->getDoctrine()->getManager();
+            $events=$user->getEvents();
+
+            foreach ($events as $event ) {
+                $user->removeEvents($event);
+                $event->removeSubscribersUsers($user);
+            }
+
+            $entityManager->initializeObject($user->getSite());
+            $site=$user->getSite();
+            $entityManager->initializeObject($site->getUsers());
+            $user->setSite(null);
+            $site->getUsers()->removeElement($user);
             $entityManager->remove($user);
             $entityManager->flush();
+            $this->addFlash("success", "Le profil a bien été effacé !");
         }
 
         return $this->redirectToRoute('user_index');
