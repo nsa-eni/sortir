@@ -105,7 +105,7 @@
                                     {% endif %}
                                 {% endfor %}
                             </td>
-                            <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                            <td><a href="{{path('user_show', { 'id' : e.user.id})}}"><button class="btn"> {{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</button></a></td>
                             <td>
                                 {% if e.user.id == app.user.id and e.state.name != "Créée" or app.user.roles[0] == "ROLE_ADMIN" %}
                                     <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
