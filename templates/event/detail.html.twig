@@ -7,76 +7,80 @@
     <div class="container">
         <h3>Afficher une sortie</h3>
         <div class="row mt-4">
-            <div class="col-md-6">
-                <div>
-                    <label class="col-md-6">Nom de la sortie :  </label>
-                    <span class="col-md-6">{{ event.name }}</span>
+            <div class="col-md-6 col-sm-12">
+                <div class="col">
+                    <label>Nom de la sortie : </label>
+                    <span >{{ event.name }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Date et heure de la sortie : </label>
-                    <span class="col-md-6">{{ event.dateStart|date('Y-m-d h:i', "Europe/Paris") }}</span>
+                <div class="col">
+                    <label >Date et heure : </label>
+                    <span >{{ event.dateStart|date('d-m-Y h:i', "Europe/Paris") }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Date limite d'inscription : </label>
-                    <span class="col-md-6">{{ event.dateEndOfRegistration|date('Y-m-d h:i', "Europe/Paris") }}</span>
+                <div class="col">
+                    <label >Date limite : </label>
+                    <span>{{ event.dateEndOfRegistration|date('d-m-Y h:i', "Europe/Paris") }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Nom de places : </label>
-                    <span class="col-md-6">{{ event.maxNumberPlaces }}</span>
+                <div class="col">
+                    <label >Nom de places : </label>
+                    <span>{{ event.maxNumberPlaces }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Durée :</label>
-                    <span class="col-md-6">{{ event.timeDelayMinutes }} minutes</span>
+                <div class="col">
+                    <label>Durée :</label>
+                    <span>{{ event.timeDelayMinutes }} minutes</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Description et infos : </label>
-                    <span class="col-md-6">{{ event.info }}</span>
+                <div class="col">
+                    <label>Description et infos : </label>
+                    <span>{{ event.info }}</span>
                 </div>
             </div>
-            <div class="col-md-6">
-                <div>
-                    <label class="col-md-6">Ville organisatrice :</label>
-                    <span class="col-md-6">{{ event.site.name }}</span>
+            <div class="col-md-6 col-sm-12">
+                <div class="col">
+                    <label>Ville organisatrice :</label>
+                    <span>{{ event.site.name }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Lieu : </label>
-                    <span class="col-md-6">{{ event.location.name }}</span>
+                <div class="col">
+                    <label >Lieu : </label>
+                    <span>{{ event.location.name }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Rue :</label>
-                    <span class="col-md-6">{{ event.location.street }}</span>
+                <div class="col">
+                    <label>Rue :</label>
+                    <span >{{ event.location.street }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Code postal :</label>
-                    <span class="col-md-6">{{ event.location.city.zipCode }}</span>
+                <div class="col">
+                    <label>Code postal :</label>
+                    <span>{{ event.location.city.zipCode }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Latitude :</label>
-                    <span class="col-md-6">{{ event.location.latitude }}</span>
+                <div class="col">
+                    <label >Latitude :</label>
+                    <span >{{ event.location.latitude }}</span>
                 </div>
-                <div>
-                    <label class="col-md-6">Longitude :</label>
-                    <span class="col-md-6">{{ event.location.longitude }}</span>
+                <div class="col">
+                    <label >Longitude :</label>
+                    <span >{{ event.location.longitude }}</span>
                 </div>
             </div>
         </div>
 
         <h3>Liste des participants inscrits :</h3>
-        <table class="table col-md-6">
-            <thead>
+        <div class="scrollbar">
+            <table class="table col-md-6">
+                <thead>
                 <tr>
                     <th>Pseudo</th>
                     <th>Nom</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    {% for su in event.subscribersUsers %}
+                </thead>
+                <tbody>
+
+                {% for su in event.subscribersUsers %}
+                    <tr>
                         <td>{{ su.pseudo }}</td>
                         <td>{{ su.firstname }} {{ su.name }}</td>
-                    {% endfor %}
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
