@@ -19,7 +19,6 @@ class DatabaseCreateEventSchedulerCommand extends Command
     private static $completion_conserve = ['NOT PRESERVE', 'PRESERVE'];
     private static $calendar_names =
         ['YEAR', 'QUARTER', 'DAY', 'HOUR', 'MINUTE', 'WEEK', 'SECOND', 'YEAR_MONTH', 'DAY_HOUR', 'DAY_MINUTE', 'DAY_SECOND', 'HOUR_MINUTE', 'HOUR_SECOND', 'MINUTE_SECOND'];
-
     private $entityManager;
 
     private $execute_calendar = [];

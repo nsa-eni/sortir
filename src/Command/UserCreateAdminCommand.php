@@ -51,7 +51,7 @@ class UserCreateAdminCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
         $helper = $this->getHelper('question');
-        $helper->ask($input, $output, $this->createSecurityPasswordCommandQuestion());
+        //$helper->ask($input, $output, $this->createSecurityPasswordCommandQuestion());
         $email = $helper->ask($input, $output, $this->createEmailQuestion());
         $password = $helper->ask($input, $output, $this->createPasswordQuestion());
         if ($this->createUser($email, $password)){
