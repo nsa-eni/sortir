@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
     /**
-     * @Route("/admin/", name="user_index", methods={"GET"})
+     * @Route("/admin/user", name="user_index", methods={"GET"})
      */
     public function index(UserRepository $userRepository, EntityManagerInterface $entityManager, Request $request): Response
      {
@@ -154,7 +154,7 @@ class SecurityController extends AbstractController
                     $createdEvent->removeSubscribersUsers($subscribersUser);
                     $subscribersUser->removeEvents($event);
                 }
-                $user->removeCreatedEvents($createdEvent);
+                $entityManager->remove($createdEvent);
             }
             //suppression du lien utilisateur supprimé - site de rattachement
             $entityManager->initializeObject($user->getSite());
