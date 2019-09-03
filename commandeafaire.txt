@@ -1,1 +1,4 @@
 composer require --dev doctrine/doctrine-fixtures-bundle
+
+composer require symfony/swiftmailer-bundle
+MAILER_URL=smtp://smtp.mailtrap.io:2525?encryption=tls&auth_mode=login&username=b8f1cb81d9c0ca&password=8d90b3b5c291b0
