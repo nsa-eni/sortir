@@ -36,7 +36,12 @@
                     <td>{{ user.phone }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.site.name }}</td>
-                    <td>{{ user.actif ? 'Yes' : 'No' }}</td>
+                    <td>{% if user.actif %}
+                            <a href={{ path('disable', {id: user.id}) }}>Yes</a>
+                        {% else %}
+                            <a href={{ path('disable', {id: user.id}) }}>No</a>
+                        {% endif %}
+                    </td>
                     {# {% if tabDetail.imageFilename %}
                            <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}" alt="user_image" /></p>
                        {% endif %} #}

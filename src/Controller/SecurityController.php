@@ -258,6 +258,25 @@ class SecurityController extends AbstractController
 
     }
 
+    /**
+     * @Route("disable/{id}", name="disable", methods={"GET"})
+     */
+    public function disableAccount(Request $request, User $user, EntityManagerInterface $entityManager) {
+        $me = $this->getUser();
 
+        if (in_array( "ROLE_ADMIN", $me->getRoles())) {
+
+            if ($user->getActif()) {
+                $user->setActif(false);
+            } else {
+                $user->setActif(true);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+            return $this->redirect($request->headers->get('referer'));
+        } else {
+            return $this->redirect($request->headers->get('referer'));
+        }
+    }
 
 }

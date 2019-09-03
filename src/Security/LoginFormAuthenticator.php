@@ -65,6 +65,11 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $credentials['email']]);
+        
+        if (!$user->getActif()) {
+            // User désactivé
+            throw new CustomUserMessageAuthenticationException('Votre compte a été désactivé.');
+        }
 
         if (!$user) {
             // fail authentication with a custom error
