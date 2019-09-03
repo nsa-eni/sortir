@@ -26,7 +26,7 @@
         <div class="form-group">
             <div>
                 <div class="row">
-                    <div class="offset-1 col-lg-5 col-md-5 ">
+                    <div class="offset-1 col-lg-5 col-md-5 col-sm-4 mr-4">
                         <div>
                             {{ form_label(searchForm.site) }}
                             {{ form_widget(searchForm.site, { 'attr': {'class': 'form-group', 'style':''}}) }}
@@ -36,17 +36,17 @@
                             {{ form_widget(searchForm.name, { 'attr': {'class': 'form-group ', 'style':''}}) }}
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 {{ form_label(searchForm.date_start) }}
                                 {{ form_widget(searchForm.date_start, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 {{ form_label(searchForm.date_end_of_registration) }}
                                 {{ form_widget(searchForm.date_end_of_registration, { 'attr': {'class': 'form-group', 'style':''}}) }}
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 mt-4">
+                    <div class="col-lg-4 col-md-4 mt-4 ml-4">
                         <div>
                             {{ form_widget(searchForm.user,{ 'attr': {'class': 'form-group', 'style':''}}) }}
                             {{ form_label(searchForm.user) }}
@@ -75,77 +75,84 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        {% if eventsFromSearch is defined %}
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Nom de la sortie</th>
-                    <th>Date de la sortie</th>
-                    <th>Clôture</th>
-                    <th>inscrits/places</th>
-                    <th>Etat</th>
-                    <th>Inscrit</th>
-                    <th>Organisateur</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                {% for e in eventsFromSearch %}
+    <div class="container ">
+        <div class="scrollbar">
+            {% if eventsFromSearch is defined %}
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td>{{ e.name }}</td>
-                        <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
-                        <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
-                        <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
-                        <td>{{ e.state.name }}</td>
-                        <td>{% for sub in e.subscribersUsers %}
-                                {% if sub.id == app.user.id %}X
-                                {% endif %}
-                            {% endfor %}
-                        </td>
-                        <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
-                        <td>
-                            {% if e.user.id == app.user.id and e.state.name != "Créée" or app.user.roles[0] == "ROLE_ADMIN" %}
-                                <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
-                            {% elseif e.user.id == app.user.id and e.state.name == "Créée" %}
-                                <a href={{ path('modifyEvent', {id: e.id}) }}>Modifier</a>
-                            {% endif %}
-                            {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
-                                {% if app.user.id == e.user.id or app.user.roles[0] == "ROLE_ADMIN" %}
-                                    {% if e.state.name == "Ouverte" or app.user.roles[0] == "ROLE_ADMIN" %}
-                                        - <a href={{ path('cancel', {id: e.id}) }}>Annuler</a>
-                                    {% endif %}
-                                    {% if e.state.name == "Créée" %}
-                                        - <a href={{ path('publish', {id: e.id}) }}>Publier</a>
-                                    {% endif %}
-                                {% else %}
-                                    {% if e.state.name == "Ouverte" %}
-                                        <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
-                                    {% endif %}
-
-                                    {% if date(e.dateEndOfRegistration) < date() %}
-                                        - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
-                                    {% else %}
-                                        
-                                        {% if app.user in e.subscribersUsers %}
-                                            - <a href={{ path('unsubscribe', {id: e.id}) }}>Se désister</a>
-                                        {% else %}
-                                            - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
-                                        {% endif %}
-                                    {% endif %}
-
-
-
-                                {% endif %}
-                            {% endif %}
-                        </td>
+                        <th>Nom de la sortie</th>
+                        <th>Date de la sortie</th>
+                        <th>Clôture</th>
+                        <th>inscrits/places</th>
+                        <th>Etat</th>
+                        <th>Inscrit</th>
+                        <th>Organisateur</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-        <button>Créer une sortie</button>
+                    </thead>
+                    <tbody>
+
+                    {% for e in eventsFromSearch %}
+                        <tr>
+                            <td>{{ e.name }}</td>
+                            <td>{{ e.dateStart|date('d/m/Y h:i') }}</td>
+                            <td>{{ e.dateEndOfRegistration|date('d/m/Y h:i') }}</td>
+                            <td>{{ e.subscribersUsers.count }}/{{ e.maxNumberPlaces }}</td>
+                            <td>{{ e.state.name }}</td>
+                            <td>{% for sub in e.subscribersUsers %}
+                                    {% if sub.id == app.user.id %}X
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>{{ e.user.firstname }} {{ e.user.name|first|capitalize }}.</td>
+                            <td>
+                                {% if e.user.id == app.user.id and e.state.name != "Créée" or app.user.roles[0] == "ROLE_ADMIN" %}
+                                    <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
+                                {% elseif e.user.id == app.user.id and e.state.name == "Créée" %}
+                                    <a href={{ path('modifyEvent', {id: e.id}) }}>Modifier</a>
+                                {% endif %}
+                                {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
+                                    {% if app.user.id == e.user.id or app.user.roles[0] == "ROLE_ADMIN" %}
+                                        {% if e.state.name == "Ouverte" or app.user.roles[0] == "ROLE_ADMIN" %}
+                                            - <a href={{ path('cancel', {id: e.id}) }}>Annuler</a>
+                                        {% endif %}
+                                        {% if e.state.name == "Créée" %}
+                                            - <a href={{ path('publish', {id: e.id}) }}>Publier</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {% if e.state.name == "Ouverte" %}
+                                            <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
+                                        {% endif %}
+
+                                        {% if date(e.dateEndOfRegistration) < date() %}
+                                            - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                        {% else %}
+
+                                            {% if app.user in e.subscribersUsers %}
+                                                - <a href={{ path('unsubscribe', {id: e.id}) }}>Se désister</a>
+                                            {% else %}
+                                                - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
+                                            {% endif %}
+                                        {% endif %}
+
+
+
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+        </div>
+        <div class="mt-5">
+            <a href={{ path('event') }}>
+                <button>Créer une sortie</button>
+            </a>
+        </div>
     </div>
 
 {% endblock %}

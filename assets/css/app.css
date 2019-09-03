@@ -1,3 +1,19 @@
 body {
     background-color: white;
 }
+
+.scrollbar {
+    position: relative;
+    height: 400px;
+    overflow-y: auto;
+}
+
+@media (min-width:200px) and (max-width: 640px) {
+    .scrollbar {
+        position: relative;
+        width: 300px;
+        height: 200px;
+        overflow-y: scroll;
+        overflow-x: scroll;
+    }
+}
