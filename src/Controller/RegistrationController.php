@@ -18,7 +18,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/admin/register", name="app_register")
+     * @Route("/admin/user/register", name="app_register")
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
 
     /**
      * @param Request $request
-     * @Route("/admin/import_file", name="import_file_and_register", methods={"GET", "POST"})
+     * @Route("/admin/user/import_file", name="import_file_and_register", methods={"GET", "POST"})
      * @return Response
      */
     public function registerByImportingFile(Request $request, UserPasswordEncoderInterface $passwordEncoder)
