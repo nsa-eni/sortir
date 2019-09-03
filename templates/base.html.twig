@@ -47,5 +47,24 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
+<br>
+<br>
+<footer class="footer pt-4 fixed-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="#"></a>
+                <a class="nav-item nav-link" href={{ path('infos') }}>Informations légales</a>
+                <a class="nav-item nav-link" href={{ path('event') }}>Données personnelles</a>
+                <a class="nav-item nav-link" href="#">Conditions générales d'utilisation</a>
+                <a class="nav-item nav-link" href={{ path('event') }}>Foire aux questions</a>
+                <a class="nav-item nav-link" href={{ path('event') }}>Nous contacter</a>
+                <a class="nav-item nav-link text-right" href={{ path('event') }}>Eni 2019</a>
+            </div>
+</footer>
 </body>
 </html>
