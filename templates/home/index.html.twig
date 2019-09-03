@@ -124,15 +124,13 @@
                                         <a href={{ path('detail', {id: e.id}) }}>Afficher</a>
                                     {% endif %}
                                     {% if e.subscribersUsers|length > 0 %}
-                                        {% for sub in e.subscribersUsers %}
                                             {% if date(e.dateEndOfRegistration|date('d/m/Y h:i')) < date() %}
-                                                {% if app.user.id == sub.id %}
+                                                {% if app.user in e.subscribersUsers %}
                                                     - <a href={{ path('unsubscribe', {id: e.id}) }}>Se désister</a>
                                                 {% else %}
                                                     - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>
                                                 {% endif %}
                                             {% endif %}
-                                        {% endfor %}
                                     {% else %}
                                         {% if date(e.dateEndOfRegistration|date('d/m/Y h:i')) > date() %}
                                             - <a href={{ path('subscribe', {id: e.id}) }}>S'inscrire</a>

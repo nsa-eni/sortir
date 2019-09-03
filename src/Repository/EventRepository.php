@@ -52,16 +52,20 @@ class EventRepository extends ServiceEntityRepository
 
         } else {
             if ($subscribed) {
-                $req->innerJoin('e.subscribers_users', 'event_user')
-                    ->andWhere(':me in (:subs)')
-                    ->setParameter('subs', 'e.subscribers_users')
+               $req->join('e.subscribers_users', 'su')
+                    ->andWhere('su.id = :me')
                     ->setParameter('me', $myId);
             }
 
             if ($notsubscribed) {
-                $req->andWhere(':me not in (:subs)')
-                    ->setParameter('subs', 'e.subscribers_users')
+                $req2 = $this->createQueryBuilder('event')->select('event.id')
+                    ->leftJoin('event.subscribers_users', 'subs')
+                    ->where('subs.id = :me');
+
+                $req->leftJoin('e.subscribers_users', 'sub')
+                    ->where('e.id not in (' . $req2 . ')')
                     ->setParameter('me', $myId);
+
             }
         }
 
@@ -78,6 +82,7 @@ class EventRepository extends ServiceEntityRepository
         if (!is_null($eventEnded) and $eventEnded) {
             $req->andWhere(':dateNow >= e.date_end_of_registration')->setParameter('dateNow', $dateNow);
         }
+
         return $req->getQuery()->getResult();
     }
 
