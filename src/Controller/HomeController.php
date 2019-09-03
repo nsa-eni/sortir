@@ -46,7 +46,7 @@ class HomeController extends AbstractController
 
             $eventsFromSearch = $entityManager->getRepository(Event::class)
                 ->searchEvent($name, $dateStart, $dateEnd, $owner, $eventEnded, $site, $myId, $subscribed, $notSubscribed);
-            
+
 
             return $this->render('home/index.html.twig', [
                 'searchForm' => $searchForm->createView(),

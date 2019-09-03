@@ -41,13 +41,6 @@ class EventRepository extends ServiceEntityRepository
             $req->leftJoin('e.site', 'site');
         }
 
-        if (!is_null($name) and !empty($name[0])) {
-            foreach ($name as $n)
-                $req->andWhere('e.name like :n')
-                    ->setParameter('n', '%' . $n . '%');
-        }
-
-
         if ($subscribed and $notsubscribed) {
 
         } else {
@@ -63,8 +56,8 @@ class EventRepository extends ServiceEntityRepository
                     ->where('subs.id = :me');
 
                 $req->leftJoin('e.subscribers_users', 'sub')
-                    ->where('e.id not in (' . $req2 . ')')
-                    ->setParameter('me', $myId);
+                    ->where('e.id not in (' . $req2 . ')')->setParameter('me', $myId);
+
 
             }
         }
@@ -81,6 +74,12 @@ class EventRepository extends ServiceEntityRepository
 
         if (!is_null($eventEnded) and $eventEnded) {
             $req->andWhere(':dateNow >= e.date_end_of_registration')->setParameter('dateNow', $dateNow);
+        }
+
+        if (!is_null($name) and !empty($name[0])) {
+            foreach ($name as $n)
+                $req->andWhere('e.name like :n')
+                    ->setParameter('n', '%' . $n . '%');
         }
 
         return $req->getQuery()->getResult();
