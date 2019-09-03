@@ -276,9 +276,9 @@ class User implements UserInterface
     }
 
     /**
-     * @return Event
+     * @return Event[]
      */
-    public function getCreatedEvents(): Event
+    public function getCreatedEvents()
     {
         return $this->createdEvents;
     }

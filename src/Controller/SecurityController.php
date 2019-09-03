@@ -138,12 +138,25 @@ class SecurityController extends AbstractController
         $entityManager= $this->getDoctrine()->getManager();
         if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $events=$user->getEvents();
-
+            //suppression de l'utilisateur dans la liste des inscrits à une sortie
             foreach ($events as $event ) {
                 $user->removeEvents($event);
                 $event->removeSubscribersUsers($user);
             }
 
+            $entityManager->initializeObject($user->getCreatedEvents());
+            $createdEvents=$user->getCreatedEvents();
+            //suppression des événements organisés par l'utilisateur supprimé
+            foreach ($createdEvents as $createdEvent){
+                $subscribersUsers=$createdEvent->getSubscribersUsers();
+                //suppression de l'événement organisé par l'utilisateur supprimé chez les utilisateurs inscrits à l'événement
+                foreach ($subscribersUsers as $subscribersUser) {
+                    $createdEvent->removeSubscribersUsers($subscribersUser);
+                    $subscribersUser->removeEvents($event);
+                }
+                $user->removeCreatedEvents($createdEvent);
+            }
+            //suppression du lien utilisateur supprimé - site de rattachement
             $entityManager->initializeObject($user->getSite());
             $site=$user->getSite();
             $entityManager->initializeObject($site->getUsers());
