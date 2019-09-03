@@ -203,7 +203,8 @@ class Event
      */
     public function getDateEndOfRegistration()
     {
-        return $this->date_end_of_registration;
+        $date = date("d/m/Y", strtotime($this->date_end_of_registration->getTimeStamp()));
+        return $date;
     }
 
     /**

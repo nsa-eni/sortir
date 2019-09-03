@@ -57,8 +57,6 @@ class EventRepository extends ServiceEntityRepository
 
                 $req->leftJoin('e.subscribers_users', 'sub')
                     ->where('e.id not in (' . $req2 . ')')->setParameter('me', $myId);
-
-
             }
         }
 
