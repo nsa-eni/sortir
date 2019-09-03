@@ -1,0 +1,18 @@
+{#template/bundles/TwigBundle/Exception/error403.html.twig#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Accès refusé{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1 class="alert alert-danger">Une Erreur est survenue !</h1>
+
+        <p>Erreur de type 403</p>
+        <p>Une exception a été lancée depuis l'application, elle comportait le message suivant : "Accès refusé" !</p>
+        <img height="400" src="{{ asset('build/images/the-office.jpg') }}">
+        <br>
+        <br>
+        <p> C'est pas beau d'essayer de contourner les règles ! Bon, file d'ici tout de suite :</p>
+        <a class="nav-item nav-link" href={{ path('home') }}>Retour a l'accueil</a>
+    </div>
+{% endblock %}
