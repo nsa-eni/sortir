@@ -56,7 +56,7 @@
         <div style="text-align: center" class="row">
             {{ form_widget(formEvent.save, { 'attr': {'class': 'btn btn-primary col-md-2', 'style':''}} ) }}
             {% if event.state.name == "Créée" %}
-                {{ form_widget(formEvent.publish, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
+                {{ form_widget(formEvent.publier, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
             {% endif %}
             {{ form_widget(formEvent.supprimer, { 'attr': {'class': 'btn btn-danger col-md-2 ml-5', 'style':'', 'onclick': 'return confirm("Vous êtes sur ?")' } } ) }}
             {{ form_widget(formEvent.cancel, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
