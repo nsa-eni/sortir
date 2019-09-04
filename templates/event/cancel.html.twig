@@ -61,8 +61,8 @@
             </div>
         </div>
         {% if event.user.id == app.user.id or app.user.roles[0] == "ROLE_ADMIN"%}
-     
-        <a  onclick="return confirm('Vous êtes sur ?')" href={{ path('cancelEvent', {id: event.id}) }}><button >Annuler</button></a>
+
+        <a  onclick="return confirm('Vous êtes sur ?')" href={{ path('cancelEvent', {id: event.id}) }}><button class="btn btn-outline-danger">Annuler la sortie</button></a>
         {% endif %}
     </div>
 {% endblock %}
