@@ -9,7 +9,7 @@
         <div class="row mt-4">
             <div class="col-md-6">
                 <div>
-                    <label class="col-md-6">Nom de la sortie :  </label>
+                    <label class="col-md-6">Nom de la sortie : </label>
                     <span class="col-md-6">{{ event.name }}</span>
                 </div>
                 <div>
@@ -60,9 +60,12 @@
                 </div>
             </div>
         </div>
-        {% if event.user.id == app.user.id or app.user.roles[0] == "ROLE_ADMIN"%}
-
-        <a  onclick="return confirm('Vous êtes sur ?')" href={{ path('cancelEvent', {id: event.id}) }}><button class="btn btn-outline-danger">Annuler la sortie</button></a>
+        {% if event.user.id == app.user.id or app.user.roles[0] == "ROLE_ADMIN" %}
+            <div class="text-center mt-5">
+                <a onclick="return confirm('Vous êtes sur ?')" href={{ path('cancelEvent', {id: event.id}) }}>
+                    <button class="btn btn-outline-danger">Annuler la sortie</button>
+                </a>
+            </div>
         {% endif %}
     </div>
 {% endblock %}
