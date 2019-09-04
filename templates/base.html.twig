@@ -13,7 +13,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href={{ path('home') }}>Sortir.com</a>
+    <a class="navbar-brand" href={{ path('welcome') }}>Sortir.com</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -49,7 +49,7 @@
 <br>
 <br>
 <footer class="footer pt-4 fixed-bottom">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light text-center">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -62,7 +62,7 @@
                 <a class="nav-item nav-link" href={{ path('cgu') }}>Conditions générales d'utilisation</a>
                 <a class="nav-item nav-link" href={{ path('faq') }}>Foire aux questions</a>
                 <a class="nav-item nav-link" href={{ path('contact') }}>Nous contacter</a>
-                <a class="nav-item nav-link" href="#">&copy; Eni 2019</a>
+                <a class="nav-item nav-link text-center" href="#">&copy; Eni 2019</a>
                 <img class="eni " height="40" src="{{ asset('build/images/logo eni.jpg') }}">
             </div>
 </footer>

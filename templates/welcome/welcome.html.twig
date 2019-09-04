@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <div class="offset-1 mr-5">
+    <h1 class="text-center">Bonjour les Eniens ! </h1>
+    <br>
+        <div class="text-center">
+            <img class="welcome" height="300" src="{{ asset('build/images/welcome1.jpg') }}">
+        </div>
+        <br>
+        <p class="text-justify">Bienvenue sur notre site sortir.com ! Le site idéal pour partager vos idées sorties
+            entre collègues et
+            améliorer votre réseau.</p>
+        <p class="text-justify">Nous avons imaginé cette solution en voyant la cohésion que chaque promo créait durant
+            sa formation. Nous
+            avons donc décidé de vous aider à poursuivre sur cette voie.
+            Donc n'hésitez pas à partager, organiser toutes vos idées sorties en parcourant les différents volets de
+            notre site.</p>
+        <div class="text-center">
+            <p class=" font-weight-bold"> Bonnes rencontres et bonnes sorties les Eniens !</p>
+            <img class="welcome" height="300" src="{{ asset('build/images/welcome2.jpg') }}">
+        </div>
+    </div>
+{% endblock %}

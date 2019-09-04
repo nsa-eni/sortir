@@ -16,4 +16,16 @@ body {
         overflow-y: scroll;
         overflow-x: scroll;
     }
+    .eni{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40px;
+    height: 40px;
+         }
+     .welcome {
+         width: 300px;
+         height: 200px;
+
+
+     }
 }
