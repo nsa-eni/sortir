@@ -48,6 +48,7 @@
                             </a>
                         </td>
                         <td class="col-md-2 text-left">
+                            {% if Site.users is empty and Site.events is empty %}
                             <form method="post" action="{{ path('site_delete', {'id': Site.id}) }}"
                                   onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce site ?');">
                                 <input type="hidden" name="_method" value="DELETE">
@@ -56,6 +57,7 @@
                                     <button class="btn">Supprimer</button>
                                 </a>
                             </form>
+                            {% endif %}
                         </td>
                     </tr>
 

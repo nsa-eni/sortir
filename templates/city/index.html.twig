@@ -55,14 +55,16 @@
                             </a>
                         </td>
                         <td class="col-md-2 text-left">
-                            <form method="post" action="{{ path('city_delete', {'id': City.id}) }}"
-                                  onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette ville ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ City.id) }}">
-                                <a href="{{ path('city_delete', {'id': City.id}) }}">
-                                    <button class="btn">Supprimer</button>
-                                </a>
-                            </form>
+                            {% if City.locations is empty %}
+                                <form method="post" action="{{ path('city_delete', {'id': City.id}) }}"
+                                      onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette ville ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ City.id) }}">
+                                    <a href="{{ path('city_delete', {'id': City.id}) }}">
+                                        <button class="btn">Supprimer</button>
+                                    </a>
+                                </form>
+                            {% endif %}
                         </td>
                     </tr>
 

@@ -26,6 +26,7 @@ class CityController extends AbstractController
         $form = $this->createForm(CityType::class, $city);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $city->setName(mb_strtoupper($city->getName()));
             $this->addFlash("success", "La nouvelle ville a bien été enregistrée !");

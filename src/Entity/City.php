@@ -78,7 +78,7 @@ class City
     /**
      * @return Location[]
      */
-    public function getLocations(): array
+    public function getLocations()
     {
         return $this->locations;
     }
