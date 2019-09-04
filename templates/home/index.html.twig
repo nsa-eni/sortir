@@ -113,7 +113,7 @@
                             <td>
 
                                 {% if e.user.id == app.user.id and e.state.name == "Créée" or app.user.roles[0] == "ROLE_ADMIN" %}
-                                    <a href={{ path('modifyEvent', {id: e.id}) }}>Modifier</a>
+                                    <a href={{ path('modifyEvent', {id: e.id}) }}>Modifier</a> -
                                 {% endif %}
                                 {% if e.state.name == "Créée" or e.state.name == "Ouverte" %}
                                     {% if app.user.id == e.user.id or app.user.roles[0] == "ROLE_ADMIN" %}
