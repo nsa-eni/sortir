@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Command\ConfirmActionCommand;
 use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\State;
@@ -104,7 +103,7 @@ class EventController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @Route("/cancel/{id}", name="cancel", methods={"GET"})
      */
-    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager, ConfirmActionCommand $confirm) {
+    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
         dump($event);
         $user = $this->getUser();
         $entityManager->initializeObject($event->getLocation());
