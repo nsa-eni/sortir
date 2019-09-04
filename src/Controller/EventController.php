@@ -162,7 +162,7 @@ class EventController extends AbstractController
             $stateRepo = $entityManager->getRepository(State::class);
             if (isset($req['save'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
-            } elseif (isset($req['publish'])) {
+            } elseif (isset($req['publier'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
             } elseif (isset($req['cancelEvent'])) {
                 return $this->redirectToRoute("cancelEvent", ['id' => $event->getId()]);
