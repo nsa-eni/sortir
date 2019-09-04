@@ -112,7 +112,6 @@ class EventController extends AbstractController
      */
     public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager)
     {
-        dump($event);
         $user = $this->getUser();
         $entityManager->initializeObject($event->getLocation());
         return $this->render('event/cancel.html.twig', ['event' => $event, 'user' => $user]);
@@ -173,11 +172,7 @@ class EventController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
             return $this->redirectToRoute("home");
-        } else {
-
         }
-
-
 
         return $this->render('event/modify.html.twig', ["formEvent" => $form->createView(), 'event' => $event]);
     }
