@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Command\ConfirmActionCommand;
 use App\Entity\City;
 use App\Entity\Event;
 use App\Entity\State;
@@ -103,10 +104,10 @@ class EventController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @Route("/cancel/{id}", name="cancel", methods={"GET"})
      */
-    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager, ConfirmActionCommand $confirm) {
         dump($event);
         $user = $this->getUser();
-
+        $entityManager->initializeObject($event->getLocation());
         return $this->render('event/cancel.html.twig', ['event' => $event, 'user' => $user]);
     }
 
@@ -122,9 +123,10 @@ class EventController extends AbstractController
         $entityManager->initializeObject($event->getState());
         $event->setState(null);
 
-        if ($user->getId() == $owner->getId() or $user->getRoles() == "ROLE_ADMIN") {
+        if ($user->getId() == $owner->getId() or $user->getRoles()[0] == "ROLE_ADMIN") {
             $entityManager->remove($event);
             $entityManager->flush();
+            return $this->redirectToRoute('home');
         }
 
         return $this->redirectToRoute('home');
@@ -148,6 +150,8 @@ class EventController extends AbstractController
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
             }elseif (isset($req['publish'])){
                 $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
+            }elseif (isset($req['cancelEvent'])){
+                return $this->redirectToRoute("cancelEvent", ['id' => $event->getId()]);
             }elseif (isset($req['cancel'])){
                 return $this->redirectToRoute("home");
             }

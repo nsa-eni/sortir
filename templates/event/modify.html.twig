@@ -41,7 +41,7 @@
                     {{ form_row(formEvent.location.street, { 'attr': {'class': 'form-control', 'style':''}} ) }}
                 </div>
                 <div class="form-group">
-                    <label >Code Postal</label>
+                    <label>Code Postal</label>
                     <p id="zip_code">_____</p>
                 </div>
                 <div class="form-group">
@@ -56,7 +56,7 @@
         <div style="text-align: center" class="row">
             {{ form_widget(formEvent.save, { 'attr': {'class': 'btn btn-primary col-md-2', 'style':''}} ) }}
             {{ form_widget(formEvent.publish, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
-            <a href={{ path('cancelEvent', {id: event.id}) }} class="col-md-2"><input type="button" class="btn btn-primary pl-5 pr-5 ml-4 mr-5" value="Supprimer"></a>
+            {{ form_widget(formEvent.cancelEvent, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':'', 'onclick': 'return confirm("Vous êtes sur ?")' } } ) }}
             {{ form_widget(formEvent.cancel, { 'attr': {'class': 'btn btn-primary col-md-2 ml-5', 'style':''}} ) }}
         </div>
 

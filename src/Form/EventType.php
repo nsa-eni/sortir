@@ -49,6 +49,10 @@ class EventType extends AbstractType
         $builder->add('publish', SubmitType::class,[
             'label' => 'Publier'
         ]);
+        $builder->add('cancelEvent', SubmitType::class, [
+            'label' => 'Supprimer'
+
+        ]);
         $builder->add('cancel', SubmitType::class,[
             'label' => 'Annuler'
         ]);
