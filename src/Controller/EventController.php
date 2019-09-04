@@ -9,6 +9,8 @@ use App\Form\EventType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Event\PreSubmitEvent;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,32 +29,40 @@ class EventController extends AbstractController
     public function index(EntityManagerInterface $entityManager, Request $request, Security $security)
     {
 
-        if ($request->isXmlHttpRequest()){
+        if ($request->isXmlHttpRequest()) {
             return $this->getPostalCodeByCityId($request, $entityManager);
-        }else{
+        } else {
             $user = $security->getUser();
 
             $event = new Event();
             $event->setUser($user);
             $event->setSite($user->getSite());
             $form = $this->createForm(EventType::class, $event);
+            $form->add('publier', SubmitType::class);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $req = $request->request->get('event');
                 $stateRepo = $entityManager->getRepository(State::class);
-                if (isset($req['save'])){
+                if (isset($req['save'])) {
                     $state = $stateRepo->findOneBy(['name' => 'Créée']);
-                }elseif (isset($req['publish'])){
+                    $event->setState($state);
+                    return $this->redirectToRoute('home');
+                } elseif (isset($req['publier'])) {
                     $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
-                }elseif (isset($req['cancel'])){
+                    $event->setState($state);
+                    return $this->redirectToRoute('home');
+                } elseif (isset($req['cancel'])) {
                     return $this->redirectToRoute("home");
                 }
-                $event->setState($state);
+
 
                 $entityManager->persist($event);
                 $entityManager->flush();
+            } else {
+
             }
+
             return $this->render('event/index.html.twig', ["formEvent" => $form->createView()]);
         }
     }
@@ -62,7 +72,7 @@ class EventController extends AbstractController
         $cityRepo = $entityManager->getRepository(City::class);
         $city = $cityRepo->find(intval($request->request->get('city_id')));
         return new Response(json_encode([
-            'zip_code'=> $city->getZipCode()
+            'zip_code' => $city->getZipCode()
         ]), 200);
     }
 
@@ -71,7 +81,8 @@ class EventController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @Route("/subscribe/{id}", name="subscribe", methods={"GET"})
      */
-    public function subscribe(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function subscribe(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
         $user = $this->getUser();
         $user->addEvents($event);
         $event->addSubscribersUsers($user);
@@ -87,7 +98,8 @@ class EventController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @Route("/unsubscribe/{id}", name="unsubscribe", methods={"GET"})
      */
-    public function unSubscribe(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function unSubscribe(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
         $user = $this->getUser();
         $user->removeEvents($event);
         $event->removeSubscribersUsers($user);
@@ -103,7 +115,8 @@ class EventController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @Route("/cancel/{id}", name="cancel", methods={"GET"})
      */
-    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function cancel(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
         dump($event);
         $user = $this->getUser();
         $entityManager->initializeObject($event->getLocation());
@@ -116,7 +129,8 @@ class EventController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @Route("/cancelEvent/{id}", name="cancelEvent", methods={"GET"})
      */
-    public function cancelEvent(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function cancelEvent(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
         $user = $this->getUser();
         $owner = $event->getUser();
         $entityManager->initializeObject($event->getState());
@@ -138,26 +152,38 @@ class EventController extends AbstractController
      * @return Response
      * @Route("/modify/{id}", name="modifyEvent", methods={"GET", "POST"})
      */
-    public function modify(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function modify(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
         $form = $this->createForm(EventType::class, $event);
+
+        if ($event->getState()->getName() == "Créée") {
+            $form->add('publier', SubmitType::class);
+        }
+        $form->add('supprimer', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $req = $request->request->get('event');
             $stateRepo = $entityManager->getRepository(State::class);
-            if (isset($req['save'])){
+            if (isset($req['save'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
-            }elseif (isset($req['publish'])){
+                return $this->redirectToRoute("home");
+            } elseif (isset($req['publish'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
-            }elseif (isset($req['cancelEvent'])){
+                return $this->redirectToRoute("home");
+            } elseif (isset($req['cancelEvent'])) {
                 return $this->redirectToRoute("cancelEvent", ['id' => $event->getId()]);
-            }elseif (isset($req['cancel'])){
+            } elseif (isset($req['cancel'])) {
                 return $this->redirectToRoute("home");
             }
 
             $entityManager->persist($event);
             $entityManager->flush();
+        } else {
+
         }
+
+
 
         return $this->render('event/modify.html.twig', ["formEvent" => $form->createView(), 'event' => $event]);
     }
@@ -169,7 +195,8 @@ class EventController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/publish/{id}", name="publish", methods={"GET"})
      */
-    public function publish(Event $event, Request $request, EntityManagerInterface $entityManager) {
+    public function publish(Event $event, Request $request, EntityManagerInterface $entityManager)
+    {
         $state = new State();
         $state->setName("Ouverte");
         $event->setState($state);
