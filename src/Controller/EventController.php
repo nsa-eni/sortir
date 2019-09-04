@@ -47,22 +47,17 @@ class EventController extends AbstractController
                 if (isset($req['save'])) {
                     $state = $stateRepo->findOneBy(['name' => 'Créée']);
                     $event->setState($state);
-                    return $this->redirectToRoute('home');
                 } elseif (isset($req['publier'])) {
                     $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
                     $event->setState($state);
-                    return $this->redirectToRoute('home');
                 } elseif (isset($req['cancel'])) {
                     return $this->redirectToRoute("home");
                 }
 
-
                 $entityManager->persist($event);
                 $entityManager->flush();
-            } else {
-
+                return $this->redirectToRoute('home');
             }
-
             return $this->render('event/index.html.twig', ["formEvent" => $form->createView()]);
         }
     }
@@ -167,18 +162,17 @@ class EventController extends AbstractController
             $stateRepo = $entityManager->getRepository(State::class);
             if (isset($req['save'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
-                return $this->redirectToRoute("home");
             } elseif (isset($req['publish'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Ouverte']);
-                return $this->redirectToRoute("home");
             } elseif (isset($req['cancelEvent'])) {
                 return $this->redirectToRoute("cancelEvent", ['id' => $event->getId()]);
             } elseif (isset($req['cancel'])) {
                 return $this->redirectToRoute("home");
             }
-
+            $event->setState($state);
             $entityManager->persist($event);
             $entityManager->flush();
+            return $this->redirectToRoute("home");
         } else {
 
         }
