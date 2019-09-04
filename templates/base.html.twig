@@ -21,8 +21,7 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             {% if app.user %}
-                <a class="nav-item nav-link" href={{ path('home') }}>Accueil</a>
-                <a class="nav-item nav-link" href={{ path('event') }}>Ajouter Sortie</a>
+                <a class="nav-item nav-link" href={{ path('home') }}>Les Sorties</a>
                 <a class="nav-item nav-link" href={{ path('user_edit', { 'id' : app.user.id}) }}>Mon Profil</a>
                 {% if is_granted('ROLE_ADMIN') %}
                     <a class="nav-item nav-link" href={{ path('site_index') }}>Gestion Sites</a>

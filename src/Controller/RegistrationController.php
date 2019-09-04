@@ -63,6 +63,9 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $file = (object) $form->get('file')->getData();
             $this->parseCsvFile($file, $form->get('site')->getData(), $passwordEncoder);
+
+
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('registration/register_by_import_file.html.twig', [
