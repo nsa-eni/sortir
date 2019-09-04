@@ -1,0 +1,17 @@
+{#template/bundles/TwigBundle/Exception/error403.html.twig#}
+{% extends 'base.html.twig' %}
+
+{% block title %}Erreur 500{% endblock %}
+
+{% block body %}
+    <div class="text-center">
+        <h1 class="alert alert-danger">Une Erreur est survenue !</h1>
+
+        <p>Erreur de type 500</p>
+        <p>Une exception a été lancée depuis l'application, elle comportait le message suivant : "Erreur interne au serveur" !</p>
+        <br>
+        <br>
+        <p> Désolé! Réessayez plus tard!</p>
+        <a class="nav-item nav-link" href={{ path('welcome') }}>Retour a l'accueil</a>
+    </div>
+{% endblock %}
