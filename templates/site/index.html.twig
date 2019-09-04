@@ -7,7 +7,7 @@
     <div class="container">
         <h1 class="text-center">Gérer les Sites</h1>
         <br>
-        <div class="offset-2">
+        <div class="offset-1 mr-5">
             <h4>Filtrer les Sites</h4>
             <br>
             <form role="search" class="form-inline my-2 my-lg-2" method="get" action="{{ path('site_index') }}">
@@ -16,58 +16,63 @@
                        aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
             </form>
-            <table class="table">
-                <thead>
-                <tr class="row">
-                    <th class="col-md-4 text-cente" scope="col">Ville</th>
-                    <th colspan="2" class="col-md-4 text-center" scope="col">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr class="row">
-                    {{ form_start(formSite) }}
-                    <td class="col-md-4">
-                        <div class="form-group">
-                            {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouveau site"}}) }}
-                        </div>
-                    </td>
-                    <td class="col-md-2">
-                        <div class="form-group text-left">
-                            {{ form_widget(formSite.submit,{'attr': {'class': 'form-control', 'style':'border:none'}}) }}
-                        </div>
-                    </td>
-                    <td class="col-md-2"></td>
-                    {{ form_end(formSite) }}
-                </tr>
-                {% for Site in tabSite %}
-                    <tr class="row">
-                        <td class="col-md-4">{{ Site.name }}</td>
-                        <td class="col-md-2 text-center">
-                            <a href="{{ path('site_edit', {'id': Site.id}) }}">
-                                <button class="btn">Modifier</button>
-                            </a>
-                        </td>
-                        <td class="col-md-2 text-left">
-                            {% if Site.users is empty and Site.events is empty %}
-                            <form method="post" action="{{ path('site_delete', {'id': Site.id}) }}"
-                                  onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce site ?');">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ Site.id) }}">
-                                <a href="{{ path('site_delete', {'id': Site.id}) }}">
-                                    <button class="btn">Supprimer</button>
-                                </a>
-                            </form>
-                            {% endif %}
-                        </td>
-                    </tr>
+            <div class="container ">
+                <div class="scrollbar">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-center" scope="col">Ville</th>
+                            <th colspan="2" class="text-center" scope="col">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {{ form_start(formSite) }}
+                            <td>
+                                <div class="form-group">
+                                    {{ form_widget(formSite.name,{'attr': {'class': 'form-control','placeholder':"Nouveau site"}}) }}
+                                </div>
+                            </td>
+                            <td">
+                                <div class="form-group text-left">
+                                    {{ form_widget(formSite.submit,{'attr': {'class': 'form-control', 'style':'border:none'}}) }}
+                                </div>
+                            </td>
+                            <td></td>
+                            {{ form_end(formSite) }}
+                        </tr>
+                        {% for Site in tabSite %}
+                            <tr>
+                                <td>{{ Site.name }}</td>
+                                <td class="text-center">
+                                    <a href="{{ path('site_edit', {'id': Site.id}) }}">
+                                        <button class="btn">Modifier</button>
+                                    </a>
+                                </td>
+                                <td class="text-left">
+                                    {% if Site.users is empty and Site.events is empty %}
+                                        <form method="post" action="{{ path('site_delete', {'id': Site.id}) }}"
+                                              onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce site ?');">
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input type="hidden" name="_token"
+                                                   value="{{ csrf_token('delete' ~ Site.id) }}">
+                                            <a href="{{ path('site_delete', {'id': Site.id}) }}">
+                                                <button class="btn">Supprimer</button>
+                                            </a>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                            </tr>
 
-                {% else %}
-                    <tr>
-                        <td colspan="4">Désolé, il n'y a pas de résultat !</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">Désolé, il n'y a pas de résultat !</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             {% if not formSite.vars.valid %}
                 {# Loop through every form item #}
                 {% for child in formSite.children %}

@@ -4,7 +4,7 @@
 
 {% block body %}
     <br>
-    <div class="container">
+    <div class="offset-1 mr-5">
         <h1 class="text-center">Gérer les utilisateurs</h1>
         <br>
         <h4>Filtrer les utilisateurs</h4>
@@ -14,64 +14,68 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Recherche" name="search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
         </form>
-        <table class="table">
-            <thead>
-            <tr>
-                <th class="text-center" scope="col">Pseudo</th>
-                <th class="text-center" scope="col">Prénom</th>
-                <th class="text-center" scope="col">Nom</th>
-                <th class="text-center" scope="col">Téléphone</th>
-                <th class="text-center" scope="col">Email</th>
-                <th class="text-center" scope="col">Site</th>
-                <th class="text-center" scope="col">Actif</th>
-                <th colspan="2" class="text-center" scope="col">actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for user in users %}
-                <tr>
-                    <td>{{ user.pseudo }}</td>
-                    <td>{{ user.firstname }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.phone }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.site.name }}</td>
-                    <td>{% if user.actif %}
-                            <a href={{ path('disable', {id: user.id}) }}>Yes</a>
-                        {% else %}
-                            <a href={{ path('disable', {id: user.id}) }}>No</a>
-                        {% endif %}
-                    </td>
-                    {# {% if tabDetail.imageFilename %}
-                           <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}" alt="user_image" /></p>
-                       {% endif %} #}
+        <div class="container ">
+            <div class="scrollbar">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Pseudo</th>
+                        <th class="text-center" scope="col">Prénom</th>
+                        <th class="text-center" scope="col">Nom</th>
+                        <th class="text-center" scope="col">Téléphone</th>
+                        <th class="text-center" scope="col">Email</th>
+                        <th class="text-center" scope="col">Site</th>
+                        <th class="text-center" scope="col">Actif</th>
+                        <th colspan="2" class="text-center" scope="col">actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.pseudo }}</td>
+                            <td>{{ user.firstname }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.phone }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.site.name }}</td>
+                            <td>{% if user.actif %}
+                                    <a href={{ path('disable', {id: user.id}) }}>Yes</a>
+                                {% else %}
+                                    <a href={{ path('disable', {id: user.id}) }}>No</a>
+                                {% endif %}
+                            </td>
+                            {# {% if tabDetail.imageFilename %}
+                                   <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}" alt="user_image" /></p>
+                               {% endif %} #}
 
 
-                    {#   <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
+                            {#   <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
 
-                    <td class="text-center">
-                        <a href="{{ path('user_show', {'id': user.id}) }}">
-                            <button class="btn">Afficher</button>
-                        </a>
-                    <td class="text-center">
-                        <form method="post" action="{{ path('user_delete', {'id': user.id}) }}"
-                              onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cet utilisateur ?');">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-                            <a href="{{ path('user_delete', {'id': user.id}) }}">
-                                <button class="btn">Supprimer</button>
-                            </a>
-                        </form>
-                    </td>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="11">Désolé, il n'y a pas de résultat !</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                            <td class="text-center">
+                                <a href="{{ path('user_show', {'id': user.id}) }}">
+                                    <button class="btn">Afficher</button>
+                                </a>
+                            <td class="text-center">
+                                <form method="post" action="{{ path('user_delete', {'id': user.id}) }}"
+                                      onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                                    <a href="{{ path('user_delete', {'id': user.id}) }}">
+                                        <button class="btn">Supprimer</button>
+                                    </a>
+                                </form>
+                            </td>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="11">Désolé, il n'y a pas de résultat !</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <div class="text-center">
             <a href="{{ path('app_register') }}"><input type="button" class="btn btn-primary"
                                                         value="Créer un nouvel utilisateur"></a>

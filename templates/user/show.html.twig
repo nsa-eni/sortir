@@ -4,9 +4,10 @@
 
 {% block body %}
     <br>
+    <div class="container">
     <h3 class="text-center">{{ user.pseudo }}</h3>
     <br>
-<div class="container">
+
     <div class="row">
         <div class="col-md-4">
             {% if user.imageFilename %}
@@ -17,27 +18,27 @@
                      height="200"/>
             {% endif%}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12">
                 <div>
                     <br>
-                    <label class="col-md-6">Prénom : </label>
-                    <span class="col-md-6">{{ user.firstname }}</span>
+                    <label class="col-6">Prénom : </label>
+                    <span class="col-6">{{ user.firstname }}</span>
                 </div>
                 <div>
-                    <label class="col-md-6">Nom : </label>
-                    <span class="col-md-6">{{ user.name }}</span>
+                    <label class="col-6">Nom : </label>
+                    <span class="col-6">{{ user.name }}</span>
                 </div>
                 <div>
-                    <label class="col-md-6">Telephone : </label>
-                    <span class="col-md-6">{{ user.phone }}</span>
+                    <label class="col-6">Telephone : </label>
+                    <span class="col-6">{{ user.phone }}</span>
                 </div>
                 <div>
-                    <label class="col-md-6">Email : </label>
-                    <span class="col-md-6">{{ user.email }}</span>
+                    <label class="col-6">Email : </label>
+                    <span class="col-6">{{ user.email }}</span>
                 </div>
                 <div>
-                    <label class="col-md-6">Ville de rattachement : </label>
-                    <span class="col-md-6">{{ user.site.name }}</span>
+                    <label class="col-6">Ville de rattachement : </label>
+                    <span class="col-6">{{ user.site.name }}</span>
                 </div>
             </div>
         </div>
@@ -52,7 +53,5 @@
     <div class="text-center">
         <a href="{{ path('home') }}">Retour aux sorties</a>
     </div>
-    {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
 
-     {{ include('user/_delete_form.html.twig') }} #}
     {% endblock %}
