@@ -9,11 +9,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4">
+            {% if user.imageFilename %}
             <img class="image-fluid" src="{{ asset('uploads/images/' ~ user.imageFilename) }}" alt="image profil"
                  height="200"/>
+            {% else %}
+                <img class="image-fluid" src="{{ asset('build/images/avatar.png') }}" alt="image profil"
+                     height="200"/>
+            {% endif%}
         </div>
         <div class="col-md-6">
                 <div>
+                    <br>
                     <label class="col-md-6">Prénom : </label>
                     <span class="col-md-6">{{ user.firstname }}</span>
                 </div>
