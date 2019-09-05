@@ -78,12 +78,18 @@ class EventController extends AbstractController
      */
     public function subscribe(Event $event, Request $request, EntityManagerInterface $entityManager)
     {
-        $user = $this->getUser();
-        $user->addEvents($event);
-        $event->addSubscribersUsers($user);
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $max = $event->getMaxNumberPlaces();
+        $subs = $event->getSubscribersUsers();
 
+        if (sizeof($subs) <$max and $event->getDateEndOfRegistration() < date('now')) {
+            $user = $this->getUser();
+            $user->addEvents($event);
+            $event->addSubscribersUsers($user);
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirect($request->headers->get('referer'));
+        }
         return $this->redirect($request->headers->get('referer'));
     }
 
@@ -150,14 +156,19 @@ class EventController extends AbstractController
     {
         $form = $this->createForm(EventType::class, $event);
 
+        // Si la sortie n'a pas été publiée
         if ($event->getState()->getName() == "Créée") {
             $form->add('publier', SubmitType::class);
         }
+        // Reprise du formulaire de création et ajout de bouton
         $form->add('supprimer', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupération des données
             $req = $request->request->get('event');
+
+            // Recherche des états pour les associer aux sorties
             $stateRepo = $entityManager->getRepository(State::class);
             if (isset($req['save'])) {
                 $state = $stateRepo->findOneBy(['name' => 'Créée']);
@@ -169,8 +180,11 @@ class EventController extends AbstractController
                 return $this->redirectToRoute("home");
             }
             $event->setState($state);
+
+            // Insertion des données dans la BDD
             $entityManager->persist($event);
             $entityManager->flush();
+
             return $this->redirectToRoute("home");
         }
 
