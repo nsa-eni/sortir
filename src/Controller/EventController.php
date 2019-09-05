@@ -81,7 +81,7 @@ class EventController extends AbstractController
         $max = $event->getMaxNumberPlaces();
         $subs = $event->getSubscribersUsers();
 
-        if (sizeof($subs) < $max and $event->getDateEndOfRegistration() < date('now')) {
+        if (sizeof($subs) < $max and $event->getDateEndOfRegistration() > date('now')) {
             $user = $this->getUser();
             $user->addEvents($event);
             $event->addSubscribersUsers($user);
@@ -90,7 +90,7 @@ class EventController extends AbstractController
 
             return $this->redirect($request->headers->get('referer'));
         }
-        if ($event->getDateEndOfRegistration()  > date('now')) {
+        if ($event->getDateEndOfRegistration()  < date('now')) {
             $this->addFlash('error','la date de cloture est dépassée');
         }
 
@@ -143,8 +143,12 @@ class EventController extends AbstractController
         $owner = $event->getUser();
         $entityManager->initializeObject($event->getState());
         $event->setState(null);
-
+        $subscribersUsers=$event->getSubscribersUsers();
         if ($user->getId() == $owner->getId() or $user->getRoles()[0] == "ROLE_ADMIN") {
+            foreach ($subscribersUsers as $subscribersUser) {
+                $event->removeSubscribersUsers($subscribersUser);
+                $subscribersUser->removeEvents($event);
+            }
             $entityManager->remove($event);
             $entityManager->flush();
             return $this->redirectToRoute('home');
