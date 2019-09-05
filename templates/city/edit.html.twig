@@ -4,9 +4,10 @@
 
 {% block body %}
     <br>
+    <div class="offset-1 mr-5">
     <h1 class="text-center">Modification d'une ville</h1>
     <br>
-    <div class="offset-1 mr-5">
+
         {{ form_start(form) }}
         <div class="form-group col-md-2">
             {{ form_label(form.name) }}
@@ -20,7 +21,7 @@
         </div>
         <br>
         <div class="form-group col-md-2">
-            {{ form_widget(form.submit,{'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.submit,{'attr': {'class': 'form-control btn-outline-primary'}}) }}
         </div>
         {{ form_end(form) }}
         <br>
