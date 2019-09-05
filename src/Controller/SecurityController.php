@@ -85,6 +85,7 @@ class SecurityController extends AbstractController
     {
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        //si utilsateur souhaitant accéder à mon profil a l'id de l'url
         if ($user->getId() == $this->getUser()->getId()) {
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $imageFile */
@@ -96,38 +97,29 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+            //si image telechargee
             if ($imageFile) {
                 $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
                     $imageFile->move(
                         $this->getParameter('images_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
+                    //mise en base de donnee du nom de l'image, image stockée dans public/uploads
                 $user->setImageFilename($newFilename);
             }
             $this->addFlash("success", "La profil a bien été modifié !");
             $this->getDoctrine()->getManager()->flush();
 
-            //return $this->redirectToRoute('home');
+            return $this->redirectToRoute('home');
         }
-
+        //formulaire non valide
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
     }else{
+            //si utilsateur souhaitant accéder à mon profil n'a pas² l'id de l'url
             return $this->redirectToRoute('home');
         }
     }

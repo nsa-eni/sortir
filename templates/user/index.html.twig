@@ -9,11 +9,13 @@
         <br>
         <h4>Filtrer les utilisateurs</h4>
         <br>
+        {#barre de recherche#}
         <form role="search" class="form-inline my-2 my-lg-2" method="get" action="{{ path('user_index') }}">
             <label>Le nom contient : &nbsp</label>
             <input class="form-control mr-sm-2" type="search" placeholder="Recherche" name="search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
         </form>
+        {#tableau des utilisateurs#}
         <div class="container ">
             <div class="scrollbar">
                 <table class="table">
@@ -38,19 +40,13 @@
                             <td>{{ user.phone }}</td>
                             <td>{{ user.email }}</td>
                             <td>{{ user.site.name }}</td>
+                            {#activation/desactivation utilisateur#}
                             <td>{% if user.actif %}
                                     <a href={{ path('disable', {id: user.id}) }}>Yes</a>
                                 {% else %}
                                     <a href={{ path('disable', {id: user.id}) }}>No</a>
                                 {% endif %}
                             </td>
-                            {# {% if tabDetail.imageFilename %}
-                                   <p class="card-text text-left"><img class="image-fluid" src="{{ asset('uploads/images/' ~ tabDetail.imageFilename) }}" alt="user_image" /></p>
-                               {% endif %} #}
-
-
-                            {#   <td>{{ user.roles ? user.roles|json_encode : '' }}</td> #}
-
                             <td class="text-center">
                                 <a href="{{ path('user_show', {'id': user.id}) }}">
                                     <button class="btn">Afficher</button>
