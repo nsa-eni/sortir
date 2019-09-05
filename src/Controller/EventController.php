@@ -81,7 +81,7 @@ class EventController extends AbstractController
         $max = $event->getMaxNumberPlaces();
         $subs = $event->getSubscribersUsers();
 
-        if (sizeof($subs) <$max and $event->getDateEndOfRegistration() < date('now')) {
+        if (sizeof($subs) < $max and $event->getDateEndOfRegistration() < date('now')) {
             $user = $this->getUser();
             $user->addEvents($event);
             $event->addSubscribersUsers($user);
@@ -90,6 +90,14 @@ class EventController extends AbstractController
 
             return $this->redirect($request->headers->get('referer'));
         }
+        if ($event->getDateEndOfRegistration()  > date('now')) {
+            $this->addFlash('error','la date de cloture est dépassée');
+        }
+
+        if(sizeof($subs) >$max) {
+            $this->addFlash('error','Il n\'y a plus de place');
+        }
+
         return $this->redirect($request->headers->get('referer'));
     }
 
