@@ -3,13 +3,61 @@
 {% block body %}
     <br>
     <br>
-    <H1 class="text-center">Contact</H1>
-    <br>
-    <br>
     <div class="offset-1 mr-5">
-        <p class="text-center">Un soucis ? N'hésitez pas à nous contacter à cette adresse :</p>
-        <div class="text-center">
-            <a href="mailto:contact@eni-ecole.fr">contact@eni-ecole.fr</a>
+        <H1 class="text-center">Contact</H1>
+        <br>
+        <br>
+
+        <p class="text-center">Un soucis ? N'hésitez pas à nous contacter via ce formulaire :</p>
+        <br>
+        {{ form_start(formContact) }}
+        <div class="container">
+            <div class="row bar">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        {{ form_label(formContact.name) }}
+                        <br>
+                        {{ form_widget(formContact.name,{'attr': {'class': 'form-control','placeholder':"Votre nom"}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(formContact.firstname) }}
+                        <br>
+                        {{ form_widget(formContact.firstname,{'attr': {'class': 'form-control','placeholder':"Votre prénom"}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(formContact.email) }}
+                        <br>
+                        {{ form_widget(formContact.email,{'attr': {'class': 'form-control','placeholder':"Votre email"}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(formContact.phone) }}
+                        <br>
+                        {{ form_widget(formContact.phone,{'attr': {'class': 'form-control','placeholder':"Votre téléphone"}}) }}
+                    </div>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                    {{ form_label(formContact.message) }}
+                    <br>
+                    {{ form_widget(formContact.message,{'attr': {'class': 'form-control', 'rows':'8','placeholder':"Votre message (1000 caractères max)"}}) }}
+                </div>
+            </div>
         </div>
+        <div class="form-group text-center">
+            {{ form_widget(formContact.submit,{'attr': {'class': 'btn btn-primary btn-lg btn-block"','style':''}}) }}
+        </div>
+        {{ form_end(formContact) }}
+        {% if not formContact.vars.valid %}
+            {# Loop through every form item #}
+            {% for child in formContact.children %}
+                {# Display the errors of the form item #}
+                {% if child.vars.errors is defined %}
+                    {% for error in child.vars.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error.message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock body %}
