@@ -121,7 +121,7 @@
                                             <a href={{ path('cancel', {id: e.id}) }}>Annuler</a> -
                                         {% endif %}
                                         {% if e.state.name == "Créée" %}
-                                            - <a href={{ path('publish', {id: e.id}) }}>Publier</a>
+                                            <a href={{ path('publish', {id: e.id}) }}>Publier</a>
                                         {% endif %}
                                     {% endif %}
                                     {% if e.state.name == "Ouverte" %}
